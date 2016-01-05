@@ -13,4 +13,5 @@ Description     | Model #         | Quanity | Cost | Shipping | Total
 --------------- | --------------- | ------- | ---- | -------- | -----
 [Particle Photon with headers](https://store.particle.io/collections/photon) | | 1 | $19.00 | $19.00
 [5V 4 Channel PLC Relay Module Controller F Arduino Mega2560 UNO R3 Raspberry Pi](http://www.ebay.com/itm/331591955325) | | 1 | $4.15 | $1.50 | $5.65 
-[CARLON 8" x 8" x 4" Junction Box](http://www.lowes.com/ProductDisplay?productId=3260229) | E989N-CAR | 1 | $22.64 | $0.00 | $22.64
+[CARLON 8" x 8" x 4" Junction Box](http://www.lowes.com/ProductDisplay?productId=3260229) | E989N-CAR | 1 | $22.64 | $0.00 | $22.64 |
+[200pcs 10k Ohm 10,000r 1/6w=1/8w Metal Film Resistors 0.125watt 1%](http://www.ebay.com/itm/like/301642249557?ul_noapp=true&chn=ps&lpid=82) | | 1 | $3.45 | $0.00 | $3.45 
