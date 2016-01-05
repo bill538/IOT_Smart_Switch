@@ -23,3 +23,6 @@ Description     | Model #         | Quanity | Price | Shipping | Total
 [20cm Long F/F Solderless Flexible Breadboard Jumper Cable Wire 40 Pcs](http://www.newegg.com/Product/Product.aspx?Item=9SIA67038W2538) | 9SIA67038W2538 | 1 | $1.11 | $0.00 | $1.11
 [50 pcs M3 Male x M3 Female Screw PCB Stand-off Spacer Hex 26mm Length](http://www.newegg.com/Product/Product.aspx?Item=9SIA67038S9220) | 9SIA67038S9220 | 1 | $4.42 | $0.00 | $4.42
 [50 Pcs M3 Male x M3 Female Hex Head PCB Standoffs Spacers 12mm Length](http://www.newegg.com/Product/Product.aspx?Item=9SIA67038S9276) | 9SIA67038S9276 | 1 | $1.83 | $0.00 | $1.83
+[100pcs Stainless steel M3*6mm Screw](http://www.ebay.com/itm/161863006976) | 161863006976 | 1 | $3.59 | $0.00 | $3.59
+[100pcs Brass M3*15mm Hex Column Standoff Support](http://www.ebay.com/itm/161863006976) | 161863006976 | 1 | $6.29 | $1.99 | $8.28
+
