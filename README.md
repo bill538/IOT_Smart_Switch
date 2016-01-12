@@ -7,6 +7,22 @@ This project is a IOT Smart Switch leveraging the Particle Photon.
 TidyCad files: 
   [IOT_Smart_Switch](https://github.com/bill538/IOT_Smart_Switch/blob/master/IOT_Smart_Switch-20160104.dsn)
   [Custom Symbol](https://github.com/bill538/IOT_Smart_Switch/blob/master/particle.TCLib)
+
+
+
+# Mappings
+Pin     | Pin Variable   | State Variable | Previous State Variable
+------- | -------------- | -------------- | ----------------------- 
+D0 | ic2_sda
+D1 | i2c_scl
+D2 | RelayIn1 | RelayIn1_State |
+D3 | RelayIn2 | RelayIn2_State |
+D4 | RelayIn3 | RelayIn3_State |
+D5 | RelayIn4 | RelayIn4_State |
+A2 | Switch1 | Switch1_State | Prev_Switch1_State
+A3 | Switch2 | Switch2_State | Prev_Switch2_State
+A4 | Switch3 | Switch3_State | Prev_Switch3_State
+A5 | Switch4 | Switch4_State | Prev_Switch4_State
   
 # Hardware
 Description     | Model #         | Quanity | Price | Shipping | Total 
@@ -25,4 +41,3 @@ Description     | Model #         | Quanity | Price | Shipping | Total
 [50 Pcs M3 Male x M3 Female Hex Head PCB Standoffs Spacers 12mm Length](http://www.newegg.com/Product/Product.aspx?Item=9SIA67038S9276) | 9SIA67038S9276 | 1 | $1.83 | $0.00 | $1.83
 [100pcs Stainless steel M3*6mm Screw](http://www.ebay.com/itm/161863006976) | 161863006976 | 1 | $3.59 | $0.00 | $3.59
 [100pcs Brass M3*15mm Hex Column Standoff Support](http://www.ebay.com/itm/161863006976) | 161863006976 | 1 | $6.29 | $1.99 | $8.28
-
