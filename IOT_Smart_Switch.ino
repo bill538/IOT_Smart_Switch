@@ -1,57 +1,52 @@
-// This #include statement was automatically added by the Particle IDE.
-#include "spark-web-embd-rest-json/spark-web-embd-rest-json.h"
-
-// This #include statement was automatically added by the Particle IDE.
-#include "Grove_LCD_RGB_Backlight/Grove_LCD_RGB_Backlight.h"
-
-
 //
-// Function set Digital output HIGH or LOW
+// Function READs or Writes to Digital or Analog pins from the cloud
 //
-// Argument syntax: A1,HIGH or D4,LOW
-int CloudWriteDigitalPin(String command) {
+// Argument syntax: A1,Read or D4,Write,LOW
+int CloudAccessPin(String command) {
+    bool value = 0;
+
+    // Make sure upper case
+    command.toUpperCase();
+
+    Particle.publish("CloudAccessPin Command", command);
+    
     //convert ascii to integer
     int pinNumber = command.charAt(1) - '0';
-
+    
     //Sanity check to see if the pin numbers are within limits
     if (pinNumber< 0 || pinNumber >7) {
         return -1;
     }
 
-    // Compute real pinNumber based on pin type A(Analog) or D(Digital)
-    if (command.startsWith("D")) {
-        pinNumber=pinNumber;
-    } else if (command.startsWith("A")) {
-        pinNumber=pinNumber+10;
-    } else {
-        return -2;
+    // Add 10 to Analog pin number
+    if(command.startsWith("A")) {
+        pinNumber = pinNumber+10;
     }
+
+    //Particle.publish("Pin", String(pinNumber) );
+    //Particle.publish("String", String(command.substring(3,7)) );
+    //Particle.publish("String", String(command.substring(9,12)) );
+    //Particle.publish("String", String(command.substring(9,13)) );
     
-digitalWrite(D7, LOW);
-delay(1000);
-digitalWrite(D7, HIGH);
-delay(1000);
-
-    // find out the state to set pin
-    if (command.substring(3,7) == "HIGH") {
-        digitalWrite(D4, HIGH);
+    // Check if READ or Write operation
+    if ( command.substring(3,7) == "READ" ) {
+        pinMode(pinNumber, INPUT);
+        return digitalRead(pinNumber);
+    } else if ( command.substring(3,8) == "WRITE" ) {
+        if ( command.substring(9,13) == "HIGH" ) {
+            value = 1;
+        } else if ( command.substring(9,12) == "LOW" ) {
+            value = 0;
+        } else {
+            return -2;
+        }
+        
+        pinMode(pinNumber, OUTPUT);
+        digitalWrite(pinNumber, value);
         return 1;
-    } else if (command.substring(3,6) == "LOW") {
-        digitalWrite(D4, LOW);
-        return 0;
     } else {
-        return -1;
+        return -3;
     }
-}
-
-
-
-//
-// Function to Read inputs as digital with HIGH or LOW
-// Note: Assume pinmode has been set
-//
-int ReadDigitalPin(int pin) {
-   return digitalRead(pin);
 }
 
 
@@ -60,7 +55,8 @@ int ReadDigitalPin(int pin) {
 //
 // Argument A1,HIGH or D4,LOW
 int WriteDigitalPin(int pin, int state) {
-
+    Particle.publish("Pin - WrireDigital", String(pin) );
+    
     // find out the state to set pin
     if (state == HIGH) {
         digitalWrite(pin, state);
@@ -78,7 +74,6 @@ int WriteDigitalPin(int pin, int state) {
 // Function to check if physical switch has chnaged state(been flipped)
 //
 int CheckSwitchStateChanged(int switch_pin, int current_switch_state, int previous_switch_state, int relayin, int relayin_state) {
-    
     bool success;
 
 	// Check if switch pin state changed
@@ -99,10 +94,14 @@ int CheckSwitchStateChanged(int switch_pin, int current_switch_state, int previo
 
 
 //
+// Function to Read inputs as digital with HIGH or LOW
+// Note: Assume pinmode has been set
 //
-// MAIN
-//
-//
+int ReadDigitalPin(int pin) {
+    //Particle.publish("Pin - ReadDigital", String(pin) );
+    return digitalRead(pin);
+}
+
 
 // -----------------------------------
 // Controlling LEDs/Circuits over the Internet
@@ -140,20 +139,14 @@ char myIpAddress[24];
 String SSID = "";
 byte MAC[6];
 
-
 // Time syncing data
 #define ONE_DAY_MILLIS (24 * 60 * 60 * 1000)
 unsigned long lastSync = millis();
 
-// Web server config.
-TCPServer server = TCPServer(23);
-TCPClient client;
 
 
-// setup function that executes at the start of code only
-void setup()
-{
-    // Here's the pin Mode configuration
+void setup() {
+   // Here's the pin Mode configuration
     pinMode(Led1, OUTPUT);
     pinMode(Led2, OUTPUT);
     pinMode(Switch1, INPUT);
@@ -168,27 +161,16 @@ void setup()
     // Let's also make sure both LEDs are off when we start.
     digitalWrite(Led1, LOW);
     digitalWrite(Led2, LOW);
-    // Let's also make sure all Relays are set HIGH(OFF) when we start.
-    RelayIn1_State = WriteDigitalPin(RelayIn1, HIGH);
-    RelayIn2_State = WriteDigitalPin(RelayIn2, HIGH);
-    RelayIn3_State = WriteDigitalPin(RelayIn3, HIGH);
-    RelayIn4_State = WriteDigitalPin(RelayIn4, HIGH);
-
-	// Read the input state on the 4 switch for their current state and store state
-    Switch1_State = ReadDigitalPin(Switch1);
-    Switch2_State = ReadDigitalPin(Switch2);
-    Switch3_State = ReadDigitalPin(Switch3);
-    Switch4_State = ReadDigitalPin(Switch4);	
-
+   
+    // Publish devi's IP
     // Build IP Address and publish
     IPAddress myIp = WiFi.localIP();
     sprintf(myIpAddress, "%d.%d.%d.%d", myIp[0], myIp[1], myIp[2], myIp[3]);
     Particle.publish("IP", myIpAddress);
-
-    WiFi.macAddress(MAC);
-    //sprintf(MAC, "%02x:%02x:%02x:%02x:%02x:%02x", MAC[0], MAC[1], MAC[2], MAC[3], MAC[4], MAC[5]);
-    //sprintf(MAC, "%d:%d", String(MAC[0], HEX), String(MAC[1], HEX)); // MAC[2], MAC[3], MAC[4], MAC[5]);
-    //Particle.publish("MAC", MAC);
+        
+    // Enable could access to function
+    // // https://api.particle.io/v1/devices/2e0048000a47343432313031/WritePin?access_token=***************?args=D4,HIGH
+    Particle.function("AccessPin", CloudAccessPin);
 
     // Expose all variables to the cloud. Note current maximum is 10.
     // https://api.particle.io/v1/devices/2e0048000a47343432313031/IP?access_token=***************
@@ -204,53 +186,12 @@ void setup()
     Particle.variable("Switch4", Switch4_State);
     Particle.variable("PrevSw1", Prev_Switch1_State);
     Particle.variable("PrevSw2", Prev_Switch2_State);
-    Particle.variable("PrevSw3", Prev_Switch3_State);
+    Particle.variable("PrevSw3iPrevSw3", Prev_Switch3_State);
     Particle.variable("PrevSw4", Prev_Switch4_State);
-    
-    // Enable could access to function
-    Particle.function("WritePin", CloudWriteDigitalPin);
-    // // https://api.particle.io/v1/devices/2e0048000a47343432313031/WritePin?access_token=***************?args=D4,HIGH
-    
-    // start listening for clients
-    server.begin();
-
-    // Make sure your Serial Terminal app is closed before powering your device
-    Serial.begin(9600);
-    // Now open your Serial Terminal, and hit any key to continue!
-    while(!Serial.available()) Particle.process();
-    Serial.print("IP Address: ");
-    Serial.println(myIpAddress);
-    Serial.print("subnetMask: ");
-    Serial.println(WiFi.subnetMask());
-    Serial.print("gateway IP Address: ");
-    Serial.println(WiFi.gatewayIP());
-    Serial.print("SSID: ");
-    Serial.println(SSID);
-    Serial.print("MAC: ");
-    Serial.print(MAC[0], HEX);
-    Serial.print(":");
-    Serial.print(MAC[1],HEX);
-    Serial.print(":");
-    Serial.print(MAC[2],HEX);
-    Serial.print(":");
-    Serial.print(MAC[3],HEX);
-    Serial.print(":");
-    Serial.print(MAC[4],HEX);
-    Serial.print(":");
-    Serial.println(MAC[5],HEX);
-    Serial.print("Switch3: ");
-    Serial.println(Switch3);
-    Serial.print("RelayIn3_State: ");
-    Serial.println(RelayIn3_State);
-
-    
-
 }
 
-void loop()
-{
-	bool success;
-
+void loop() {
+    //Particle.publish("LOOP", String(Switch3_State) );
     Prev_Switch1_State = Switch1_State;
     Prev_Switch2_State = Switch2_State;
     Prev_Switch3_State = Switch3_State;
@@ -267,77 +208,5 @@ void loop()
     RelayIn3_State = CheckSwitchStateChanged(Switch3, Switch3_State, Prev_Switch3_State, RelayIn3, RelayIn3_State);
     RelayIn4_State = CheckSwitchStateChanged(Switch4, Switch4_State, Prev_Switch4_State, RelayIn4, RelayIn4_State);
 
-    // Check time sync every 24 hours with cloud
-    if (millis() - lastSync > ONE_DAY_MILLIS) {
-        // Request time synchronization from the Particle Cloud
-        Particle.syncTime();
-        lastSync = millis();
-    }
-
-
-//digitalWrite(Led1, LOW);
-//digitalWrite(Led2, LOW);
-//delay(500);
-//digitalWrite(Led1, HIGH);
-//digitalWrite(Led2, HIGH);
-//delay(500);
-
-  if (client.connected()) {
-    // echo all available bytes back to the client
-    while (client.available()) {
-        server.write(client.read());
-        server.print("IP Address: ");
-        server.println(myIpAddress);
-        server.print("SSID: ");
-        server.println(SSID);
-        server.print("MAC: ");
-        server.print(MAC[0], HEX);
-        server.print(":");
-        server.print(MAC[1],HEX);
-        server.print(":");
-        server.print(MAC[2],HEX);
-        server.print(":");
-        server.print(MAC[3],HEX);
-        server.print(":");
-        server.print(MAC[4],HEX);
-        server.print(":");
-        server.println(MAC[5],HEX);
-        server.print("Switch3: ");
-        server.println(Switch3);
-        server.print("RelayIn3_State: ");
-        server.println(RelayIn3_State);
-    }
-  } else {
-    // if no client is yet connected, check for a new connection
-    client = server.available();
-  }
-delay(100);
-}
-
-// We're going to have a super cool function now that gets called when a matching API request is sent
-// This is the ledToggle function we registered to the "led" Spark.function earlier.
-
-
-int ledToggle(String command) {
-    /* Spark.functions always take a string as an argument and return an integer.
-    Since we can pass a string, it means that we can give the program commands on how the function should be used.
-    In this case, telling the function "on" will turn the LED on and telling it "off" will turn the LED off.
-    Then, the function returns a value to us to let us know what happened.
-    In this case, it will return 1 for the LEDs turning on, 0 for the LEDs turning off,
-    and -1 if we received a totally bogus command that didn't do anything to the LEDs.
-    */
- 
-    if (command=="on") {
-        digitalWrite(Led1,HIGH);
-        digitalWrite(Led2,HIGH);
-        return 1;
-    }
-    else if (command=="off") {
-        digitalWrite(Led1,LOW);
-        digitalWrite(Led2,LOW);
-        return 0;
-    }
-    else {
-        return -1;
-    }
+    delay(100);
 }
