@@ -186,7 +186,7 @@ void setup() {
     Particle.variable("Switch4", Switch4_State);
     Particle.variable("PrevSw1", Prev_Switch1_State);
     Particle.variable("PrevSw2", Prev_Switch2_State);
-    Particle.variable("PrevSw3iPrevSw3", Prev_Switch3_State);
+    Particle.variable("PrevSw3", Prev_Switch3_State);
     Particle.variable("PrevSw4", Prev_Switch4_State);
 }
 
@@ -202,9 +202,9 @@ void loop() {
     Switch3_State = ReadDigitalPin(Switch3);
     Switch4_State = ReadDigitalPin(Switch4);	
 
-	// Check if light switches have changed states "been flipped"
-	RelayIn1_State = CheckSwitchStateChanged(Switch1, Switch1_State, Prev_Switch1_State, RelayIn1, RelayIn1_State);
-	RelayIn2_State = CheckSwitchStateChanged(Switch2, Switch2_State, Prev_Switch2_State, RelayIn2, RelayIn2_State);
+    // Check if light switches have changed states "been flipped"
+    RelayIn1_State = CheckSwitchStateChanged(Switch1, Switch1_State, Prev_Switch1_State, RelayIn1, RelayIn1_State);
+    RelayIn2_State = CheckSwitchStateChanged(Switch2, Switch2_State, Prev_Switch2_State, RelayIn2, RelayIn2_State);
     RelayIn3_State = CheckSwitchStateChanged(Switch3, Switch3_State, Prev_Switch3_State, RelayIn3, RelayIn3_State);
     RelayIn4_State = CheckSwitchStateChanged(Switch4, Switch4_State, Prev_Switch4_State, RelayIn4, RelayIn4_State);
 
