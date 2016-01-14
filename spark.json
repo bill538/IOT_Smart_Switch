@@ -1,0 +1,7 @@
+{
+    "name": "IOT-Smart-Switch",
+    "version": "0.0.1",
+    "author": "dogpile100 <at gmail dot com>",
+    "license": "GPLv3",
+    "description": "This project implement IOT Smart Switch with load RESTful API at http://IP-Photon:80"
+}
