@@ -15,7 +15,7 @@ download a copy.-->
 			<DOCNUMBER></DOCNUMBER>
 			<ORGANISATION></ORGANISATION>
 			<SHEETS>1 of 1</SHEETS>
-			<SHOWS>1</SHOWS>
+			<SHOWS>3</SHOWS>
 			<DATE></DATE>
 			<GRID spacing='100.00000' snap='0'/>
 		</DETAILS>
@@ -39,7 +39,7 @@ download a copy.-->
 			<CHARSET>0</CHARSET>
 			<FACENAME>Arial</FACENAME>
 		</FONT>
-		<FONT id='7'>
+		<FONT id='4'>
 			<HEIGHT>-15</HEIGHT>
 			<WIDTH>7</WIDTH>
 			<WEIGHT>700</WEIGHT>
@@ -49,12 +49,32 @@ download a copy.-->
 			<CHARSET>0</CHARSET>
 			<FACENAME>Arial</FACENAME>
 		</FONT>
+		<STYLE id='3'>
+			<STYLE>0</STYLE>
+			<COLOR>000000</COLOR>
+			<THICKNESS>3</THICKNESS>
+		</STYLE>
 		<STYLE id='4'>
+			<STYLE>0</STYLE>
+			<COLOR>FFFFFF</COLOR>
+			<THICKNESS>3</THICKNESS>
+		</STYLE>
+		<STYLE id='5'>
+			<STYLE>0</STYLE>
+			<COLOR>004000</COLOR>
+			<THICKNESS>3</THICKNESS>
+		</STYLE>
+		<STYLE id='6'>
+			<STYLE>0</STYLE>
+			<COLOR>0000FF</COLOR>
+			<THICKNESS>3</THICKNESS>
+		</STYLE>
+		<STYLE id='7'>
 			<STYLE>0</STYLE>
 			<COLOR>000000</COLOR>
 			<THICKNESS>1</THICKNESS>
 		</STYLE>
-		<STYLE id='5'>
+		<STYLE id='8'>
 			<STYLE>0</STYLE>
 			<COLOR>000000</COLOR>
 			<THICKNESS>2</THICKNESS>
@@ -17043,126 +17063,126 @@ GF+ UKM/MMUZX-6&amp;QQ&quot;M6?)K_ (U#&gt;I+MEOZO     $E%3D2N0F&quot;&quot;
 			</FIELD>
 			<REF_POINT power='0' part='0' pos='36.40000,46.88967'/>
 			<TinyCAD>
-				<ELLIPSE a='36.40000,12.40000' b='36.40000,12.40000' style='4' fill='0'/>
-				<RECTANGLE a='10.34005,10.45209' b='29.58992,46.88967' style='5' fill='0'/>
+				<ELLIPSE a='36.40000,12.40000' b='36.40000,12.40000' style='7' fill='0'/>
+				<RECTANGLE a='10.34005,10.45209' b='29.58992,46.88967' style='8' fill='0'/>
 				<METAFILE a='10.40000,10.40000' b='29.60000,46.80000' id='1'/>
-				<ELLIPSE a='10.98785,15.36345' b='12.14754,16.73322' style='4' fill='1'/>
-				<POLYGON pos='8.80000,16.00000' style='5' fill='0'>
+				<ELLIPSE a='10.98785,15.36345' b='12.14754,16.73322' style='7' fill='1'/>
+				<POLYGON pos='8.80000,16.00000' style='8' fill='0'>
 					<POINT pos='2.11782,0.01332' arc='0'/>
 					<POINT pos='0.10928,0.01332' arc='2'/>
 				</POLYGON>
-				<ELLIPSE a='11.05114,17.72663' b='12.21083,19.09640' style='4' fill='1'/>
-				<POLYGON pos='8.80000,18.20000' style='5' fill='0'>
+				<ELLIPSE a='11.05114,17.72663' b='12.21083,19.09640' style='7' fill='1'/>
+				<POLYGON pos='8.80000,18.20000' style='8' fill='0'>
 					<POINT pos='2.18111,0.17650' arc='0'/>
 					<POINT pos='0.17257,0.17650' arc='2'/>
 				</POLYGON>
-				<ELLIPSE a='11.00971,20.17131' b='12.16940,21.54108' style='4' fill='1'/>
-				<POLYGON pos='8.80000,20.80000' style='5' fill='0'>
+				<ELLIPSE a='11.00971,20.17131' b='12.16940,21.54108' style='7' fill='1'/>
+				<POLYGON pos='8.80000,20.80000' style='8' fill='0'>
 					<POINT pos='2.13968,0.02118' arc='0'/>
 					<POINT pos='0.13114,0.02118' arc='2'/>
 				</POLYGON>
-				<ELLIPSE a='11.00971,22.57455' b='12.16940,23.94432' style='4' fill='1'/>
-				<POLYGON pos='8.80000,23.20000' style='5' fill='0'>
+				<ELLIPSE a='11.00971,22.57455' b='12.16940,23.94432' style='7' fill='1'/>
+				<POLYGON pos='8.80000,23.20000' style='8' fill='0'>
 					<POINT pos='2.13968,0.02442' arc='0'/>
 					<POINT pos='0.13114,0.02442' arc='2'/>
 				</POLYGON>
-				<ELLIPSE a='10.99186,25.04441' b='12.15155,26.41418' style='4' fill='1'/>
-				<POLYGON pos='8.80000,25.60000' style='5' fill='0'>
+				<ELLIPSE a='10.99186,25.04441' b='12.15155,26.41418' style='7' fill='1'/>
+				<POLYGON pos='8.80000,25.60000' style='8' fill='0'>
 					<POINT pos='2.12183,0.09428' arc='0'/>
 					<POINT pos='0.11329,0.09428' arc='2'/>
 				</POLYGON>
-				<ELLIPSE a='11.02373,27.46678' b='12.18342,28.83655' style='4' fill='1'/>
-				<POLYGON pos='8.80000,28.00000' style='5' fill='0'>
+				<ELLIPSE a='11.02373,27.46678' b='12.18342,28.83655' style='7' fill='1'/>
+				<POLYGON pos='8.80000,28.00000' style='8' fill='0'>
 					<POINT pos='2.15370,0.11665' arc='0'/>
 					<POINT pos='0.14516,0.11665' arc='2'/>
 				</POLYGON>
-				<ELLIPSE a='11.02373,29.88915' b='12.18342,31.25892' style='4' fill='1'/>
-				<POLYGON pos='8.80000,30.40000' style='5' fill='0'>
+				<ELLIPSE a='11.02373,29.88915' b='12.18342,31.25892' style='7' fill='1'/>
+				<POLYGON pos='8.80000,30.40000' style='8' fill='0'>
 					<POINT pos='2.15370,0.13902' arc='0'/>
 					<POINT pos='0.14516,0.13902' arc='2'/>
 				</POLYGON>
-				<ELLIPSE a='11.01347,32.27981' b='12.17316,33.64958' style='4' fill='1'/>
-				<POLYGON pos='8.80000,32.80000' style='5' fill='0'>
+				<ELLIPSE a='11.01347,32.27981' b='12.17316,33.64958' style='7' fill='1'/>
+				<POLYGON pos='8.80000,32.80000' style='8' fill='0'>
 					<POINT pos='2.14344,0.12968' arc='0'/>
 					<POINT pos='0.13490,0.12968' arc='2'/>
 				</POLYGON>
-				<ELLIPSE a='10.98160,34.73405' b='12.14129,36.10382' style='4' fill='1'/>
-				<POLYGON pos='8.80000,35.20000' style='5' fill='0'>
+				<ELLIPSE a='10.98160,34.73405' b='12.14129,36.10382' style='7' fill='1'/>
+				<POLYGON pos='8.80000,35.20000' style='8' fill='0'>
 					<POINT pos='2.11157,0.18392' arc='0'/>
 					<POINT pos='0.10303,0.18392' arc='2'/>
 				</POLYGON>
-				<ELLIPSE a='10.98160,37.12455' b='12.14129,38.49432' style='4' fill='1'/>
-				<POLYGON pos='8.80000,37.60000' style='5' fill='0'>
+				<ELLIPSE a='10.98160,37.12455' b='12.14129,38.49432' style='7' fill='1'/>
+				<POLYGON pos='8.80000,37.60000' style='8' fill='0'>
 					<POINT pos='2.11157,0.17442' arc='0'/>
 					<POINT pos='0.10303,0.17442' arc='2'/>
 				</POLYGON>
-				<ELLIPSE a='10.98160,39.54692' b='12.14129,40.91669' style='4' fill='1'/>
-				<POLYGON pos='8.80000,40.00000' style='5' fill='0'>
+				<ELLIPSE a='10.98160,39.54692' b='12.14129,40.91669' style='7' fill='1'/>
+				<POLYGON pos='8.80000,40.00000' style='8' fill='0'>
 					<POINT pos='2.11157,0.19679' arc='0'/>
 					<POINT pos='0.10303,0.19679' arc='2'/>
 				</POLYGON>
-				<ELLIPSE a='11.04535,41.96929' b='12.20504,43.33906' style='4' fill='1'/>
-				<POLYGON pos='8.80000,42.60000' style='5' fill='0'>
+				<ELLIPSE a='11.04535,41.96929' b='12.20504,43.33906' style='7' fill='1'/>
+				<POLYGON pos='8.80000,42.60000' style='8' fill='0'>
 					<POINT pos='2.17532,0.01916' arc='0'/>
 					<POINT pos='0.16678,0.01916' arc='2'/>
 				</POLYGON>
-				<ELLIPSE a='29.01025,40.88843' b='27.85056,39.51866' style='4' fill='1'/>
-				<POLYGON pos='29.00000,40.20000' style='5' fill='0'>
+				<ELLIPSE a='29.01025,40.88843' b='27.85056,39.51866' style='7' fill='1'/>
+				<POLYGON pos='29.00000,40.20000' style='8' fill='0'>
 					<POINT pos='0.08028,0.03856' arc='0'/>
 					<POINT pos='2.08882,0.03856' arc='2'/>
 				</POLYGON>
-				<ELLIPSE a='28.96672,43.31570' b='27.80703,41.94593' style='4' fill='1'/>
-				<POLYGON pos='29.00000,42.60000' style='5' fill='0'>
+				<ELLIPSE a='28.96672,43.31570' b='27.80703,41.94593' style='7' fill='1'/>
+				<POLYGON pos='29.00000,42.60000' style='8' fill='0'>
 					<POINT pos='0.03675,0.06583' arc='0'/>
 					<POINT pos='2.04529,0.06583' arc='2'/>
 				</POLYGON>
-				<ELLIPSE a='28.96672,38.48567' b='27.80703,37.11590' style='4' fill='1'/>
-				<POLYGON pos='29.00000,37.80000' style='5' fill='0'>
+				<ELLIPSE a='28.96672,38.48567' b='27.80703,37.11590' style='7' fill='1'/>
+				<POLYGON pos='29.00000,37.80000' style='8' fill='0'>
 					<POINT pos='0.03675,0.03580' arc='0'/>
 					<POINT pos='2.04529,0.03580' arc='2'/>
 				</POLYGON>
-				<ELLIPSE a='28.96672,36.05840' b='27.80703,34.68863' style='4' fill='1'/>
-				<POLYGON pos='29.00000,35.40000' style='5' fill='0'>
+				<ELLIPSE a='28.96672,36.05840' b='27.80703,34.68863' style='7' fill='1'/>
+				<POLYGON pos='29.00000,35.40000' style='8' fill='0'>
 					<POINT pos='0.03675,0.00853' arc='0'/>
 					<POINT pos='2.04529,0.00853' arc='2'/>
 				</POLYGON>
-				<ELLIPSE a='28.97082,33.61156' b='27.81113,32.24179' style='4' fill='1'/>
-				<POLYGON pos='29.00000,32.80000' style='5' fill='0'>
+				<ELLIPSE a='28.97082,33.61156' b='27.81113,32.24179' style='7' fill='1'/>
+				<POLYGON pos='29.00000,32.80000' style='8' fill='0'>
 					<POINT pos='0.04085,0.16169' arc='0'/>
 					<POINT pos='2.04939,0.16169' arc='2'/>
 				</POLYGON>
-				<ELLIPSE a='29.00270,31.18919' b='27.84301,29.81942' style='4' fill='1'/>
-				<POLYGON pos='29.00000,30.40000' style='5' fill='0'>
+				<ELLIPSE a='29.00270,31.18919' b='27.84301,29.81942' style='7' fill='1'/>
+				<POLYGON pos='29.00000,30.40000' style='8' fill='0'>
 					<POINT pos='0.07273,0.13932' arc='0'/>
 					<POINT pos='2.08127,0.13932' arc='2'/>
 				</POLYGON>
-				<ELLIPSE a='28.97082,28.76683' b='27.81113,27.39706' style='4' fill='1'/>
-				<POLYGON pos='29.00000,28.00000' style='5' fill='0'>
+				<ELLIPSE a='28.97082,28.76683' b='27.81113,27.39706' style='7' fill='1'/>
+				<POLYGON pos='29.00000,28.00000' style='8' fill='0'>
 					<POINT pos='0.04085,0.11696' arc='0'/>
 					<POINT pos='2.04939,0.11696' arc='2'/>
 				</POLYGON>
-				<ELLIPSE a='29.03457,26.34446' b='27.87488,24.97469' style='4' fill='1'/>
-				<POLYGON pos='29.00000,25.60000' style='5' fill='0'>
+				<ELLIPSE a='29.03457,26.34446' b='27.87488,24.97469' style='7' fill='1'/>
+				<POLYGON pos='29.00000,25.60000' style='8' fill='0'>
 					<POINT pos='0.10460,0.09459' arc='0'/>
 					<POINT pos='2.11314,0.09459' arc='2'/>
 				</POLYGON>
-				<ELLIPSE a='28.97082,23.92209' b='27.81113,22.55232' style='4' fill='1'/>
-				<POLYGON pos='29.00000,23.20000' style='5' fill='0'>
+				<ELLIPSE a='28.97082,23.92209' b='27.81113,22.55232' style='7' fill='1'/>
+				<POLYGON pos='29.00000,23.20000' style='8' fill='0'>
 					<POINT pos='0.04085,0.07222' arc='0'/>
 					<POINT pos='2.04939,0.07222' arc='2'/>
 				</POLYGON>
-				<ELLIPSE a='29.03457,21.49972' b='27.87488,20.12995' style='4' fill='1'/>
-				<POLYGON pos='29.00000,20.80000' style='5' fill='0'>
+				<ELLIPSE a='29.03457,21.49972' b='27.87488,20.12995' style='7' fill='1'/>
+				<POLYGON pos='29.00000,20.80000' style='8' fill='0'>
 					<POINT pos='0.10460,0.04985' arc='0'/>
 					<POINT pos='2.11314,0.04985' arc='2'/>
 				</POLYGON>
-				<ELLIPSE a='29.00270,19.09823' b='27.84301,17.72846' style='4' fill='1'/>
-				<POLYGON pos='29.00000,18.40000' style='5' fill='0'>
+				<ELLIPSE a='29.00270,19.09823' b='27.84301,17.72846' style='7' fill='1'/>
+				<POLYGON pos='29.00000,18.40000' style='8' fill='0'>
 					<POINT pos='0.07273,0.04836' arc='0'/>
 					<POINT pos='2.08127,0.04836' arc='2'/>
 				</POLYGON>
-				<ELLIPSE a='28.97082,16.67586' b='27.81113,15.30609' style='4' fill='1'/>
-				<POLYGON pos='29.00000,16.00000' style='5' fill='0'>
+				<ELLIPSE a='28.97082,16.67586' b='27.81113,15.30609' style='7' fill='1'/>
+				<POLYGON pos='29.00000,16.00000' style='8' fill='0'>
 					<POINT pos='0.04085,0.02599' arc='0'/>
 					<POINT pos='2.04939,0.02599' arc='2'/>
 				</POLYGON>
@@ -17260,19 +17280,19 @@ GF+ UKM/MMUZX-6&amp;QQ&quot;M6?)K_ (U#&gt;I+MEOZO     $E%3D2N0F&quot;&quot;
 			<REF_POINT power='0' part='0' pos='49.00000,48.00000'/>
 			<REF_POINT power='1' part='0' pos='49.00000,48.00000'/>
 			<TinyCAD>
-				<ELLIPSE a='43.00000,46.00000' b='45.00000,48.00000' style='5' fill='0'/>
-				<POLYGON pos='37.80000,45.00000' style='4' fill='0'>
+				<ELLIPSE a='43.00000,46.00000' b='45.00000,48.00000' style='8' fill='0'/>
+				<POLYGON pos='37.80000,45.00000' style='7' fill='0'>
 					<POINT pos='0.08264,1.68127' arc='0'/>
 					<POINT pos='5.20000,0.00000' arc='0'/>
 				</POLYGON>
 				<PIN pos='32.00000,47.00000' which='0' elec='4' direction='3' part='0' number='1' show='1' length='15' number_pos='0' centre_name='0'></PIN>
 				<PIN pos='49.00000,47.00000' which='0' elec='4' direction='2' part='0' number='2' show='1' length='15' number_pos='0' centre_name='0'></PIN>
-				<ELLIPSE a='36.00000,46.00000' b='38.00000,48.00000' style='5' fill='0'/>
-				<POLYGON pos='35.00000,47.00000' style='4' fill='0'>
+				<ELLIPSE a='36.00000,46.00000' b='38.00000,48.00000' style='8' fill='0'/>
+				<POLYGON pos='35.00000,47.00000' style='7' fill='0'>
 					<POINT pos='1.00000,0.00000' arc='0'/>
 					<POINT pos='0.00000,0.00000' arc='0'/>
 				</POLYGON>
-				<POLYGON pos='45.00000,47.00000' style='4' fill='0'>
+				<POLYGON pos='45.00000,47.00000' style='7' fill='0'>
 					<POINT pos='0.00000,0.00000' arc='0'/>
 					<POINT pos='1.00000,0.00000' arc='2'/>
 				</POLYGON>
@@ -17288,15 +17308,15 @@ GF+ UKM/MMUZX-6&amp;QQ&quot;M6?)K_ (U#&gt;I+MEOZO     $E%3D2N0F&quot;&quot;
 			<TinyCAD>
 				<PIN pos='82.00000,43.00000' which='5' elec='4' direction='1' part='0' number='1' show='0' length='30' number_pos='0' centre_name='0'></PIN>
 				<PIN pos='82.00000,51.00000' which='5' elec='4' direction='0' part='0' number='2' show='0' length='30' number_pos='0' centre_name='0'></PIN>
-				<POLYGON pos='82.00000,43.00000' style='4' fill='0'>
+				<POLYGON pos='82.00000,43.00000' style='7' fill='0'>
 					<POINT pos='0.00000,1.60000' arc='0'/>
 					<POINT pos='0.00000,0.00000' arc='0'/>
 				</POLYGON>
-				<POLYGON pos='82.00000,50.40000' style='4' fill='0'>
+				<POLYGON pos='82.00000,50.40000' style='7' fill='0'>
 					<POINT pos='0.00000,0.00000' arc='0'/>
 					<POINT pos='0.00000,1.60000' arc='0'/>
 				</POLYGON>
-				<RECTANGLE a='80.40000,44.60000' b='83.40000,50.40000' style='4' fill='0'/>
+				<RECTANGLE a='80.40000,44.60000' b='83.40000,50.40000' style='7' fill='0'/>
 			</TinyCAD>
 		</SYMBOLDEF>
 		<SYMBOLDEF id='4'>
@@ -17391,19 +17411,19 @@ GF+ UKM/MMUZX-6&amp;QQ&quot;M6?)K_ (U#&gt;I+MEOZO     $E%3D2N0F&quot;&quot;
 			<REF_POINT power='0' part='0' pos='49.00000,48.00000'/>
 			<REF_POINT power='1' part='0' pos='49.00000,48.00000'/>
 			<TinyCAD>
-				<ELLIPSE a='43.00000,46.00000' b='45.00000,48.00000' style='5' fill='0'/>
-				<POLYGON pos='37.80000,45.00000' style='4' fill='0'>
+				<ELLIPSE a='43.00000,46.00000' b='45.00000,48.00000' style='8' fill='0'/>
+				<POLYGON pos='37.80000,45.00000' style='7' fill='0'>
 					<POINT pos='0.08264,1.68127' arc='0'/>
 					<POINT pos='5.20000,0.00000' arc='0'/>
 				</POLYGON>
 				<PIN pos='32.00000,47.00000' which='0' elec='4' direction='3' part='0' number='1' show='1' length='15' number_pos='0' centre_name='0'></PIN>
 				<PIN pos='49.00000,47.00000' which='0' elec='4' direction='2' part='0' number='2' show='1' length='15' number_pos='0' centre_name='0'></PIN>
-				<ELLIPSE a='36.00000,46.00000' b='38.00000,48.00000' style='5' fill='0'/>
-				<POLYGON pos='35.00000,47.00000' style='4' fill='0'>
+				<ELLIPSE a='36.00000,46.00000' b='38.00000,48.00000' style='8' fill='0'/>
+				<POLYGON pos='35.00000,47.00000' style='7' fill='0'>
 					<POINT pos='1.00000,0.00000' arc='0'/>
 					<POINT pos='0.00000,0.00000' arc='0'/>
 				</POLYGON>
-				<POLYGON pos='45.00000,47.00000' style='4' fill='0'>
+				<POLYGON pos='45.00000,47.00000' style='7' fill='0'>
 					<POINT pos='0.00000,0.00000' arc='0'/>
 					<POINT pos='1.00000,0.00000' arc='2'/>
 				</POLYGON>
@@ -17419,15 +17439,15 @@ GF+ UKM/MMUZX-6&amp;QQ&quot;M6?)K_ (U#&gt;I+MEOZO     $E%3D2N0F&quot;&quot;
 			<TinyCAD>
 				<PIN pos='82.00000,43.00000' which='5' elec='4' direction='1' part='0' number='1' show='0' length='30' number_pos='0' centre_name='0'></PIN>
 				<PIN pos='82.00000,51.00000' which='5' elec='4' direction='0' part='0' number='2' show='0' length='30' number_pos='0' centre_name='0'></PIN>
-				<POLYGON pos='82.00000,43.00000' style='4' fill='0'>
+				<POLYGON pos='82.00000,43.00000' style='7' fill='0'>
 					<POINT pos='0.00000,1.60000' arc='0'/>
 					<POINT pos='0.00000,0.00000' arc='0'/>
 				</POLYGON>
-				<POLYGON pos='82.00000,50.40000' style='4' fill='0'>
+				<POLYGON pos='82.00000,50.40000' style='7' fill='0'>
 					<POINT pos='0.00000,0.00000' arc='0'/>
 					<POINT pos='0.00000,1.60000' arc='0'/>
 				</POLYGON>
-				<RECTANGLE a='80.40000,44.60000' b='83.40000,50.40000' style='4' fill='0'/>
+				<RECTANGLE a='80.40000,44.60000' b='83.40000,50.40000' style='7' fill='0'/>
 			</TinyCAD>
 		</SYMBOLDEF>
 		<SYMBOLDEF id='6'>
@@ -17522,19 +17542,19 @@ GF+ UKM/MMUZX-6&amp;QQ&quot;M6?)K_ (U#&gt;I+MEOZO     $E%3D2N0F&quot;&quot;
 			<REF_POINT power='0' part='0' pos='49.00000,48.00000'/>
 			<REF_POINT power='1' part='0' pos='49.00000,48.00000'/>
 			<TinyCAD>
-				<ELLIPSE a='43.00000,46.00000' b='45.00000,48.00000' style='5' fill='0'/>
-				<POLYGON pos='37.80000,45.00000' style='4' fill='0'>
+				<ELLIPSE a='43.00000,46.00000' b='45.00000,48.00000' style='8' fill='0'/>
+				<POLYGON pos='37.80000,45.00000' style='7' fill='0'>
 					<POINT pos='0.08264,1.68127' arc='0'/>
 					<POINT pos='5.20000,0.00000' arc='0'/>
 				</POLYGON>
 				<PIN pos='32.00000,47.00000' which='0' elec='4' direction='3' part='0' number='1' show='1' length='15' number_pos='0' centre_name='0'></PIN>
 				<PIN pos='49.00000,47.00000' which='0' elec='4' direction='2' part='0' number='2' show='1' length='15' number_pos='0' centre_name='0'></PIN>
-				<ELLIPSE a='36.00000,46.00000' b='38.00000,48.00000' style='5' fill='0'/>
-				<POLYGON pos='35.00000,47.00000' style='4' fill='0'>
+				<ELLIPSE a='36.00000,46.00000' b='38.00000,48.00000' style='8' fill='0'/>
+				<POLYGON pos='35.00000,47.00000' style='7' fill='0'>
 					<POINT pos='1.00000,0.00000' arc='0'/>
 					<POINT pos='0.00000,0.00000' arc='0'/>
 				</POLYGON>
-				<POLYGON pos='45.00000,47.00000' style='4' fill='0'>
+				<POLYGON pos='45.00000,47.00000' style='7' fill='0'>
 					<POINT pos='0.00000,0.00000' arc='0'/>
 					<POINT pos='1.00000,0.00000' arc='2'/>
 				</POLYGON>
@@ -17550,15 +17570,15 @@ GF+ UKM/MMUZX-6&amp;QQ&quot;M6?)K_ (U#&gt;I+MEOZO     $E%3D2N0F&quot;&quot;
 			<TinyCAD>
 				<PIN pos='82.00000,43.00000' which='5' elec='4' direction='1' part='0' number='1' show='0' length='30' number_pos='0' centre_name='0'></PIN>
 				<PIN pos='82.00000,51.00000' which='5' elec='4' direction='0' part='0' number='2' show='0' length='30' number_pos='0' centre_name='0'></PIN>
-				<POLYGON pos='82.00000,43.00000' style='4' fill='0'>
+				<POLYGON pos='82.00000,43.00000' style='7' fill='0'>
 					<POINT pos='0.00000,1.60000' arc='0'/>
 					<POINT pos='0.00000,0.00000' arc='0'/>
 				</POLYGON>
-				<POLYGON pos='82.00000,50.40000' style='4' fill='0'>
+				<POLYGON pos='82.00000,50.40000' style='7' fill='0'>
 					<POINT pos='0.00000,0.00000' arc='0'/>
 					<POINT pos='0.00000,1.60000' arc='0'/>
 				</POLYGON>
-				<RECTANGLE a='80.40000,44.60000' b='83.40000,50.40000' style='4' fill='0'/>
+				<RECTANGLE a='80.40000,44.60000' b='83.40000,50.40000' style='7' fill='0'/>
 			</TinyCAD>
 		</SYMBOLDEF>
 		<SYMBOLDEF id='8'>
@@ -17588,6 +17608,7 @@ GF+ UKM/MMUZX-6&amp;QQ&quot;M6?)K_ (U#&gt;I+MEOZO     $E%3D2N0F&quot;&quot;
 				<POS>1.00000,1.00000</POS>
 			</FIELD>
 			<REF_POINT power='0' part='0' pos='64.26000,84.08000'/>
+			<REF_POINT power='1' part='0' pos='64.26000,84.08000'/>
 			<TinyCAD>
 				<METAFILE a='10.66000,10.68000' b='64.26000,84.08000' id='2'/>
 			</TinyCAD>
@@ -17599,55 +17620,55 @@ GF+ UKM/MMUZX-6&amp;QQ&quot;M6?)K_ (U#&gt;I+MEOZO     $E%3D2N0F&quot;&quot;
 			<PPP>1</PPP>
 			<REF_POINT power='0' part='0' pos='33.00000,44.00000'/>
 			<TinyCAD>
-				<POLYGON pos='24.00000,39.00000' style='4' fill='0'>
+				<POLYGON pos='24.00000,39.00000' style='7' fill='0'>
 					<POINT pos='0.00000,0.00000' arc='0'/>
 					<POINT pos='9.00000,0.00000' arc='0'/>
 				</POLYGON>
-				<POLYGON pos='31.00000,39.00000' style='4' fill='0'>
+				<POLYGON pos='31.00000,39.00000' style='7' fill='0'>
 					<POINT pos='0.00000,0.00000' arc='0'/>
 					<POINT pos='0.00000,4.00000' arc='0'/>
 				</POLYGON>
-				<POLYGON pos='26.00000,39.00000' style='4' fill='0'>
+				<POLYGON pos='26.00000,39.00000' style='7' fill='0'>
 					<POINT pos='0.00000,0.00000' arc='0'/>
 					<POINT pos='0.00000,4.00000' arc='0'/>
 				</POLYGON>
-				<POLYGON pos='29.00000,39.00000' style='4' fill='0'>
+				<POLYGON pos='29.00000,39.00000' style='7' fill='0'>
 					<POINT pos='0.00000,0.00000' arc='0'/>
 					<POINT pos='0.00000,5.00000' arc='0'/>
 				</POLYGON>
-				<POLYGON pos='28.00000,44.00000' style='4' fill='0'>
+				<POLYGON pos='28.00000,44.00000' style='7' fill='0'>
 					<POINT pos='1.00000,0.00000' arc='0'/>
 					<POINT pos='0.00000,0.00000' arc='0'/>
 				</POLYGON>
-				<POLYGON pos='28.00000,39.00000' style='4' fill='0'>
+				<POLYGON pos='28.00000,39.00000' style='7' fill='0'>
 					<POINT pos='0.00000,5.00000' arc='0'/>
 					<POINT pos='0.00000,0.00000' arc='0'/>
 				</POLYGON>
-				<POLYGON pos='28.00000,27.00000' style='4' fill='0'>
+				<POLYGON pos='28.00000,27.00000' style='7' fill='0'>
 					<POINT pos='0.00000,0.00000' arc='0'/>
 					<POINT pos='1.00000,0.00000' arc='0'/>
 				</POLYGON>
-				<POLYGON pos='27.00000,18.00000' style='4' fill='0'>
+				<POLYGON pos='27.00000,18.00000' style='7' fill='0'>
 					<POINT pos='0.00000,9.00000' arc='0'/>
 					<POINT pos='0.00000,0.00000' arc='0'/>
 				</POLYGON>
-				<POLYGON pos='30.00000,16.00000' style='4' fill='0'>
+				<POLYGON pos='30.00000,16.00000' style='7' fill='0'>
 					<POINT pos='0.00000,11.00000' arc='0'/>
 					<POINT pos='0.00000,0.00000' arc='0'/>
 				</POLYGON>
-				<POLYGON pos='27.00000,13.00000' style='4' fill='0'>
+				<POLYGON pos='27.00000,13.00000' style='7' fill='0'>
 					<POINT pos='0.00000,5.00000' arc='0'/>
 					<POINT pos='0.00000,0.00000' arc='0'/>
 				</POLYGON>
-				<POLYGON pos='30.00000,13.00000' style='4' fill='0'>
+				<POLYGON pos='30.00000,13.00000' style='7' fill='0'>
 					<POINT pos='0.00000,3.00000' arc='0'/>
 					<POINT pos='0.00000,0.00000' arc='0'/>
 				</POLYGON>
-				<POLYGON pos='24.00000,27.00000' style='4' fill='0'>
+				<POLYGON pos='24.00000,27.00000' style='7' fill='0'>
 					<POINT pos='0.00000,12.00000' arc='0'/>
 					<POINT pos='4.00000,0.00000' arc='2'/>
 				</POLYGON>
-				<POLYGON pos='29.00000,27.00000' style='4' fill='0'>
+				<POLYGON pos='29.00000,27.00000' style='7' fill='0'>
 					<POINT pos='4.00000,12.00000' arc='0'/>
 					<POINT pos='0.00000,0.00000' arc='2'/>
 				</POLYGON>
@@ -17663,35 +17684,35 @@ GF+ UKM/MMUZX-6&amp;QQ&quot;M6?)K_ (U#&gt;I+MEOZO     $E%3D2N0F&quot;&quot;
 				<PIN pos='22.00000,26.00000' which='0' elec='0' direction='0' part='0' number='3' show='1' length='30' number_pos='0' centre_name='0'></PIN>
 				<PIN pos='13.00000,17.00000' which='0' elec='0' direction='3' part='0' number='1' show='1' length='30' number_pos='0' centre_name='0'></PIN>
 				<PIN pos='30.00000,17.00000' which='0' elec='0' direction='2' part='0' number='2' show='1' length='30' number_pos='0' centre_name='0'></PIN>
-				<POLYGON pos='17.00000,17.00000' style='4' fill='0'>
+				<POLYGON pos='17.00000,17.00000' style='7' fill='0'>
 					<POINT pos='2.00000,0.00000' arc='0'/>
 					<POINT pos='0.00000,0.00000' arc='0'/>
 				</POLYGON>
-				<POLYGON pos='19.00000,16.00000' style='5' fill='0'>
+				<POLYGON pos='19.00000,16.00000' style='8' fill='0'>
 					<POINT pos='0.00000,0.00000' arc='0'/>
 					<POINT pos='0.00000,2.00000' arc='0'/>
 				</POLYGON>
-				<POLYGON pos='21.00000,20.00000' style='4' fill='0'>
+				<POLYGON pos='21.00000,20.00000' style='7' fill='0'>
 					<POINT pos='0.00000,1.00000' arc='0'/>
 					<POINT pos='0.00000,0.00000' arc='0'/>
 				</POLYGON>
-				<POLYGON pos='21.00000,20.00000' style='4' fill='0'>
+				<POLYGON pos='21.00000,20.00000' style='7' fill='0'>
 					<POINT pos='0.00000,0.00000' arc='0'/>
 					<POINT pos='1.00000,0.00000' arc='0'/>
 				</POLYGON>
-				<POLYGON pos='22.00000,20.00000' style='4' fill='0'>
+				<POLYGON pos='22.00000,20.00000' style='7' fill='0'>
 					<POINT pos='0.00000,0.00000' arc='0'/>
 					<POINT pos='0.00000,1.00000' arc='0'/>
 				</POLYGON>
-				<POLYGON pos='24.00000,15.00000' style='5' fill='0'>
+				<POLYGON pos='24.00000,15.00000' style='8' fill='0'>
 					<POINT pos='0.00000,0.00000' arc='0'/>
 					<POINT pos='0.00000,4.00000' arc='0'/>
 				</POLYGON>
-				<POLYGON pos='24.00000,17.00000' style='4' fill='0'>
+				<POLYGON pos='24.00000,17.00000' style='7' fill='0'>
 					<POINT pos='0.00000,0.00000' arc='0'/>
 					<POINT pos='3.00000,0.00000' arc='0'/>
 				</POLYGON>
-				<ELLIPSE a='17.00000,12.00000' b='27.00000,22.00000' style='4' fill='0'/>
+				<ELLIPSE a='17.00000,12.00000' b='27.00000,22.00000' style='7' fill='0'/>
 			</TinyCAD>
 		</SYMBOLDEF>
 		<SYMBOLDEF id='11'>
@@ -17704,88 +17725,88 @@ GF+ UKM/MMUZX-6&amp;QQ&quot;M6?)K_ (U#&gt;I+MEOZO     $E%3D2N0F&quot;&quot;
 				<DEFAULT></DEFAULT>
 				<FT>000001</FT>
 				<VALUE></VALUE>
-				<POS>1.00000,1.#QNAN</POS>
+				<POS>1.00000,1.00000</POS>
 			</FIELD>
 			<FIELD>
 				<NAME>I_Trip</NAME>
 				<DEFAULT>..</DEFAULT>
 				<FT>000001</FT>
 				<VALUE></VALUE>
-				<POS>1.00000,1.#QNAN</POS>
+				<POS>1.00000,1.00000</POS>
 			</FIELD>
 			<FIELD>
 				<NAME>I_Hold</NAME>
 				<DEFAULT>..</DEFAULT>
 				<FT>000001</FT>
 				<VALUE></VALUE>
-				<POS>1.00000,1.#QNAN</POS>
+				<POS>1.00000,1.00000</POS>
 			</FIELD>
 			<FIELD>
 				<NAME>T_Trip</NAME>
 				<DEFAULT>..</DEFAULT>
 				<FT>000001</FT>
 				<VALUE></VALUE>
-				<POS>1.00000,1.#QNAN</POS>
+				<POS>1.00000,1.00000</POS>
 			</FIELD>
 			<FIELD>
 				<NAME>R_Off</NAME>
 				<DEFAULT>..</DEFAULT>
 				<FT>000001</FT>
 				<VALUE></VALUE>
-				<POS>1.00000,1.#QNAN</POS>
+				<POS>1.00000,1.00000</POS>
 			</FIELD>
 			<FIELD>
 				<NAME>R_On</NAME>
 				<DEFAULT>..</DEFAULT>
 				<FT>000001</FT>
 				<VALUE></VALUE>
-				<POS>1.00000,1.#QNAN</POS>
+				<POS>1.00000,1.00000</POS>
 			</FIELD>
 			<FIELD>
 				<NAME>Temp_Nom</NAME>
 				<DEFAULT>..</DEFAULT>
 				<FT>000001</FT>
 				<VALUE></VALUE>
-				<POS>1.00000,1.#QNAN</POS>
+				<POS>1.00000,1.00000</POS>
 			</FIELD>
 			<FIELD>
 				<NAME>Manufacturer Part</NAME>
 				<DEFAULT>..</DEFAULT>
 				<FT>000001</FT>
 				<VALUE></VALUE>
-				<POS>1.00000,1.#QNAN</POS>
+				<POS>1.00000,1.00000</POS>
 			</FIELD>
 			<FIELD>
 				<NAME>Digi-Key Part</NAME>
 				<DEFAULT>..</DEFAULT>
 				<FT>000001</FT>
 				<VALUE></VALUE>
-				<POS>1.00000,1.#QNAN</POS>
+				<POS>1.00000,1.00000</POS>
 			</FIELD>
 			<FIELD>
 				<NAME>Newark Part</NAME>
 				<DEFAULT>..</DEFAULT>
 				<FT>000001</FT>
 				<VALUE></VALUE>
-				<POS>1.00000,1.#QNAN</POS>
+				<POS>1.00000,1.00000</POS>
 			</FIELD>
 			<FIELD>
 				<NAME>Mouser Part</NAME>
 				<DEFAULT>..</DEFAULT>
 				<FT>000001</FT>
 				<VALUE></VALUE>
-				<POS>1.00000,1.#QNAN</POS>
+				<POS>1.00000,1.00000</POS>
 			</FIELD>
 			<FIELD>
 				<NAME>Cost</NAME>
 				<DEFAULT>..</DEFAULT>
 				<FT>000001</FT>
 				<VALUE></VALUE>
-				<POS>1.00000,1.#QNAN</POS>
+				<POS>1.00000,1.00000</POS>
 			</FIELD>
 			<REF_POINT power='0' part='0' pos='91.00000,53.00000'/>
 			<TinyCAD>
-				<POLYGON pos='84.00000,44.00000' style='4' fill='0'>
+				<POLYGON pos='84.00000,44.00000' style='7' fill='0'>
 					<POINT pos='0.00000,0.00000' arc='0'/>
 					<POINT pos='6.00000,3.00000' arc='0'/>
 					<POINT pos='7.00000,1.00000' arc='0'/>
@@ -17793,39 +17814,39 @@ GF+ UKM/MMUZX-6&amp;QQ&quot;M6?)K_ (U#&gt;I+MEOZO     $E%3D2N0F&quot;&quot;
 				</POLYGON>
 				<PIN pos='87.00000,39.00000' which='0' elec='4' direction='1' part='0' number='2' show='0' length='15' number_pos='0' centre_name='0'></PIN>
 				<PIN pos='87.00000,53.00000' which='0' elec='4' direction='0' part='0' number='1' show='0' length='15' number_pos='0' centre_name='0'></PIN>
-				<POLYGON pos='86.00000,42.60000' style='4' fill='0'>
+				<POLYGON pos='86.00000,42.60000' style='7' fill='0'>
 					<POINT pos='0.00000,1.00000' arc='0'/>
 					<POINT pos='1.00000,0.00000' arc='0'/>
 				</POLYGON>
-				<POLYGON pos='86.00000,43.60000' style='4' fill='0'>
+				<POLYGON pos='86.00000,43.60000' style='7' fill='0'>
 					<POINT pos='2.00000,1.00000' arc='0'/>
 					<POINT pos='0.00000,0.00000' arc='0'/>
 				</POLYGON>
-				<POLYGON pos='86.00000,44.60000' style='4' fill='0'>
+				<POLYGON pos='86.00000,44.60000' style='7' fill='0'>
 					<POINT pos='0.00000,1.00000' arc='0'/>
 					<POINT pos='2.00000,0.00000' arc='0'/>
 				</POLYGON>
-				<POLYGON pos='86.00000,45.60000' style='4' fill='0'>
+				<POLYGON pos='86.00000,45.60000' style='7' fill='0'>
 					<POINT pos='2.00000,1.00000' arc='0'/>
 					<POINT pos='0.00000,0.00000' arc='0'/>
 				</POLYGON>
-				<POLYGON pos='86.00000,46.60000' style='4' fill='0'>
+				<POLYGON pos='86.00000,46.60000' style='7' fill='0'>
 					<POINT pos='0.00000,1.00000' arc='0'/>
 					<POINT pos='2.00000,0.00000' arc='0'/>
 				</POLYGON>
-				<POLYGON pos='86.00000,47.60000' style='4' fill='0'>
+				<POLYGON pos='86.00000,47.60000' style='7' fill='0'>
 					<POINT pos='2.00000,1.00000' arc='0'/>
 					<POINT pos='0.00000,0.00000' arc='0'/>
 				</POLYGON>
-				<POLYGON pos='87.00000,48.60000' style='4' fill='0'>
+				<POLYGON pos='87.00000,48.60000' style='7' fill='0'>
 					<POINT pos='0.00000,1.00000' arc='0'/>
 					<POINT pos='1.00000,0.00000' arc='0'/>
 				</POLYGON>
-				<POLYGON pos='87.00000,49.60000' style='4' fill='0'>
+				<POLYGON pos='87.00000,49.60000' style='7' fill='0'>
 					<POINT pos='0.00000,0.00000' arc='0'/>
 					<POINT pos='0.00000,0.40000' arc='0'/>
 				</POLYGON>
-				<POLYGON pos='87.00000,42.00000' style='4' fill='0'>
+				<POLYGON pos='87.00000,42.00000' style='7' fill='0'>
 					<POINT pos='0.00000,0.60000' arc='0'/>
 					<POINT pos='0.00000,0.00000' arc='0'/>
 				</POLYGON>
@@ -17841,35 +17862,35 @@ GF+ UKM/MMUZX-6&amp;QQ&quot;M6?)K_ (U#&gt;I+MEOZO     $E%3D2N0F&quot;&quot;
 				<PIN pos='22.00000,26.00000' which='0' elec='0' direction='0' part='0' number='3' show='1' length='30' number_pos='0' centre_name='0'></PIN>
 				<PIN pos='13.00000,17.00000' which='0' elec='0' direction='3' part='0' number='1' show='1' length='30' number_pos='0' centre_name='0'></PIN>
 				<PIN pos='30.00000,17.00000' which='0' elec='0' direction='2' part='0' number='2' show='1' length='30' number_pos='0' centre_name='0'></PIN>
-				<POLYGON pos='17.00000,17.00000' style='4' fill='0'>
+				<POLYGON pos='17.00000,17.00000' style='7' fill='0'>
 					<POINT pos='2.00000,0.00000' arc='0'/>
 					<POINT pos='0.00000,0.00000' arc='0'/>
 				</POLYGON>
-				<POLYGON pos='19.00000,16.00000' style='5' fill='0'>
+				<POLYGON pos='19.00000,16.00000' style='8' fill='0'>
 					<POINT pos='0.00000,0.00000' arc='0'/>
 					<POINT pos='0.00000,2.00000' arc='0'/>
 				</POLYGON>
-				<POLYGON pos='21.00000,20.00000' style='4' fill='0'>
+				<POLYGON pos='21.00000,20.00000' style='7' fill='0'>
 					<POINT pos='0.00000,1.00000' arc='0'/>
 					<POINT pos='0.00000,0.00000' arc='0'/>
 				</POLYGON>
-				<POLYGON pos='21.00000,20.00000' style='4' fill='0'>
+				<POLYGON pos='21.00000,20.00000' style='7' fill='0'>
 					<POINT pos='0.00000,0.00000' arc='0'/>
 					<POINT pos='1.00000,0.00000' arc='0'/>
 				</POLYGON>
-				<POLYGON pos='22.00000,20.00000' style='4' fill='0'>
+				<POLYGON pos='22.00000,20.00000' style='7' fill='0'>
 					<POINT pos='0.00000,0.00000' arc='0'/>
 					<POINT pos='0.00000,1.00000' arc='0'/>
 				</POLYGON>
-				<POLYGON pos='24.00000,15.00000' style='5' fill='0'>
+				<POLYGON pos='24.00000,15.00000' style='8' fill='0'>
 					<POINT pos='0.00000,0.00000' arc='0'/>
 					<POINT pos='0.00000,4.00000' arc='0'/>
 				</POLYGON>
-				<POLYGON pos='24.00000,17.00000' style='4' fill='0'>
+				<POLYGON pos='24.00000,17.00000' style='7' fill='0'>
 					<POINT pos='0.00000,0.00000' arc='0'/>
 					<POINT pos='3.00000,0.00000' arc='0'/>
 				</POLYGON>
-				<ELLIPSE a='17.00000,12.00000' b='27.00000,22.00000' style='4' fill='0'/>
+				<ELLIPSE a='17.00000,12.00000' b='27.00000,22.00000' style='7' fill='0'/>
 			</TinyCAD>
 		</SYMBOLDEF>
 		<SYMBOLDEF id='13'>
@@ -17882,21 +17903,21 @@ GF+ UKM/MMUZX-6&amp;QQ&quot;M6?)K_ (U#&gt;I+MEOZO     $E%3D2N0F&quot;&quot;
 				<DEFAULT>5</DEFAULT>
 				<FT>000002</FT>
 				<VALUE></VALUE>
-				<POS>1.#QNAN,1.#QNAN</POS>
+				<POS>1.00000,1.00000</POS>
 			</FIELD>
 			<FIELD>
 				<NAME>$$SPICE_EPILOG_PRIORITY</NAME>
 				<DEFAULT>5</DEFAULT>
 				<FT>000002</FT>
 				<VALUE></VALUE>
-				<POS>1.#QNAN,1.#QNAN</POS>
+				<POS>1.00000,1.00000</POS>
 			</FIELD>
 			<FIELD>
 				<NAME>Package</NAME>
 				<DEFAULT>package name for PCB layout</DEFAULT>
 				<FT>000001</FT>
 				<VALUE></VALUE>
-				<POS>1.#QNAN,1.#QNAN</POS>
+				<POS>1.00000,1.00000</POS>
 			</FIELD>
 			<REF_POINT power='0' part='0' pos='89.80000,45.80000'/>
 			<TinyCAD>
@@ -17914,7 +17935,7 @@ GF+ UKM/MMUZX-6&amp;QQ&quot;M6?)K_ (U#&gt;I+MEOZO     $E%3D2N0F&quot;&quot;
 			<COLOR_POWER>000000</COLOR_POWER>
 			<COLOR_PIN>4040C0</COLOR_PIN>
 			<COLOR_HIDDEN_PIN>208020</COLOR_HIDDEN_PIN>
-			<COLOR_BACKGROUND>FFFFFF</COLOR_BACKGROUND>
+			<COLOR_BACKGROUND>C0C0C0</COLOR_BACKGROUND>
 		</OPTIONS>
 		<SYMBOL id='1' pos='108.00000,74.20000' part='0' rotate='0' can_scale='0' show_power='0' scale_x='1.00000' scale_y='1.00000'>
 			<FIELD type='0' description='Ref' value='Particle Photon' show='1' pos='-23.20000,-38.48967'/>
@@ -17945,14 +17966,14 @@ GF+ UKM/MMUZX-6&amp;QQ&quot;M6?)K_ (U#&gt;I+MEOZO     $E%3D2N0F&quot;&quot;
 			<FIELD type='0' description='Name' value='10K 1/4 watt' show='1' pos='-9.00000,-3.00000'/>
 		</SYMBOL>
 		<POWER pos='24.68428,54.80815' which='4' direction='1'></POWER>
-		<WIRE a='24.68428,54.80815' b='25.76160,54.80815'/>
-		<WIRE a='25.76160,54.80815' b='25.70773,54.80815'/>
+		<WIRE style='5' a='24.68428,54.80815' b='25.76160,54.80815'/>
+		<WIRE style='5' a='25.76160,54.80815' b='25.70773,54.80815'/>
 		<JUNCTION pos='25.70773,54.80815'/>
 		<JUNCTION pos='39.40000,51.60088'/>
 		<WIRE a='33.70773,54.80815' b='39.40000,54.80815'/>
 		<WIRE a='81.15760,57.82248' b='39.40000,57.82248'/>
 		<WIRE a='39.40000,48.54511' b='39.40000,57.82248'/>
-		<RULER pos='28.40000,50.80600' horizontal='0'/>
+		<RULER pos='28.40000,6.69998' horizontal='0'/>
 		<SYMBOL id='4' pos='39.41163,68.27648' part='0' rotate='0' can_scale='0' show_power='1' scale_x='1.00000' scale_y='1.00000'>
 			<FIELD type='1' description='Ref' value='Switch3' show='1' pos='-11.70897,-4.00000'/>
 			<FIELD type='0' description='Name' value='SWITCH_SPST' show='0' pos='-21.60000,-8.80000'/>
@@ -17975,11 +17996,11 @@ GF+ UKM/MMUZX-6&amp;QQ&quot;M6?)K_ (U#&gt;I+MEOZO     $E%3D2N0F&quot;&quot;
 			<FIELD type='0' description='Name' value='10K 1/4 watt' show='1' pos='-9.00000,-3.00000'/>
 		</SYMBOL>
 		<POWER pos='24.69591,73.53952' which='4' direction='1'></POWER>
-		<WIRE a='24.69591,73.53952' b='25.77323,73.53952'/>
-		<WIRE a='25.77323,73.53952' b='25.71936,73.53952'/>
+		<WIRE style='5' a='24.69591,73.53952' b='25.77323,73.53952'/>
+		<WIRE style='5' a='25.77323,73.53952' b='25.71936,73.53952'/>
 		<JUNCTION pos='25.71936,73.53952'/>
 		<WIRE a='33.71936,73.53952' b='39.41163,73.53952'/>
-		<RULER pos='28.41163,50.80600' horizontal='0'/>
+		<RULER pos='28.41163,6.69998' horizontal='0'/>
 		<WIRE a='22.40000,48.54511' b='22.41163,48.54511'/>
 		<WIRE a='39.41163,73.53952' b='39.41163,60.23364'/>
 		<WIRE a='39.41163,60.23364' b='81.10401,60.23364'/>
@@ -18005,8 +18026,8 @@ GF+ UKM/MMUZX-6&amp;QQ&quot;M6?)K_ (U#&gt;I+MEOZO     $E%3D2N0F&quot;&quot;
 			<FIELD type='0' description='Name' value='10K 1/4 watt' show='1' pos='-9.00000,-3.00000'/>
 		</SYMBOL>
 		<POWER pos='24.75123,92.80339' which='4' direction='1'></POWER>
-		<WIRE a='24.75123,92.80339' b='25.82855,92.80339'/>
-		<WIRE a='25.82855,92.80339' b='25.77468,92.80339'/>
+		<WIRE style='5' a='24.75123,92.80339' b='25.82855,92.80339'/>
+		<WIRE style='5' a='25.82855,92.80339' b='25.77468,92.80339'/>
 		<JUNCTION pos='25.77468,92.80339'/>
 		<WIRE a='33.77468,92.80339' b='39.46695,92.80339'/>
 		<SYMBOL id='6' pos='39.43964,106.56629' part='0' rotate='0' can_scale='0' show_power='1' scale_x='1.00000' scale_y='1.00000'>
@@ -18031,8 +18052,8 @@ GF+ UKM/MMUZX-6&amp;QQ&quot;M6?)K_ (U#&gt;I+MEOZO     $E%3D2N0F&quot;&quot;
 			<FIELD type='0' description='Name' value='10K 1/4 watt' show='1' pos='-9.00000,-3.00000'/>
 		</SYMBOL>
 		<POWER pos='24.72392,111.82933' which='4' direction='1'></POWER>
-		<WIRE a='24.72392,111.82933' b='25.80124,111.82933'/>
-		<WIRE a='25.80124,111.82933' b='25.74737,111.82933'/>
+		<WIRE style='5' a='24.72392,111.82933' b='25.80124,111.82933'/>
+		<WIRE style='5' a='25.80124,111.82933' b='25.74737,111.82933'/>
 		<JUNCTION pos='25.74737,111.82933'/>
 		<WIRE a='33.74737,111.82933' b='39.43964,111.82933'/>
 		<WIRE a='22.46695,67.27648' b='22.46695,86.54035'/>
@@ -18062,12 +18083,12 @@ GF+ UKM/MMUZX-6&amp;QQ&quot;M6?)K_ (U#&gt;I+MEOZO     $E%3D2N0F&quot;&quot;
 			<FIELD type='1' description='Package' value='package name for PCB layout' show='0' pos='1.00000,-66.60000'/>
 		</SYMBOL>
 		<POWER pos='135.10077,77.28010' which='4' direction='2'></POWER>
-		<WIRE a='140.91289,77.26696' b='135.03074,77.26696'/>
-		<WIRE a='135.03074,77.26696' b='135.10077,77.28010'/>
-		<WIRE a='140.96827,90.05819' b='133.66880,90.05819'/>
-		<WIRE a='133.66880,90.05819' b='133.66880,127.51757'/>
-		<WIRE a='10.04559,127.51757' b='10.04559,43.26818'/>
-		<WIRE a='10.04559,43.26818' b='81.12795,43.26818'/>
+		<WIRE style='5' a='140.91289,77.26696' b='135.03074,77.26696'/>
+		<WIRE style='5' a='135.03074,77.26696' b='135.10077,77.28010'/>
+		<WIRE style='6' a='140.96827,90.05819' b='133.66880,90.05819'/>
+		<WIRE style='6' a='133.66880,90.05819' b='133.66880,127.51757'/>
+		<WIRE style='6' a='10.04559,127.51757' b='10.04559,43.26818'/>
+		<WIRE style='6' a='10.04559,43.26818' b='81.12795,43.26818'/>
 		<TEXT pos='76.22000,42.96000' direction='3' font='3' color='000000'>5V</TEXT>
 		<TEXT pos='135.60000,112.84000' direction='3' font='3' color='000000'>5V</TEXT>
 		<WIRE a='140.96252,79.75829' b='121.95284,79.75829'/>
@@ -18132,60 +18153,59 @@ GF+ UKM/MMUZX-6&amp;QQ&quot;M6?)K_ (U#&gt;I+MEOZO     $E%3D2N0F&quot;&quot;
 			<FIELD type='0' description='Ref' value='SO?' show='1' pos='1.00000,-9.60000'/>
 			<FIELD type='0' description='Name' value='SO4' show='1' pos='1.00000,-12.00000'/>
 		</SYMBOL>
-		<WIRE a='230.32875,136.31769' b='230.35493,136.30585'/>
-		<WIRE a='236.29365,162.34301' b='234.83927,162.34301'/>
-		<WIRE a='234.83927,162.34301' b='234.83927,169.02237'/>
-		<WIRE a='216.32875,136.31769' b='208.45692,136.31769'/>
-		<WIRE a='208.45692,136.31769' b='208.45692,107.10000'/>
+		<WIRE style='3' a='230.32875,136.31769' b='230.35493,136.30585'/>
+		<WIRE style='3' a='236.29365,162.34301' b='234.83927,162.34301'/>
+		<WIRE style='3' a='234.83927,162.34301' b='234.83927,169.02237'/>
+		<WIRE style='3' a='216.32875,136.31769' b='208.45692,136.31769'/>
+		<WIRE style='3' a='208.45692,136.31769' b='208.45692,107.10000'/>
 		<JUNCTION pos='140.89178,87.46815'/>
-		<WIRE a='230.32875,136.19142' b='230.32875,136.31769'/>
+		<WIRE style='3' a='230.32875,136.19142' b='230.32875,136.31769'/>
 		<JUNCTION pos='230.32875,136.31769'/>
 		<JUNCTION pos='216.32875,136.31769'/>
-		<WIRE a='208.45692,107.10000' b='184.68854,107.10000'/>
-		<WIRE a='184.68854,107.10000' b='184.68854,90.97479'/>
-		<WIRE a='184.68854,90.97479' b='181.42653,90.97479'/>
+		<WIRE style='3' a='208.45692,107.10000' b='184.68854,107.10000'/>
+		<WIRE style='3' a='184.68854,107.10000' b='184.68854,90.97479'/>
+		<WIRE style='3' a='184.68854,90.97479' b='181.42653,90.97479'/>
 		<WIRE a='181.42653,43.06780' b='184.97683,43.06780'/>
 		<WIRE a='184.88579,58.08828' b='181.42653,58.08828'/>
-		<WIRE a='181.42653,90.97479' b='181.42653,58.17931'/>
+		<WIRE style='3' a='181.42653,90.97479' b='181.42653,58.17931'/>
 		<WIRE a='181.51756,58.08828' b='181.51756,43.06780'/>
 		<WIRE a='184.78738,76.05978' b='181.42653,76.05978'/>
 		<JUNCTION pos='184.68854,90.97479'/>
 		<JUNCTION pos='184.78738,76.05978'/>
 		<JUNCTION pos='184.88579,58.08828'/>
 		<JUNCTION pos='184.97683,43.06780'/>
-		<WIRE a='230.32875,136.19142' b='236.29365,136.19142'/>
-		<WIRE a='236.29365,136.19142' b='236.29365,162.34301'/>
-		<WIRE a='210.02612,81.60760' b='184.97885,81.60760'/>
+		<WIRE style='3' a='230.32875,136.19142' b='236.29365,136.19142'/>
+		<WIRE style='3' a='236.29365,136.19142' b='236.29365,162.34301'/>
+		<WIRE style='3' a='210.02612,81.60760' b='184.97885,81.60760'/>
 		<JUNCTION pos='184.97885,81.60760'/>
-		<WIRE a='184.55385,33.26154' b='230.09231,33.26154'/>
+		<WIRE style='3' a='184.55385,33.26154' b='230.09231,33.26154'/>
 		<JUNCTION pos='184.55385,33.26154'/>
 		<JUNCTION pos='185.01538,48.03077'/>
-		<WIRE a='185.01538,48.03077' b='209.93846,48.03077'/>
+		<WIRE style='3' a='185.01538,48.03077' b='209.93846,48.03077'/>
 		<JUNCTION pos='185.01538,48.03077'/>
-		<WIRE a='184.55385,66.18462' b='229.93846,66.18462'/>
+		<WIRE style='3' a='184.55385,66.18462' b='229.93846,66.18462'/>
 		<JUNCTION pos='184.55385,66.18462'/>
 		<JUNCTION pos='229.82690,66.18462'/>
 		<JUNCTION pos='210.02612,81.60760'/>
 		<JUNCTION pos='209.93846,48.03077'/>
 		<JUNCTION pos='230.09231,33.26154'/>
-		<POWER pos='218.82533,57.02941' which='4' direction='2'></POWER>
-		<POWER pos='239.08498,42.25909' which='4' direction='2'></POWER>
-		<POWER pos='238.86451,75.17769' which='4' direction='2'></POWER>
-		<POWER pos='219.02612,90.60760' which='4' direction='2'></POWER>
-		<POWER pos='236.89974,125.85476' which='4' direction='2'></POWER>
-		<WIRE a='237.31352,169.05946' b='237.51337,169.05946'/>
-		<WIRE a='237.51337,169.05946' b='237.51337,125.85476'/>
-		<WIRE a='237.51337,125.85476' b='236.89974,125.85476'/>
-		<WIRE a='239.76184,169.09302' b='239.76184,162.33907'/>
-		<WIRE a='239.76184,162.33907' b='238.43039,162.33907'/>
-		<WIRE a='238.43039,162.33907' b='238.39852,120.75303'/>
-		<WIRE a='226.82533,48.02941' b='246.86451,48.02941'/>
-		<WIRE a='247.08498,33.25909' b='246.86451,33.25909'/>
-		<WIRE a='246.86451,33.25909' b='246.86451,81.60760'/>
-		<WIRE a='227.02612,81.60760' b='246.88560,81.60760'/>
-		<WIRE a='246.88560,81.60760' b='246.88560,107.53720'/>
-		<WIRE a='246.88560,107.53720' b='238.39866,107.53720'/>
-		<WIRE a='238.39866,107.53720' b='238.39866,120.93720'/>
+		<POWER pos='213.88533,57.02941' which='4' direction='2'></POWER>
+		<POWER pos='239.05311,44.90457' which='4' direction='3'></POWER>
+		<POWER pos='236.00451,75.17769' which='4' direction='2'></POWER>
+		<POWER pos='219.02612,90.08760' which='4' direction='2'></POWER>
+		<WIRE style='5' a='237.31352,169.05946' b='237.51337,169.05946'/>
+		<WIRE style='5' a='237.51337,169.05946' b='237.51337,125.85476'/>
+		<WIRE style='5' a='237.51337,125.85476' b='236.89974,125.85476'/>
+		<WIRE style='4' a='239.76184,169.09302' b='239.76184,162.33907'/>
+		<WIRE style='4' a='239.76184,162.33907' b='238.43039,162.33907'/>
+		<WIRE style='4' a='238.43039,162.33907' b='238.39852,120.75303'/>
+		<WIRE style='4' a='226.82533,48.02941' b='246.86451,48.02941'/>
+		<WIRE style='4' a='247.08498,33.25909' b='246.86451,33.25909'/>
+		<WIRE style='4' a='246.86451,33.25909' b='246.86451,81.60760'/>
+		<WIRE style='4' a='227.02612,81.60760' b='246.88560,81.60760'/>
+		<WIRE style='4' a='246.88560,81.60760' b='246.88560,107.53720'/>
+		<WIRE style='4' a='246.88560,107.53720' b='238.39866,107.53720'/>
+		<WIRE style='4' a='238.39866,107.53720' b='238.39866,120.93720'/>
 		<JUNCTION pos='227.02612,81.60760'/>
 		<JUNCTION pos='246.86451,66.56217'/>
 		<JUNCTION pos='226.82533,48.02941'/>
@@ -18197,17 +18217,16 @@ GF+ UKM/MMUZX-6&amp;QQ&quot;M6?)K_ (U#&gt;I+MEOZO     $E%3D2N0F&quot;&quot;
 			<FIELD type='2' description='$$SPICE_EPILOG_PRIORITY' value='5' show='0' pos='0.00000,0.00000'/>
 			<FIELD type='1' description='Package' value='package name for PCB layout' show='0' pos='1.00000,-28.60000'/>
 		</SYMBOL>
-		<POWER pos='59.20000,89.40000' which='4' direction='3'></POWER>
-		<WIRE a='76.48967,115.81793' b='50.81830,115.81793'/>
-		<WIRE a='50.81830,115.81793' b='50.81830,89.40000'/>
-		<WIRE a='50.81830,89.40000' b='59.20000,89.40000'/>
+		<POWER pos='60.28606,84.91337' which='4' direction='3'></POWER>
+		<WIRE style='5' a='76.48967,115.81793' b='50.54897,115.81793'/>
+		<WIRE style='5' a='50.54897,115.81793' b='50.50806,84.90008'/>
+		<WIRE style='5' a='50.50806,84.90008' b='60.28606,84.91337'/>
 		<JUNCTION pos='76.48967,115.81793'/>
-		<JUNCTION pos='59.10232,89.40000'/>
-		<WIRE a='76.15984,117.47769' b='77.77043,117.47769'/>
-		<WIRE a='77.77043,117.47769' b='77.77043,127.51757'/>
-		<WIRE a='133.66880,127.51757' b='10.04559,127.51757'/>
+		<WIRE style='6' a='76.15984,117.47769' b='77.77043,117.47769'/>
+		<WIRE style='6' a='77.77043,117.47769' b='77.77043,127.51757'/>
+		<WIRE style='6' a='133.66880,127.51757' b='10.04559,127.51757'/>
 		<JUNCTION pos='76.42183,117.47769'/>
-		<TEXT pos='78.11488,127.42132' direction='3' font='3' color='000000'>5V</TEXT>
+		<TEXT pos='76.42257,133.57517' direction='3' font='3' color='000000'>5V</TEXT>
 		<JUNCTION pos='77.86316,127.51757'/>
 		<WIRE a='101.87411,70.00783' b='104.34040,70.00783'/>
 		<WIRE a='104.34040,70.00783' b='104.34040,76.26061'/>
@@ -18221,8 +18240,19 @@ GF+ UKM/MMUZX-6&amp;QQ&quot;M6?)K_ (U#&gt;I+MEOZO     $E%3D2N0F&quot;&quot;
 		<WIRE a='76.22419,119.04258' b='47.93356,119.04258'/>
 		<WIRE a='47.93356,119.04258' b='47.93356,76.26061'/>
 		<WIRE a='47.93356,76.26061' b='104.34040,76.26061'/>
-		<TEXT pos='227.45444,182.68284' direction='3' font='7' color='000000'>IOT Smart Switch leveraging the Particle Photon</TEXT>
-		<TEXT pos='228.16450,192.26864' direction='3' font='7' color='000000'>William Hahn</TEXT>
-		<TEXT pos='255.73846,208.36331' direction='3' font='7' color='000000'>01/04/2015</TEXT>
+		<TEXT pos='221.53728,179.86081' direction='3' font='4' color='000000'>IOT Smart Switch leveraging the Particle Photon</TEXT>
+		<TEXT pos='225.88867,188.71834' direction='3' font='4' color='000000'>William Hahn</TEXT>
+		<TEXT pos='250.45853,204.53991' direction='3' font='4' color='000000'>01/09/2016</TEXT>
+		<WIRE style='5' a='236.89974,125.85476' b='219.02612,125.85476'/>
+		<WIRE style='5' a='219.02612,125.85476' b='219.02612,90.08760'/>
+		<WIRE style='5' a='238.86451,75.17769' b='233.66451,75.17769'/>
+		<WIRE style='5' a='233.66451,75.17769' b='236.00451,75.17769'/>
+		<WIRE style='5' a='218.82533,57.02941' b='213.88533,57.02941'/>
+		<WIRE style='5' a='239.08498,42.25909' b='239.05311,42.25909'/>
+		<WIRE style='5' a='239.05311,42.25909' b='239.05311,44.90457'/>
+		<POWER pos='75.53635,45.80000' which='4' direction='2'></POWER>
+		<WIRE style='5' a='80.42200,45.78671' b='75.53635,45.80000'/>
+		<JUNCTION pos='80.42200,45.78671'/>
+		<JUNCTION pos='80.30897,57.82248'/>
 	</TinyCAD>
 </TinyCADSheets>
