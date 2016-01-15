@@ -1,6 +1,6 @@
 {
     "name": "IOT_Smart_Switch",
-    "version": "0.0.1",
+    "version": "0.0.2",
     "author": "dogpile100 <at gmail dot com>",
     "license": "GPLv3",
     "description": "This project implement IOT Smart Switch with load RESTful API at http://IP-Photon:80"
