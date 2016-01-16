@@ -49,22 +49,87 @@ download a copy.-->
 			<CHARSET>0</CHARSET>
 			<FACENAME>Arial</FACENAME>
 		</FONT>
-		<STYLE id='3'>
+		<FONT id='5'>
+			<HEIGHT>-13</HEIGHT>
+			<WIDTH>6</WIDTH>
+			<WEIGHT>700</WEIGHT>
+			<ITALIC>0</ITALIC>
+			<UNDERLINE>0</UNDERLINE>
+			<STRIKEOUT>0</STRIKEOUT>
+			<CHARSET>0</CHARSET>
+			<FACENAME>Arial</FACENAME>
+		</FONT>
+		<FONT id='6'>
+			<HEIGHT>-13</HEIGHT>
+			<WIDTH>6</WIDTH>
+			<WEIGHT>700</WEIGHT>
+			<ITALIC>0</ITALIC>
+			<UNDERLINE>0</UNDERLINE>
+			<STRIKEOUT>0</STRIKEOUT>
+			<CHARSET>0</CHARSET>
+			<FACENAME>Arial</FACENAME>
+		</FONT>
+		<FONT id='7'>
+			<HEIGHT>-13</HEIGHT>
+			<WIDTH>6</WIDTH>
+			<WEIGHT>700</WEIGHT>
+			<ITALIC>0</ITALIC>
+			<UNDERLINE>0</UNDERLINE>
+			<STRIKEOUT>0</STRIKEOUT>
+			<CHARSET>0</CHARSET>
+			<FACENAME>Arial</FACENAME>
+		</FONT>
+		<FONT id='8'>
+			<HEIGHT>-13</HEIGHT>
+			<WIDTH>6</WIDTH>
+			<WEIGHT>700</WEIGHT>
+			<ITALIC>0</ITALIC>
+			<UNDERLINE>0</UNDERLINE>
+			<STRIKEOUT>0</STRIKEOUT>
+			<CHARSET>0</CHARSET>
+			<FACENAME>Arial</FACENAME>
+		</FONT>
+		<FONT id='9'>
+			<HEIGHT>-13</HEIGHT>
+			<WIDTH>6</WIDTH>
+			<WEIGHT>700</WEIGHT>
+			<ITALIC>0</ITALIC>
+			<UNDERLINE>0</UNDERLINE>
+			<STRIKEOUT>0</STRIKEOUT>
+			<CHARSET>0</CHARSET>
+			<FACENAME>Arial</FACENAME>
+		</FONT>
+		<FONT id='44'>
+			<HEIGHT>-8</HEIGHT>
+			<WIDTH>4</WIDTH>
+			<WEIGHT>700</WEIGHT>
+			<ITALIC>0</ITALIC>
+			<UNDERLINE>0</UNDERLINE>
+			<STRIKEOUT>0</STRIKEOUT>
+			<CHARSET>0</CHARSET>
+			<FACENAME>Arial</FACENAME>
+		</FONT>
+		<FONT id='45'>
+			<HEIGHT>-8</HEIGHT>
+			<WIDTH>4</WIDTH>
+			<WEIGHT>700</WEIGHT>
+			<ITALIC>0</ITALIC>
+			<UNDERLINE>0</UNDERLINE>
+			<STRIKEOUT>0</STRIKEOUT>
+			<CHARSET>0</CHARSET>
+			<FACENAME>Arial</FACENAME>
+		</FONT>
+		<STYLE id='2'>
 			<STYLE>0</STYLE>
 			<COLOR>000000</COLOR>
 			<THICKNESS>3</THICKNESS>
 		</STYLE>
-		<STYLE id='4'>
+		<STYLE id='3'>
 			<STYLE>0</STYLE>
 			<COLOR>FFFFFF</COLOR>
 			<THICKNESS>3</THICKNESS>
 		</STYLE>
 		<STYLE id='5'>
-			<STYLE>0</STYLE>
-			<COLOR>004000</COLOR>
-			<THICKNESS>3</THICKNESS>
-		</STYLE>
-		<STYLE id='6'>
 			<STYLE>0</STYLE>
 			<COLOR>0000FF</COLOR>
 			<THICKNESS>3</THICKNESS>
@@ -78,6 +143,21 @@ download a copy.-->
 			<STYLE>0</STYLE>
 			<COLOR>000000</COLOR>
 			<THICKNESS>2</THICKNESS>
+		</STYLE>
+		<STYLE id='9'>
+			<STYLE>0</STYLE>
+			<COLOR>0000FF</COLOR>
+			<THICKNESS>3</THICKNESS>
+		</STYLE>
+		<STYLE id='10'>
+			<STYLE>0</STYLE>
+			<COLOR>00FF00</COLOR>
+			<THICKNESS>3</THICKNESS>
+		</STYLE>
+		<STYLE id='11'>
+			<STYLE>0</STYLE>
+			<COLOR>000080</COLOR>
+			<THICKNESS>3</THICKNESS>
 		</STYLE>
 		<FILL id='0'>
 			<INDEX>-1</INDEX>
@@ -17966,14 +18046,13 @@ GF+ UKM/MMUZX-6&amp;QQ&quot;M6?)K_ (U#&gt;I+MEOZO     $E%3D2N0F&quot;&quot;
 			<FIELD type='0' description='Name' value='10K 1/4 watt' show='1' pos='-9.00000,-3.00000'/>
 		</SYMBOL>
 		<POWER pos='24.68428,54.80815' which='4' direction='1'></POWER>
-		<WIRE style='5' a='24.68428,54.80815' b='25.76160,54.80815'/>
-		<WIRE style='5' a='25.76160,54.80815' b='25.70773,54.80815'/>
+		<WIRE style='10' a='24.68428,54.80815' b='25.76160,54.80815'/>
+		<WIRE style='10' a='25.76160,54.80815' b='25.70773,54.80815'/>
 		<JUNCTION pos='25.70773,54.80815'/>
 		<JUNCTION pos='39.40000,51.60088'/>
 		<WIRE a='33.70773,54.80815' b='39.40000,54.80815'/>
 		<WIRE a='81.15760,57.82248' b='39.40000,57.82248'/>
 		<WIRE a='39.40000,48.54511' b='39.40000,57.82248'/>
-		<RULER pos='28.40000,6.69998' horizontal='0'/>
 		<SYMBOL id='4' pos='39.41163,68.27648' part='0' rotate='0' can_scale='0' show_power='1' scale_x='1.00000' scale_y='1.00000'>
 			<FIELD type='1' description='Ref' value='Switch3' show='1' pos='-11.70897,-4.00000'/>
 			<FIELD type='0' description='Name' value='SWITCH_SPST' show='0' pos='-21.60000,-8.80000'/>
@@ -17996,11 +18075,11 @@ GF+ UKM/MMUZX-6&amp;QQ&quot;M6?)K_ (U#&gt;I+MEOZO     $E%3D2N0F&quot;&quot;
 			<FIELD type='0' description='Name' value='10K 1/4 watt' show='1' pos='-9.00000,-3.00000'/>
 		</SYMBOL>
 		<POWER pos='24.69591,73.53952' which='4' direction='1'></POWER>
-		<WIRE style='5' a='24.69591,73.53952' b='25.77323,73.53952'/>
-		<WIRE style='5' a='25.77323,73.53952' b='25.71936,73.53952'/>
+		<WIRE style='10' a='24.69591,73.53952' b='25.77323,73.53952'/>
+		<WIRE style='10' a='25.77323,73.53952' b='25.71936,73.53952'/>
 		<JUNCTION pos='25.71936,73.53952'/>
 		<WIRE a='33.71936,73.53952' b='39.41163,73.53952'/>
-		<RULER pos='28.41163,6.69998' horizontal='0'/>
+		<RULER pos='29.08763,-12.21200' horizontal='0'/>
 		<WIRE a='22.40000,48.54511' b='22.41163,48.54511'/>
 		<WIRE a='39.41163,73.53952' b='39.41163,60.23364'/>
 		<WIRE a='39.41163,60.23364' b='81.10401,60.23364'/>
@@ -18026,8 +18105,8 @@ GF+ UKM/MMUZX-6&amp;QQ&quot;M6?)K_ (U#&gt;I+MEOZO     $E%3D2N0F&quot;&quot;
 			<FIELD type='0' description='Name' value='10K 1/4 watt' show='1' pos='-9.00000,-3.00000'/>
 		</SYMBOL>
 		<POWER pos='24.75123,92.80339' which='4' direction='1'></POWER>
-		<WIRE style='5' a='24.75123,92.80339' b='25.82855,92.80339'/>
-		<WIRE style='5' a='25.82855,92.80339' b='25.77468,92.80339'/>
+		<WIRE style='10' a='24.75123,92.80339' b='25.82855,92.80339'/>
+		<WIRE style='10' a='25.82855,92.80339' b='25.77468,92.80339'/>
 		<JUNCTION pos='25.77468,92.80339'/>
 		<WIRE a='33.77468,92.80339' b='39.46695,92.80339'/>
 		<SYMBOL id='6' pos='39.43964,106.56629' part='0' rotate='0' can_scale='0' show_power='1' scale_x='1.00000' scale_y='1.00000'>
@@ -18052,8 +18131,8 @@ GF+ UKM/MMUZX-6&amp;QQ&quot;M6?)K_ (U#&gt;I+MEOZO     $E%3D2N0F&quot;&quot;
 			<FIELD type='0' description='Name' value='10K 1/4 watt' show='1' pos='-9.00000,-3.00000'/>
 		</SYMBOL>
 		<POWER pos='24.72392,111.82933' which='4' direction='1'></POWER>
-		<WIRE style='5' a='24.72392,111.82933' b='25.80124,111.82933'/>
-		<WIRE style='5' a='25.80124,111.82933' b='25.74737,111.82933'/>
+		<WIRE style='10' a='24.72392,111.82933' b='25.80124,111.82933'/>
+		<WIRE style='10' a='25.80124,111.82933' b='25.74737,111.82933'/>
 		<JUNCTION pos='25.74737,111.82933'/>
 		<WIRE a='33.74737,111.82933' b='39.43964,111.82933'/>
 		<WIRE a='22.46695,67.27648' b='22.46695,86.54035'/>
@@ -18075,7 +18154,7 @@ GF+ UKM/MMUZX-6&amp;QQ&quot;M6?)K_ (U#&gt;I+MEOZO     $E%3D2N0F&quot;&quot;
 		<WIRE a='39.38462,98.73846' b='46.00000,98.73846'/>
 		<WIRE a='46.00000,98.73846' b='46.00000,65.09944'/>
 		<WIRE a='46.00000,65.09944' b='81.12436,65.09944'/>
-		<SYMBOL id='8' pos='190.47547,98.93780' part='0' rotate='0' can_scale='0' show_power='0' scale_x='1.00000' scale_y='1.00000'>
+		<SYMBOL id='8' pos='207.37547,98.93780' part='0' rotate='0' can_scale='0' show_power='0' scale_x='1.00000' scale_y='1.00000'>
 			<FIELD type='0' description='Ref' value='5V 4 Channel PLC Relay Vert' show='0' pos='1.00000,-69.00000'/>
 			<FIELD type='0' description='Name' value='5V 4 Channel PLC Relay' show='1' pos='-39.60000,-74.20000'/>
 			<FIELD type='2' description='$$SPICE_PROLOG_PRIORITY' value='5' show='0' pos='0.00000,0.00000'/>
@@ -18083,53 +18162,51 @@ GF+ UKM/MMUZX-6&amp;QQ&quot;M6?)K_ (U#&gt;I+MEOZO     $E%3D2N0F&quot;&quot;
 			<FIELD type='1' description='Package' value='package name for PCB layout' show='0' pos='1.00000,-66.60000'/>
 		</SYMBOL>
 		<POWER pos='135.10077,77.28010' which='4' direction='2'></POWER>
-		<WIRE style='5' a='140.91289,77.26696' b='135.03074,77.26696'/>
-		<WIRE style='5' a='135.03074,77.26696' b='135.10077,77.28010'/>
-		<WIRE style='6' a='140.96827,90.05819' b='133.66880,90.05819'/>
-		<WIRE style='6' a='133.66880,90.05819' b='133.66880,127.51757'/>
-		<WIRE style='6' a='10.04559,127.51757' b='10.04559,43.26818'/>
-		<WIRE style='6' a='10.04559,43.26818' b='81.12795,43.26818'/>
+		<WIRE style='9' a='157.86827,90.05819' b='133.66880,90.05819'/>
+		<WIRE style='9' a='133.66880,90.05819' b='133.66880,133.91757'/>
+		<WIRE style='9' a='10.04559,133.91757' b='10.04559,43.26818'/>
+		<WIRE style='9' a='10.04559,43.26818' b='81.12795,43.26818'/>
 		<TEXT pos='76.22000,42.96000' direction='3' font='3' color='000000'>5V</TEXT>
-		<TEXT pos='135.60000,112.84000' direction='3' font='3' color='000000'>5V</TEXT>
-		<WIRE a='140.96252,79.75829' b='121.95284,79.75829'/>
+		<TEXT pos='152.50000,112.84000' direction='3' font='3' color='000000'>5V</TEXT>
+		<WIRE a='157.86252,79.75829' b='121.95284,79.75829'/>
 		<WIRE a='121.95284,79.75829' b='121.95284,57.83639'/>
 		<WIRE a='121.95284,57.83639' b='101.98163,57.83639'/>
 		<JUNCTION pos='102.60401,57.83639'/>
-		<JUNCTION pos='140.95746,79.75829'/>
-		<JUNCTION pos='140.91289,77.26696'/>
-		<JUNCTION pos='140.87301,90.05819'/>
+		<JUNCTION pos='157.85746,79.75829'/>
+		<JUNCTION pos='157.81289,77.26696'/>
+		<JUNCTION pos='157.77301,90.05819'/>
 		<JUNCTION pos='80.32883,65.09944'/>
 		<JUNCTION pos='80.27980,62.70018'/>
 		<JUNCTION pos='80.27980,60.23364'/>
 		<JUNCTION pos='80.33746,43.26818'/>
 		<JUNCTION pos='102.67136,43.34960'/>
-		<WIRE a='140.93674,82.31810' b='120.50598,82.31810'/>
+		<WIRE a='157.83674,82.31810' b='120.50598,82.31810'/>
 		<WIRE a='120.50598,82.31810' b='120.50598,60.27207'/>
 		<WIRE a='120.50598,60.27207' b='102.13819,60.27207'/>
 		<JUNCTION pos='102.54441,60.27207'/>
-		<WIRE a='140.88001,84.88728' b='117.00000,84.88728'/>
+		<WIRE a='157.78001,84.88728' b='117.00000,84.88728'/>
 		<WIRE a='117.00000,84.88728' b='117.00000,62.72496'/>
 		<WIRE a='117.00000,62.72496' b='102.15223,62.72496'/>
 		<JUNCTION pos='102.47096,62.72496'/>
-		<JUNCTION pos='140.93674,82.31810'/>
-		<JUNCTION pos='140.88001,84.88728'/>
-		<WIRE a='140.89178,87.46815' b='114.08352,87.46815'/>
+		<JUNCTION pos='157.83674,82.31810'/>
+		<JUNCTION pos='157.78001,84.88728'/>
+		<WIRE a='157.79178,87.46815' b='114.08352,87.46815'/>
 		<WIRE a='114.08352,87.46815' b='114.08352,65.12639'/>
 		<WIRE a='114.08352,65.12639' b='102.23207,65.12639'/>
 		<JUNCTION pos='102.52722,65.12639'/>
-		<SYMBOL id='9' pos='241.82143,174.07996' part='0' rotate='0' can_scale='0' show_power='0' scale_x='1.00000' scale_y='1.00000'>
+		<SYMBOL id='9' pos='258.51135,173.23965' part='0' rotate='0' can_scale='0' show_power='0' scale_x='1.00000' scale_y='1.00000'>
 			<FIELD type='0' description='Ref' value='AC Plug' show='0' pos='1.00000,-26.60000'/>
-			<FIELD type='0' description='Name' value='AC Plug' show='1' pos='1.00000,-29.00000'/>
+			<FIELD type='0' description='Name' value='AC Plug' show='0' pos='1.00000,-28.23077'/>
 		</SYMBOL>
-		<SYMBOL id='10' pos='226.82533,57.02941' part='0' rotate='0' can_scale='0' show_power='0' scale_x='1.00000' scale_y='1.00000'>
+		<SYMBOL id='10' pos='243.72533,57.02941' part='0' rotate='0' can_scale='0' show_power='0' scale_x='1.00000' scale_y='1.00000'>
 			<FIELD type='0' description='Ref' value='SO?' show='1' pos='1.00000,-9.60000'/>
 			<FIELD type='0' description='Name' value='SO4' show='1' pos='1.00000,-12.00000'/>
 		</SYMBOL>
-		<SYMBOL id='10' pos='246.86451,75.17769' part='0' rotate='0' can_scale='0' show_power='0' scale_x='1.00000' scale_y='1.00000'>
+		<SYMBOL id='10' pos='263.76451,75.17769' part='0' rotate='0' can_scale='0' show_power='0' scale_x='1.00000' scale_y='1.00000'>
 			<FIELD type='0' description='Ref' value='SO?' show='1' pos='1.00000,-9.60000'/>
 			<FIELD type='0' description='Name' value='SO4' show='1' pos='1.00000,-12.00000'/>
 		</SYMBOL>
-		<SYMBOL id='11' pos='230.32875,139.31769' part='0' rotate='6' can_scale='0' show_power='0' scale_x='1.00000' scale_y='1.00000'>
+		<SYMBOL id='11' pos='247.22875,139.31769' part='0' rotate='6' can_scale='0' show_power='0' scale_x='1.00000' scale_y='1.00000'>
 			<FIELD type='1' description='Ref' value='10AMP Restable Fuse' show='0' pos='-14.00000,4.40000'/>
 			<FIELD type='0' description='Name' value='Resetable Fuse' show='1' pos='-14.00000,-7.00000'/>
 			<FIELD type='1' description='Package' value='' show='0' pos='-14.00000,6.80000'/>
@@ -18145,71 +18222,69 @@ GF+ UKM/MMUZX-6&amp;QQ&quot;M6?)K_ (U#&gt;I+MEOZO     $E%3D2N0F&quot;&quot;
 			<FIELD type='1' description='Mouser Part' value='..' show='0' pos='-14.00000,28.40000'/>
 			<FIELD type='1' description='Cost' value='..' show='0' pos='-14.00000,30.80000'/>
 		</SYMBOL>
-		<SYMBOL id='12' pos='247.08498,42.25909' part='0' rotate='0' can_scale='0' show_power='0' scale_x='1.00000' scale_y='1.00000'>
+		<SYMBOL id='12' pos='263.98498,42.25909' part='0' rotate='0' can_scale='0' show_power='0' scale_x='1.00000' scale_y='1.00000'>
 			<FIELD type='0' description='Ref' value='SO?' show='1' pos='1.00000,-9.60000'/>
 			<FIELD type='0' description='Name' value='SO4' show='1' pos='1.00000,-12.00000'/>
 		</SYMBOL>
-		<SYMBOL id='12' pos='227.02612,90.60760' part='0' rotate='0' can_scale='0' show_power='0' scale_x='1.00000' scale_y='1.00000'>
+		<SYMBOL id='12' pos='243.92612,90.60760' part='0' rotate='0' can_scale='0' show_power='0' scale_x='1.00000' scale_y='1.00000'>
 			<FIELD type='0' description='Ref' value='SO?' show='1' pos='1.00000,-9.60000'/>
 			<FIELD type='0' description='Name' value='SO4' show='1' pos='1.00000,-12.00000'/>
 		</SYMBOL>
-		<WIRE style='3' a='230.32875,136.31769' b='230.35493,136.30585'/>
-		<WIRE style='3' a='236.29365,162.34301' b='234.83927,162.34301'/>
-		<WIRE style='3' a='234.83927,162.34301' b='234.83927,169.02237'/>
-		<WIRE style='3' a='216.32875,136.31769' b='208.45692,136.31769'/>
-		<WIRE style='3' a='208.45692,136.31769' b='208.45692,107.10000'/>
-		<JUNCTION pos='140.89178,87.46815'/>
-		<WIRE style='3' a='230.32875,136.19142' b='230.32875,136.31769'/>
-		<JUNCTION pos='230.32875,136.31769'/>
-		<JUNCTION pos='216.32875,136.31769'/>
-		<WIRE style='3' a='208.45692,107.10000' b='184.68854,107.10000'/>
-		<WIRE style='3' a='184.68854,107.10000' b='184.68854,90.97479'/>
-		<WIRE style='3' a='184.68854,90.97479' b='181.42653,90.97479'/>
-		<WIRE a='181.42653,43.06780' b='184.97683,43.06780'/>
-		<WIRE a='184.88579,58.08828' b='181.42653,58.08828'/>
-		<WIRE style='3' a='181.42653,90.97479' b='181.42653,58.17931'/>
-		<WIRE a='181.51756,58.08828' b='181.51756,43.06780'/>
-		<WIRE a='184.78738,76.05978' b='181.42653,76.05978'/>
-		<JUNCTION pos='184.68854,90.97479'/>
-		<JUNCTION pos='184.78738,76.05978'/>
-		<JUNCTION pos='184.88579,58.08828'/>
-		<JUNCTION pos='184.97683,43.06780'/>
-		<WIRE style='3' a='230.32875,136.19142' b='236.29365,136.19142'/>
-		<WIRE style='3' a='236.29365,136.19142' b='236.29365,162.34301'/>
-		<WIRE style='3' a='210.02612,81.60760' b='184.97885,81.60760'/>
-		<JUNCTION pos='184.97885,81.60760'/>
-		<WIRE style='3' a='184.55385,33.26154' b='230.09231,33.26154'/>
-		<JUNCTION pos='184.55385,33.26154'/>
-		<JUNCTION pos='185.01538,48.03077'/>
-		<WIRE style='3' a='185.01538,48.03077' b='209.93846,48.03077'/>
-		<JUNCTION pos='185.01538,48.03077'/>
-		<WIRE style='3' a='184.55385,66.18462' b='229.93846,66.18462'/>
-		<JUNCTION pos='184.55385,66.18462'/>
-		<JUNCTION pos='229.82690,66.18462'/>
-		<JUNCTION pos='210.02612,81.60760'/>
-		<JUNCTION pos='209.93846,48.03077'/>
-		<JUNCTION pos='230.09231,33.26154'/>
-		<POWER pos='213.88533,57.02941' which='4' direction='2'></POWER>
-		<POWER pos='239.05311,44.90457' which='4' direction='3'></POWER>
-		<POWER pos='236.00451,75.17769' which='4' direction='2'></POWER>
-		<POWER pos='219.02612,90.08760' which='4' direction='2'></POWER>
-		<WIRE style='5' a='237.31352,169.05946' b='237.51337,169.05946'/>
-		<WIRE style='5' a='237.51337,169.05946' b='237.51337,125.85476'/>
-		<WIRE style='5' a='237.51337,125.85476' b='236.89974,125.85476'/>
-		<WIRE style='4' a='239.76184,169.09302' b='239.76184,162.33907'/>
-		<WIRE style='4' a='239.76184,162.33907' b='238.43039,162.33907'/>
-		<WIRE style='4' a='238.43039,162.33907' b='238.39852,120.75303'/>
-		<WIRE style='4' a='226.82533,48.02941' b='246.86451,48.02941'/>
-		<WIRE style='4' a='247.08498,33.25909' b='246.86451,33.25909'/>
-		<WIRE style='4' a='246.86451,33.25909' b='246.86451,81.60760'/>
-		<WIRE style='4' a='227.02612,81.60760' b='246.88560,81.60760'/>
-		<WIRE style='4' a='246.88560,81.60760' b='246.88560,107.53720'/>
-		<WIRE style='4' a='246.88560,107.53720' b='238.39866,107.53720'/>
-		<WIRE style='4' a='238.39866,107.53720' b='238.39866,120.93720'/>
-		<JUNCTION pos='227.02612,81.60760'/>
-		<JUNCTION pos='246.86451,66.56217'/>
-		<JUNCTION pos='226.82533,48.02941'/>
-		<JUNCTION pos='246.86451,33.25909'/>
+		<WIRE style='2' a='247.22875,136.31769' b='247.25493,136.30585'/>
+		<WIRE style='2' a='253.19365,162.34301' b='251.73927,162.34301'/>
+		<WIRE style='2' a='251.73927,162.34301' b='251.73421,167.99909'/>
+		<WIRE style='2' a='233.22875,136.31769' b='225.35692,136.31769'/>
+		<WIRE style='2' a='225.35692,136.31769' b='225.35692,107.10000'/>
+		<JUNCTION pos='157.79178,87.46815'/>
+		<WIRE style='2' a='247.22875,136.19142' b='247.22875,136.31769'/>
+		<JUNCTION pos='247.22875,136.31769'/>
+		<JUNCTION pos='233.22875,136.31769'/>
+		<WIRE style='2' a='225.35692,107.10000' b='201.58854,107.10000'/>
+		<WIRE style='2' a='201.58854,107.10000' b='201.58854,90.97479'/>
+		<WIRE style='2' a='201.58854,90.97479' b='198.32653,90.97479'/>
+		<WIRE a='198.32653,43.06780' b='201.87683,43.06780'/>
+		<WIRE a='201.78579,58.08828' b='198.32653,58.08828'/>
+		<WIRE style='2' a='198.32653,90.97479' b='198.32653,58.17931'/>
+		<WIRE a='198.41756,58.08828' b='198.41756,43.06780'/>
+		<WIRE a='201.68738,76.05978' b='198.32653,76.21350'/>
+		<JUNCTION pos='201.58854,90.97479'/>
+		<JUNCTION pos='201.68738,76.05978'/>
+		<JUNCTION pos='201.78579,58.08828'/>
+		<JUNCTION pos='201.87683,43.06780'/>
+		<WIRE style='2' a='247.22875,136.19142' b='253.19365,136.19142'/>
+		<WIRE style='2' a='253.19365,136.19142' b='253.19365,162.34301'/>
+		<WIRE style='2' a='226.92612,81.60760' b='201.87885,81.60760'/>
+		<JUNCTION pos='201.87885,81.60760'/>
+		<WIRE style='2' a='201.45385,33.26154' b='246.99231,33.26154'/>
+		<JUNCTION pos='201.45385,33.26154'/>
+		<JUNCTION pos='201.91538,48.03077'/>
+		<WIRE style='2' a='201.91538,48.03077' b='226.83846,48.03077'/>
+		<JUNCTION pos='201.91538,48.03077'/>
+		<WIRE style='2' a='201.45385,66.18462' b='246.83846,66.18462'/>
+		<JUNCTION pos='201.45385,66.18462'/>
+		<JUNCTION pos='246.72690,66.18462'/>
+		<JUNCTION pos='226.92612,81.60760'/>
+		<JUNCTION pos='226.83846,48.03077'/>
+		<JUNCTION pos='246.99231,33.26154'/>
+		<POWER pos='230.78533,57.02941' which='4' direction='2'></POWER>
+		<POWER pos='255.95311,44.90457' which='4' direction='3'></POWER>
+		<POWER pos='252.90451,75.17769' which='4' direction='2'></POWER>
+		<POWER pos='235.92612,90.08760' which='4' direction='2'></POWER>
+		<WIRE style='10' a='254.36786,167.97750' b='254.41337,125.85476'/>
+		<WIRE style='10' a='254.41337,125.85476' b='235.92612,125.85476'/>
+		<WIRE style='3' a='256.66184,167.98302' b='256.66184,162.33907'/>
+		<WIRE style='3' a='256.66184,162.33907' b='255.33039,162.33907'/>
+		<WIRE style='3' a='255.33039,162.33907' b='255.20302,107.53717'/>
+		<WIRE style='3' a='243.72533,48.02941' b='263.76451,48.02941'/>
+		<WIRE style='3' a='263.98498,33.25909' b='263.76451,33.25909'/>
+		<WIRE style='3' a='263.76451,33.25909' b='263.76451,81.60760'/>
+		<WIRE style='3' a='243.92612,81.60760' b='263.78560,81.60760'/>
+		<WIRE style='3' a='263.78560,81.60760' b='263.78560,107.53720'/>
+		<WIRE style='3' a='263.78560,107.53720' b='255.29866,107.53720'/>
+		<JUNCTION pos='243.92612,81.60760'/>
+		<JUNCTION pos='263.76451,66.56217'/>
+		<JUNCTION pos='243.72533,48.02941'/>
+		<JUNCTION pos='263.76451,33.25909'/>
 		<SYMBOL id='13' pos='130.60000,124.40000' part='0' rotate='0' can_scale='0' show_power='0' scale_x='1.00000' scale_y='1.00000'>
 			<FIELD type='0' description='Ref' value='Grove LCD RGB Backlight' show='0' pos='1.00000,-31.00000'/>
 			<FIELD type='0' description='Name' value='Grove LCD RGB Backlight' show='1' pos='-55.80000,-35.80000'/>
@@ -18218,16 +18293,10 @@ GF+ UKM/MMUZX-6&amp;QQ&quot;M6?)K_ (U#&gt;I+MEOZO     $E%3D2N0F&quot;&quot;
 			<FIELD type='1' description='Package' value='package name for PCB layout' show='0' pos='1.00000,-28.60000'/>
 		</SYMBOL>
 		<POWER pos='60.28606,84.91337' which='4' direction='3'></POWER>
-		<WIRE style='5' a='76.48967,115.81793' b='50.54897,115.81793'/>
-		<WIRE style='5' a='50.54897,115.81793' b='50.50806,84.90008'/>
-		<WIRE style='5' a='50.50806,84.90008' b='60.28606,84.91337'/>
-		<JUNCTION pos='76.48967,115.81793'/>
-		<WIRE style='6' a='76.15984,117.47769' b='77.77043,117.47769'/>
-		<WIRE style='6' a='77.77043,117.47769' b='77.77043,127.51757'/>
-		<WIRE style='6' a='133.66880,127.51757' b='10.04559,127.51757'/>
+		<WIRE style='5' a='76.15984,117.47769' b='77.77043,117.47769'/>
+		<WIRE style='5' a='77.77043,117.47769' b='77.77043,134.09844'/>
 		<JUNCTION pos='76.42183,117.47769'/>
-		<TEXT pos='76.42257,133.57517' direction='3' font='3' color='000000'>5V</TEXT>
-		<JUNCTION pos='77.86316,127.51757'/>
+		<TEXT pos='84.42257,132.77517' direction='3' font='3' color='000000'>5V</TEXT>
 		<WIRE a='101.87411,70.00783' b='104.34040,70.00783'/>
 		<WIRE a='104.34040,70.00783' b='104.34040,76.26061'/>
 		<WIRE a='101.96988,67.52225' b='107.09970,67.52225'/>
@@ -18235,24 +18304,58 @@ GF+ UKM/MMUZX-6&amp;QQ&quot;M6?)K_ (U#&gt;I+MEOZO     $E%3D2N0F&quot;&quot;
 		<WIRE a='107.09970,79.46594' b='49.51561,79.46594'/>
 		<WIRE a='49.51561,79.46594' b='49.51561,120.60901'/>
 		<WIRE a='49.51561,120.60901' b='76.09731,120.60901'/>
-		<JUNCTION pos='76.09731,120.60901'/>
-		<JUNCTION pos='76.18835,119.06145'/>
-		<WIRE a='76.22419,119.04258' b='47.93356,119.04258'/>
+		<JUNCTION pos='76.37041,120.60901'/>
+		<JUNCTION pos='76.37042,119.06145'/>
 		<WIRE a='47.93356,119.04258' b='47.93356,76.26061'/>
 		<WIRE a='47.93356,76.26061' b='104.34040,76.26061'/>
 		<TEXT pos='221.53728,179.86081' direction='3' font='4' color='000000'>IOT Smart Switch leveraging the Particle Photon</TEXT>
 		<TEXT pos='225.88867,188.71834' direction='3' font='4' color='000000'>William Hahn</TEXT>
 		<TEXT pos='250.45853,204.53991' direction='3' font='4' color='000000'>01/09/2016</TEXT>
-		<WIRE style='5' a='236.89974,125.85476' b='219.02612,125.85476'/>
-		<WIRE style='5' a='219.02612,125.85476' b='219.02612,90.08760'/>
-		<WIRE style='5' a='238.86451,75.17769' b='233.66451,75.17769'/>
-		<WIRE style='5' a='233.66451,75.17769' b='236.00451,75.17769'/>
-		<WIRE style='5' a='218.82533,57.02941' b='213.88533,57.02941'/>
-		<WIRE style='5' a='239.08498,42.25909' b='239.05311,42.25909'/>
-		<WIRE style='5' a='239.05311,42.25909' b='239.05311,44.90457'/>
+		<WIRE style='10' a='235.92612,125.85476' b='235.92612,90.08760'/>
+		<WIRE style='10' a='255.76451,75.17769' b='250.56451,75.17769'/>
+		<WIRE style='10' a='235.72533,57.02941' b='230.78533,57.02941'/>
+		<WIRE style='10' a='255.98498,42.25909' b='255.95311,42.25909'/>
+		<WIRE style='10' a='255.95311,42.25909' b='255.95311,44.90457'/>
 		<POWER pos='75.53635,45.80000' which='4' direction='2'></POWER>
-		<WIRE style='5' a='80.42200,45.78671' b='75.53635,45.80000'/>
 		<JUNCTION pos='80.42200,45.78671'/>
 		<JUNCTION pos='80.30897,57.82248'/>
+		<SYMBOL id='7' pos='42.52041,120.67054' part='0' rotate='6' can_scale='0' show_power='1' scale_x='1.00000' scale_y='1.00000'>
+			<FIELD type='0' description='Ref' value='10K 1/4 watt' show='0' pos='-9.00000,2.00000'/>
+			<FIELD type='0' description='Name' value='10K 1/4 watt' show='1' pos='-9.00000,-3.00000'/>
+		</SYMBOL>
+		<SYMBOL id='7' pos='51.07355,131.41008' part='0' rotate='4' can_scale='0' show_power='1' scale_x='1.00000' scale_y='1.00000'>
+			<FIELD type='0' description='Ref' value='10K 1/4 watt' show='0' pos='1.00000,-4.60000'/>
+			<FIELD type='0' description='Name' value='10K 1/4 watt' show='1' pos='0.60000,-3.00000'/>
+			<FIELD type='3' description='Other' value='..' show='1' pos='1.00000,-2.20000'/>
+		</SYMBOL>
+		<WIRE style='9' a='49.47355,130.41008' b='49.40000,133.91757'/>
+		<WIRE style='9' a='133.66880,133.91757' b='49.80000,133.91757'/>
+		<WIRE style='9' a='49.40000,133.91757' b='10.04559,133.91757'/>
+		<JUNCTION pos='49.40000,133.91757'/>
+		<JUNCTION pos='77.77043,134.09844'/>
+		<WIRE a='49.47355,122.41008' b='49.50898,122.34005'/>
+		<WIRE a='49.50898,122.34005' b='49.50898,120.46896'/>
+		<JUNCTION pos='49.45995,122.00982'/>
+		<WIRE a='76.22419,119.04258' b='41.52041,119.04258'/>
+		<WIRE a='41.52041,119.04258' b='41.52041,119.07054'/>
+		<JUNCTION pos='41.71427,119.04258'/>
+		<WIRE style='9' a='33.52041,119.07054' b='31.35048,119.07054'/>
+		<WIRE style='9' a='31.35048,119.07054' b='31.35048,133.91757'/>
+		<JUNCTION pos='33.52041,119.07054'/>
+		<LABEL pos='241.51538,145.52308' direction='3' font='5' color='000000' style='0'>A/C Hot</LABEL>
+		<LABEL pos='257.63133,144.90769' direction='3' font='6' color='FFFFFF' style='0'>Common</LABEL>
+		<LABEL pos='238.59231,124.75385' direction='3' font='8' color='00FF00' style='0'>A/C Ground</LABEL>
+		<LABEL pos='260.90000,164.60000' direction='3' font='7' color='000000' style='0'>A/C Plug</LABEL>
+		<WIRE style='11' a='75.53635,45.80000' b='80.48947,45.80000'/>
+		<WIRE style='11' a='135.10077,77.28010' b='157.78670,77.28010'/>
+		<WIRE style='11' a='76.45661,115.86328' b='51.23431,115.86328'/>
+		<WIRE style='11' a='51.23431,115.86328' b='51.23431,84.91337'/>
+		<WIRE style='11' a='51.23431,84.91337' b='60.28606,84.91337'/>
+		<JUNCTION pos='76.45661,115.86328'/>
+		<LABEL pos='135.09742,76.49283' direction='3' font='9' color='000080' style='0'>DC Ground</LABEL>
+		<LABEL pos='63.99682,50.76565' direction='3' font='9' color='000080' style='0'>DC Ground</LABEL>
+		<LABEL pos='51.83666,83.26775' direction='3' font='9' color='000080' style='0'>DC Ground</LABEL>
+		<LABEL pos='32.76111,123.84367' direction='3' font='45' color='000000' style='0'>I2C Pins requirer</LABEL>
+		<LABEL pos='32.67065,126.29447' direction='3' font='44' color='000000' style='0'>Pull up resistors</LABEL>
 	</TinyCAD>
 </TinyCADSheets>
