@@ -1,4 +1,10 @@
 //
+// RGB LCD initilazation
+#include "Grove_LCD_RGB_Backlight.h"
+rgb_lcd lcd;
+
+
+//
 // Function READs or Writes to Digital or Analog pins from the cloud
 //
 // Argument syntax: A1,Read or D4,Write,LOW
@@ -143,8 +149,14 @@ byte MAC[6];
 #define ONE_DAY_MILLIS (24 * 60 * 60 * 1000)
 unsigned long lastSync = millis();
 
+// Init rge lcd rgb color
+const int colorR = 128;
+const int colorG = 128;
+const int colorB = 0;
 
 
+//
+// Setup loop that is run only once at bootup
 void setup() {
   // Here's the pin Mode configuration
   pinMode(Led1, OUTPUT);
@@ -188,8 +200,18 @@ void setup() {
   Particle.variable("PrevSw2", Prev_Switch2_State);
   Particle.variable("PrevSw3", Prev_Switch3_State);
   Particle.variable("PrevSw4", Prev_Switch4_State);
+
+  // set up the LCD's number of columns and rows:
+  lcd.begin(16, 2);
+  lcd.setRGB(colorR, colorG, colorB);
+
+  // Print a message to the LCD.
+  lcd.print("Hello, setup done");
+  delay(1000);
 }
 
+//
+// Infinty loop that runs after setup() function
 void loop() {
   //Particle.publish("LOOP", String(Switch3_State) );
   Prev_Switch1_State = Switch1_State;
@@ -200,13 +222,22 @@ void loop() {
   Switch1_State = ReadDigitalPin(Switch1);
   Switch2_State = ReadDigitalPin(Switch2);
   Switch3_State = ReadDigitalPin(Switch3);
-  Switch4_State = ReadDigitalPin(Switch4);  
+  Switch4_State = ReadDigitalPin(Switch4);
 
   // Check if light switches have changed states "been flipped"
   RelayIn1_State = CheckSwitchStateChanged(Switch1, Switch1_State, Prev_Switch1_State, RelayIn1, RelayIn1_State);
   RelayIn2_State = CheckSwitchStateChanged(Switch2, Switch2_State, Prev_Switch2_State, RelayIn2, RelayIn2_State);
   RelayIn3_State = CheckSwitchStateChanged(Switch3, Switch3_State, Prev_Switch3_State, RelayIn3, RelayIn3_State);
   RelayIn4_State = CheckSwitchStateChanged(Switch4, Switch4_State, Prev_Switch4_State, RelayIn4, RelayIn4_State);
+
+  // set the cursor to column 0, line 1
+  // (note: line 1 is the second row, since counting begins with 0):
+  lcd.clear();
+  lcd.setCursor(0, 0);
+  lcd.print(myIpAddress);
+  lcd.setCursor(0, 1);
+  // print the number of seconds since reset:
+  lcd.print(millis()/1000);
 
   delay(100);
 }
