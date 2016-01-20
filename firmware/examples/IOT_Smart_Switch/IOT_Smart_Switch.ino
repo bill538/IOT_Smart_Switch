@@ -4,6 +4,124 @@
 rgb_lcd lcd;
 
 
+
+// -----------------------------------
+// Controlling LEDs/Circuits over the Internet
+// -----------------------------------
+
+// First, let's create our "shorthand" for the pins used
+int ic2_sda = D0;
+int i2c_scl = D1;
+int RelayIn1 = D2;
+int RelayIn2 = D3;
+int RelayIn3 = D4;
+int RelayIn4 = D5;
+int RelayIn1_State = HIGH;
+int RelayIn2_State = HIGH;
+int RelayIn3_State = HIGH;
+int RelayIn4_State = HIGH;
+int Switch1 = A2;
+int Switch2 = A3;
+int Switch3 = A4;
+int Switch4 = A5;
+int Switch1_State = HIGH;
+int Switch2_State = HIGH;
+int Switch3_State = HIGH;
+int Switch4_State = HIGH;
+int Prev_Switch1_State = HIGH;
+int Prev_Switch2_State = HIGH;
+int Prev_Switch3_State = HIGH;
+int Prev_Switch4_State = HIGH;
+
+int Led1 = D6;
+int Led2 = D7;
+
+// Save IP,SSID & MAC to variables
+char myIpAddress[24];
+String SSID = "";
+byte MAC[6];
+
+// Initialize time tracking stamps
+#define ONE_DAY_MILLIS (24 * 60 * 60 * 1000)
+unsigned long lastDaySync = millis();
+unsigned long lastSecSync = lastDaySync;
+unsigned long lastMSecSync = lastDaySync;
+unsigned long currentSync = lastDaySync;
+
+// Init rge lcd rgb color
+const int colorR = 128;
+const int colorG = 128;
+const int colorB = 0;
+
+
+//
+// Function for Cloud/RestAPI to Change the state of RelayIn1,2,3,4 and set RelayIn#_State to proper state
+//
+// Argument syntax: 1 or 3
+int CloudRelayInChange(String command) {
+  bool value = 0;
+  int RelayIn = 0;
+  int RelayIn_State = 0;
+
+  // Make sure upper case
+  command.toUpperCase();
+
+  Particle.publish("CloudRelayInChange Command", command);
+
+  //Extract RelayIn# from Command and convert to integer
+  int Relay = command.charAt(0) - '0';
+
+  //Sanity check to see if the Relay number are within limits
+  if (Relay< 1 || Relay >4) {
+    return -1;
+  }
+
+  // Set the Pin number(RelayIn#) to RelayIn & set RelayIn_State
+  switch (Relay) {
+      case 1:   RelayIn = RelayIn1;
+                RelayIn_State = RelayIn1_State;
+      break;
+      case 2:   RelayIn = RelayIn2;
+                RelayIn_State = RelayIn2_State;
+     break;
+      case 3:   RelayIn = RelayIn3;
+                RelayIn_State = RelayIn3_State;
+      break;
+      case 4:   RelayIn = RelayIn4;
+                RelayIn_State = RelayIn4_State;
+      break;
+      default:  return -2;
+  }
+
+  Particle.publish("CloudRelayIn RelayIn - A", String::format("RelayIn:%i, RelayIn_State:%i",RelayIn,RelayIn_State));
+
+  // Check if RelayIn_State is 1(OFF) or 0(ON). Then with the opposit to the pin.
+  if ( RelayIn_State == 0 ) {
+    digitalWrite(RelayIn, 1);
+    RelayIn_State = 1;
+  } else if ( RelayIn_State == 1 ) {
+    digitalWrite(RelayIn, 0);
+    RelayIn_State = 0;
+  } else {
+    return -3;
+  }
+
+  // Set Global Variable for RelayIn#_State based on new state
+  switch (Relay) {
+      case 1:   RelayIn1_State = RelayIn_State;
+      break;
+      case 2:   RelayIn2_State = RelayIn_State;
+      break;
+      case 3:   RelayIn3_State = RelayIn_State;
+      break;
+      case 4:   RelayIn4_State = RelayIn_State;
+      break;
+      default:  return -4;
+  }
+  Particle.publish("CloudRelayIn RelayIn - B", String::format("RelayIn:%i, RelayIn_State:%i",RelayIn,RelayIn_State));
+}
+
+
 //
 // Function READs or Writes to Digital or Analog pins from the cloud
 //
@@ -14,7 +132,10 @@ int CloudAccessPin(String command) {
   // Make sure upper case
   command.toUpperCase();
 
+  //Particle.publish("CloudAccessPin Command", command);
   Particle.publish("CloudAccessPin Command", command);
+  Particle.publish("CloudAccessPin RelayIn3_State", String(RelayIn3_State));
+  //Particle.publish("CloudAccessPin Command", command);
 
   //convert ascii to integer
   int pinNumber = command.charAt(1) - '0';
@@ -108,52 +229,9 @@ int ReadDigitalPin(int pin) {
   return digitalRead(pin);
 }
 
-
-// -----------------------------------
-// Controlling LEDs/Circuits over the Internet
-// -----------------------------------
-
-// First, let's create our "shorthand" for the pins used
-int ic2_sda = D0;
-int i2c_scl = D1;
-int RelayIn1 = D2;
-int RelayIn2 = D3;
-int RelayIn3 = D4;
-int RelayIn4 = D5;
-int RelayIn1_State = HIGH;
-int RelayIn2_State = HIGH;
-int RelayIn3_State = HIGH;
-int RelayIn4_State = HIGH;
-int Switch1 = A2;
-int Switch2 = A3;
-int Switch3 = A4;
-int Switch4 = A5;
-int Switch1_State = HIGH;
-int Switch2_State = HIGH;
-int Switch3_State = HIGH;
-int Switch4_State = HIGH;
-int Prev_Switch1_State = HIGH;
-int Prev_Switch2_State = HIGH;
-int Prev_Switch3_State = HIGH;
-int Prev_Switch4_State = HIGH;
-
-int Led1 = D6;
-int Led2 = D7;
-
-// Save IP,SSID & MAC to variables
-char myIpAddress[24];
-String SSID = "";
-byte MAC[6];
-
-// Time syncing data
-#define ONE_DAY_MILLIS (24 * 60 * 60 * 1000)
-unsigned long lastSync = millis();
-
-// Init rge lcd rgb color
-const int colorR = 128;
-const int colorG = 128;
-const int colorB = 0;
-
+//
+// Main Functions
+//
 
 //
 // Setup loop that is run only once at bootup
@@ -183,6 +261,7 @@ void setup() {
   // Enable could access to function
   // https://api.particle.io/v1/devices/2e0048000a47343432313031/WritePin?access_token=***************?args=D4,HIGH
   Particle.function("AccessPin", CloudAccessPin);
+  Particle.function("RelayInChg", CloudRelayInChange);
 
   // Expose all variables to the cloud. Note current maximum is 10.
   // https://api.particle.io/v1/devices/2e0048000a47343432313031/IP?access_token=***************
@@ -201,18 +280,25 @@ void setup() {
   Particle.variable("PrevSw3", Prev_Switch3_State);
   Particle.variable("PrevSw4", Prev_Switch4_State);
 
-  // set up the LCD's number of columns and rows:
+  // Set up the LCD's number of columns and rows:
   lcd.begin(16, 2);
+  // Set LCD background color
   lcd.setRGB(colorR, colorG, colorB);
 
-  // Print a message to the LCD.
-  lcd.print("Hello, setup done");
+  lcd.clear();
+  lcd.setCursor(0, 0);
+  lcd.print("Hello, world!");
+  lcd.setCursor(0, 1);
+  lcd.print("Setup Complete!!");
   delay(1000);
 }
 
 //
 // Infinty loop that runs after setup() function
 void loop() {
+  // Get the current Millis for this loop
+  currentSync = millis();
+
   //Particle.publish("LOOP", String(Switch3_State) );
   Prev_Switch1_State = Switch1_State;
   Prev_Switch2_State = Switch2_State;
@@ -230,14 +316,28 @@ void loop() {
   RelayIn3_State = CheckSwitchStateChanged(Switch3, Switch3_State, Prev_Switch3_State, RelayIn3, RelayIn3_State);
   RelayIn4_State = CheckSwitchStateChanged(Switch4, Switch4_State, Prev_Switch4_State, RelayIn4, RelayIn4_State);
 
-  // set the cursor to column 0, line 1
-  // (note: line 1 is the second row, since counting begins with 0):
-  lcd.clear();
-  lcd.setCursor(0, 0);
-  lcd.print(myIpAddress);
-  lcd.setCursor(0, 1);
-  // print the number of seconds since reset:
-  lcd.print(millis()/1000);
+  // Update the display every second when the lastSync is > 1000 Millis ie one second
+  // This is needed so the loop() can run faster to detect switch has been flipped
+  if ( (currentSync - lastSecSync) > 1000) {
+    // set the cursor to column 0, line 1
+    // (note: line 1 is the second row, since counting begins with 0):
+    lcd.clear();
+    lcd.setCursor(0, 0);
+    //lcd.print(myIpAddress);
+    lcd.print(String::format("1:%i 2:%i 3:%i 4:%i", RelayIn1_State, RelayIn2_State, RelayIn3_State, RelayIn4_State));
+    lcd.setCursor(0, 1);
+    // print the number of seconds since reset:
+    lcd.print(String::format("%i %i %i", currentSync/1000, lastSecSync/1000, currentSync - lastSecSync ));
+    lastSecSync = currentSync;
+  }
 
+  // Sync time with cloud once a day
+  if ( (currentSync - lastDaySync) > ONE_DAY_MILLIS) {
+    // Request time synchronization from the Particle Cloud
+    Particle.syncTime();
+    lastDaySync = currentSync;
+  }
+
+  // Add a delay so loop only checks if physical switch state changes 10 times in one second.
   delay(100);
 }
