@@ -4,7 +4,6 @@
 rgb_lcd lcd;
 
 
-
 // -----------------------------------
 // Controlling LEDs/Circuits over the Internet
 // -----------------------------------
@@ -43,12 +42,13 @@ byte MAC[6];
 
 // Initialize time tracking stamps
 #define ONE_DAY_MILLIS (24 * 60 * 60 * 1000)
-unsigned long lastDaySync = millis();
-unsigned long lastSecSync = lastDaySync;
-unsigned long lastMSecSync = lastDaySync;
-unsigned long currentSync = lastDaySync;
+unsigned long currentSync = millis();
+unsigned long lastMinSync = currentSync;
+unsigned long lastSecSync = currentSync;
+unsigned long lastMSecSync = currentSync;
+unsigned long lastDaySync = currentSync;
 
-// Init rge lcd rgb color
+// Init RGB lcd color for background
 const int colorR = 128;
 const int colorG = 128;
 const int colorB = 0;
@@ -180,7 +180,7 @@ int CloudAccessPin(String command) {
 //
 // Function set Digital output HIGH or LOW
 //
-// Argument A1,HIGH or D4,LOW
+// Argument A1, HIGH or D4, LOW
 int WriteDigitalPin(int pin, int state) {
   Particle.publish("Pin - WriteDigital", String(pin) );
 
@@ -252,6 +252,12 @@ void setup() {
   digitalWrite(Led1, LOW);
   digitalWrite(Led2, LOW);
 
+  // Set the RelayIn# output to HIGH when we start
+  WriteDigitalPin(RelayIn1, HIGH);
+  WriteDigitalPin(RelayIn2, HIGH);
+  WriteDigitalPin(RelayIn3, HIGH);
+  WriteDigitalPin(RelayIn4, HIGH);
+
   // Publish devi's IP
   // Build IP Address and publish
   IPAddress myIp = WiFi.localIP();
@@ -299,12 +305,13 @@ void loop() {
   // Get the current Millis for this loop
   currentSync = millis();
 
-  //Particle.publish("LOOP", String(Switch3_State) );
+  // At the start of loop copt Switch$_State over to Prev_Switch#_State so we can tell if State has changed from previous loop
   Prev_Switch1_State = Switch1_State;
   Prev_Switch2_State = Switch2_State;
   Prev_Switch3_State = Switch3_State;
   Prev_Switch4_State = Switch4_State;
 
+  // Read the four anlog inputs for a LOW or HIGH state
   Switch1_State = ReadDigitalPin(Switch1);
   Switch2_State = ReadDigitalPin(Switch2);
   Switch3_State = ReadDigitalPin(Switch3);
@@ -318,7 +325,7 @@ void loop() {
 
   // Update the display every second when the lastSync is > 1000 Millis ie one second
   // This is needed so the loop() can run faster to detect switch has been flipped
-  if ( (currentSync - lastSecSync) > 1000) {
+  if ( (currentSync - lastSecSync) > 1000 ) {
     // set the cursor to column 0, line 1
     // (note: line 1 is the second row, since counting begins with 0):
     lcd.clear();
@@ -332,7 +339,13 @@ void loop() {
   }
 
   // Sync time with cloud once a day
-  if ( (currentSync - lastDaySync) > ONE_DAY_MILLIS) {
+  if ( (currentSync - lastMinSync) > 6000 ) {
+    lastMinSync = currentSync;
+  }
+
+
+  // Sync time with cloud once a day
+  if ( (currentSync - lastDaySync) > ONE_DAY_MILLIS ) {
     // Request time synchronization from the Particle Cloud
     Particle.syncTime();
     lastDaySync = currentSync;
