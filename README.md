@@ -13,16 +13,16 @@ TidyCad files:
 # Mappings
 Pin     | Pin Number | Pin Variable   | State Variable | Previous State Variable
 ------- | ---------- | -------------- | -------------- | ----------------------- 
-D0 | ic2_sda | 0
-D1 | i2c_scl | 1
-D2 | RelayIn1 | 2 | RelayIn1_State |
-D3 | RelayIn2 | 3 | RelayIn2_State |
-D4 | RelayIn3 | 4 | RelayIn3_State |
-D5 | RelayIn4 | 5 | RelayIn4_State |
-A2 | Switch1 | 12 | Switch1_State | Prev_Switch1_State
-A3 | Switch2 | 13 | Switch2_State | Prev_Switch2_State
-A4 | Switch3 | 14 | Switch3_State | Prev_Switch3_State
-A5 | Switch4 | 15 | Switch4_State | Prev_Switch4_State
+D0 | 0 |ic2_sda
+D1 | 1 | i2c_scl 
+D2 | 2 | RelayIn1 | RelayIn1_State |
+D3 | 3 | RelayIn2 | RelayIn2_State |
+D4 | 4 | RelayIn3 | RelayIn3_State |
+D5 | 5 | RelayIn4 | RelayIn4_State |
+A2 | 12 | Switch1 | Switch1_State | Prev_Switch1_State
+A3 | 13 | Switch2 | Switch2_State | Prev_Switch2_State
+A4 | 14 | Switch3 | Switch3_State | Prev_Switch3_State
+A5 | 15 | Switch4 | Switch4_State | Prev_Switch4_State
   
 # Hardware
 Description     | Model #         | Quanity | Price | Shipping | Total 
