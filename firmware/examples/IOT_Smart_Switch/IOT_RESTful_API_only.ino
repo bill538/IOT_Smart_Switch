@@ -1,5 +1,5 @@
 // This #include statement was automatically added by the Spark IDE.
-#include "spark-web-embd-rest-json/SparkTime.h"
+#include "SparkTime.h"
 #include "spark-web-embd-rest-json/HttpRequest.h"
 #include "spark-web-embd-rest-json/HttpResponse.h"
 #include "spark-web-embd-rest-json/http_parser.h"
@@ -14,7 +14,7 @@ unsigned long currentTime;
 unsigned long lastTime = 0UL;
 String timeStr;
 char* TS;
-        
+
 class Welcome : public HttpResponse {
 protected:
 //Formatage page accueil  ---------------------------------------------------------------------------------------
@@ -65,22 +65,22 @@ protected:
 
 public:
 // Port d'écoute TCP/80.
-    WebServer() : TCPServer(80) {}    
-    WebServer(const unsigned aPort) : TCPServer(aPort) {}    
+    WebServer() : TCPServer(80) {}
+    WebServer(const unsigned aPort) : TCPServer(aPort) {}
 // Doît-être utilisé dans la fonction boucle loop() .
     void loop() {
         char jsonD[96];
         char jsonA[128];
         TS = (char*)timeStr.c_str();
         if (TCPClient client = available()) {
-            
+
             HttpRequest hr;
             while (int nb = client.available()) {
                 Serial.println(nb);
                 for (int i = nb; i > 0; --i) {
                     const char buf = client.read();
                     Serial.print(buf);
-                    hr.parse(buf);    
+                    hr.parse(buf);
                 }
                 Serial.println();
             }
@@ -93,7 +93,7 @@ public:
             if (slre_match("^/(|index.htm)$", hr.URL(), strlen(hr.URL()), NULL, 0) >= 0) {
                 client << welcome;
 //URL JSON --------------------------------------------------------------------------------------------------
-            } else if ((slre_match("^/json/(ana|dig)$", hr.URL(), strlen(hr.URL()), caps, 1) >= 0)) { 
+            } else if ((slre_match("^/json/(ana|dig)$", hr.URL(), strlen(hr.URL()), caps, 1) >= 0)) {
                 pinMode(D0, OUTPUT);
                 if (!strcmp(caps[0].ptr, "dig")) {
                     sprintf(jsonD,"{\"TS\":%s\,\"D0\":%ld\,\"D1\":%ld,\"D2\":%ld,\"D3\":%ld,\"D4\":%ld,\"D5\":%ld,\"D6\":%ld,\"D7\":%ld}",TS,digitalRead(0),digitalRead(1),digitalRead(2),digitalRead(3),digitalRead(4),digitalRead(5),digitalRead(6),digitalRead(7));
@@ -105,9 +105,9 @@ public:
                     client << resp.status(400);
                 } else {
                     client << help;
-                }                    
+                }
 //URL REST D0 -----------------------------------------------------------------------------------------------
-            } else if ((slre_match("^/D0/(on|off)$", hr.URL(), strlen(hr.URL()), caps, 1) >= 0)) { 
+            } else if ((slre_match("^/D0/(on|off)$", hr.URL(), strlen(hr.URL()), caps, 1) >= 0)) {
                 pinMode(D0, OUTPUT);
                 if (!strcmp(caps[0].ptr, "on")) {
                     digitalWrite(D0, HIGH);
@@ -119,7 +119,7 @@ public:
                     client << help;
                 }
 //URL REST D1 -----------------------------------------------------------------------------------------------
-            } else if ((slre_match("^/D1/(on|off)$", hr.URL(), strlen(hr.URL()), caps, 1) >= 0)) { 
+            } else if ((slre_match("^/D1/(on|off)$", hr.URL(), strlen(hr.URL()), caps, 1) >= 0)) {
                 pinMode(D1, OUTPUT);
                 if (!strcmp(caps[0].ptr, "on")) {
                     digitalWrite(D1, HIGH);
@@ -131,7 +131,7 @@ public:
                     client << help;
                 }
 //URL REST D2 -----------------------------------------------------------------------------------------------
-            } else if ((slre_match("^/D2/(on|off)$", hr.URL(), strlen(hr.URL()), caps, 1) >= 0)) { 
+            } else if ((slre_match("^/D2/(on|off)$", hr.URL(), strlen(hr.URL()), caps, 1) >= 0)) {
                 pinMode(D2, OUTPUT);
                 if (!strcmp(caps[0].ptr, "on")) {
                     digitalWrite(D2, HIGH);
@@ -143,7 +143,7 @@ public:
                     client << help;
                 }
 //URL REST D3 -----------------------------------------------------------------------------------------------
-            } else if ((slre_match("^/D3/(on|off)$", hr.URL(), strlen(hr.URL()), caps, 1) >= 0)) { 
+            } else if ((slre_match("^/D3/(on|off)$", hr.URL(), strlen(hr.URL()), caps, 1) >= 0)) {
                 pinMode(D3, OUTPUT);
                 if (!strcmp(caps[0].ptr, "on")) {
                     digitalWrite(D3, HIGH);
@@ -155,7 +155,7 @@ public:
                     client << help;
                 }
 //URL REST D4 -----------------------------------------------------------------------------------------------
-            } else if ((slre_match("^/D4/(on|off)$", hr.URL(), strlen(hr.URL()), caps, 1) >= 0)) { 
+            } else if ((slre_match("^/D4/(on|off)$", hr.URL(), strlen(hr.URL()), caps, 1) >= 0)) {
                 pinMode(D4, OUTPUT);
                 if (!strcmp(caps[0].ptr, "on")) {
                     digitalWrite(D4, HIGH);
@@ -167,7 +167,7 @@ public:
                     client << help;
                 }
 //URL REST D5 -----------------------------------------------------------------------------------------------
-            } else if ((slre_match("^/D5/(on|off)$", hr.URL(), strlen(hr.URL()), caps, 1) >= 0)) { 
+            } else if ((slre_match("^/D5/(on|off)$", hr.URL(), strlen(hr.URL()), caps, 1) >= 0)) {
                 pinMode(D5, OUTPUT);
                 if (!strcmp(caps[0].ptr, "on")) {
                     digitalWrite(D5, HIGH);
@@ -179,7 +179,7 @@ public:
                     client << help;
                 }
 //URL REST D6 -----------------------------------------------------------------------------------------------
-            } else if ((slre_match("^/D6/(on|off)$", hr.URL(), strlen(hr.URL()), caps, 1) >= 0)) { 
+            } else if ((slre_match("^/D6/(on|off)$", hr.URL(), strlen(hr.URL()), caps, 1) >= 0)) {
                 pinMode(D6, OUTPUT);
                 if (!strcmp(caps[0].ptr, "on")) {
                     digitalWrite(D6, HIGH);
@@ -191,7 +191,7 @@ public:
                     client << help;
                 }
 //URL REST D7 -----------------------------------------------------------------------------------------------
-            } else if ((slre_match("^/D7/(on|off)$", hr.URL(), strlen(hr.URL()), caps, 1) >= 0)) { 
+            } else if ((slre_match("^/D7/(on|off)$", hr.URL(), strlen(hr.URL()), caps, 1) >= 0)) {
                 pinMode(D7, OUTPUT);
                 if (!strcmp(caps[0].ptr, "on")) {
                     digitalWrite(D7, HIGH);
@@ -216,7 +216,7 @@ public:
             client.flush();
             delay(100);
             client.stop();
-        }   
+        }
     };
 };
 
@@ -251,7 +251,7 @@ void loop() {
 	    //Serial.println(rtc.ISODateString(currentTime));
     } else if (sec == 50) {
 	    // UTC or Zulu time
-	    //Serial.println(rtc.ISODateUTCString(currentTime));	
+	    //Serial.println(rtc.ISODateUTCString(currentTime));
       } else {
 		timeStr = "";
 	    timeStr += rtc.yearString(currentTime);
@@ -259,7 +259,7 @@ void loop() {
 	    timeStr += rtc.dayString(currentTime);
 	    timeStr += rtc.hourString(currentTime);
 	    timeStr += rtc.minuteString(currentTime);
-	    timeStr += rtc.secondString(currentTime);	
+	    timeStr += rtc.secondString(currentTime);
 	    //Serial.println(timeStr);
       }
       lastTime = currentTime;
