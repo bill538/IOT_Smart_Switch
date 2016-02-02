@@ -81,7 +81,7 @@ char* TS;
 
 class Welcome : public HttpResponse {
 protected:
-//Formatage page accueil  ---------------------------------------------------------------------------------------
+//Home page formatting  ---------------------------------------------------------------------------------------
     Stream& printBody(Stream& aStream) const {
         aStream.print("<html> \
     <head> \
@@ -101,7 +101,7 @@ public:
 
 class Help :  public HttpResponse {
 protected:
-    //Formatage page aide  ---------------------------------------------------------------------------------------
+    //Help page formatting  ---------------------------------------------------------------------------------------
     Stream& printBody(Stream& aStream) const {
     aStream.print("<html> \
     <head> \
@@ -110,8 +110,8 @@ protected:
     </title> \
     </head> \
     <body> \
-        <p>Le paramètre doit-être 'ana' ou 'dig' pour l'url /json/.</p> \
-        <p>Le paramètre doit-être 'on' ou 'off' pour l'url /D0/ à /D7/.</p> \
+        <p>The parameter must be 'ana ' or ' dig' for the url  /json/.</p> \
+        <p>The setting should be 'on' or 'off' to the url /D0/ to /D7/.</p> \
     </body>\n \
     </html>\n");
         return aStream;
@@ -121,17 +121,17 @@ public:
 
 const Help help;
 const Welcome welcome;
-// "Class WebServer" implémente TCPServer et fourni toutes les methodes pour le serveur http .
+// "Class WebServer " implements TCPServer and provided all the methods for http server.
 class WebServer : public TCPServer {
 private:
 
 protected:
 
 public:
-// Port d'écoute TCP/80.
+// Listen port TCP/80.
     WebServer() : TCPServer(80) {}
     WebServer(const unsigned aPort) : TCPServer(aPort) {}
-// Doît-être utilisé dans la fonction boucle loop() .
+// Must be used in the loop function loop ().
     void loop() {
         char jsonD[96];
         char jsonA[128];
@@ -153,7 +153,7 @@ public:
             hr.printHeaders();
 #endif
             struct slre_cap caps[4];
-//Gestion des URL -----------------------------------------------------------------------------------------------
+//URL handling -----------------------------------------------------------------------------------------------
             if (slre_match("^/(|index.htm)$", hr.URL(), strlen(hr.URL()), NULL, 0) >= 0) {
                 client << welcome;
 //URL JSON --------------------------------------------------------------------------------------------------
@@ -266,7 +266,7 @@ public:
                 } else {
                     client << help;
                 }
-//URL Inconnue ----------------------------------------------------------------------------------------------
+//Unknown URL ----------------------------------------------------------------------------------------------
             } else {
                 char lib[1024];
                 lib[0] = '\0';
@@ -386,11 +386,6 @@ int CloudAccessPin(String command) {
   if(command.startsWith("A")) {
     pinNumber = pinNumber+10;
   }
-
-  //Particle.publish("Pin", String(pinNumber) );
-  //Particle.publish("String", String(command.substring(3,7)) );
-  //Particle.publish("String", String(command.substring(9,12)) );
-  //Particle.publish("String", String(command.substring(9,13)) );
 
   // Check if READ or Write operation
   if ( command.substring(3,7) == "READ" ) {
