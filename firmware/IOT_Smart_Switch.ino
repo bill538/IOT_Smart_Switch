@@ -132,48 +132,39 @@ void outputPins(WebServer &server, WebServer::ConnectionType type, bool addContr
   if (addControls)
     server << "<form action='" PREFIX "/form' method='post'>";
 
-  server << "<h1>Digital Pins</h1><p>";
+  server << "<h1>Relay States</h1><p>";
   // Check if RelayIn_State is 1(OFF) or 0(ON). Then with the opposit to the pin.
+
+  //
+  // <input type="checkbox" name="vehicle1" value="Bike"> I have a bike<br>
+
+  server << "RelayIn1_State: <input type=checkbox name=RelayIn1_State value=";
   if ( RelayIn1_State == 0 ) {
-    server << "<h1>RelayIn1_State: ON</h1>" << RelayIn1_State << "<p>";
+    server << "ON <br>";
   } else {
-    server << "<h1>RelayIn1_State: OFF</h1>" << RelayIn1_State << "<p>";
+    server << "OFF <br>";
   }
-  server << "<h1>RelayIn2_State:</h1>" << RelayIn2_State << "<p>";
-  server << "<h1>RelayIn3_State:</h1>" << RelayIn3_State << "<p>";
-  server << "<h1>RelayIn4_State:</h1>" << RelayIn4_State << "<p>";
-
-  for (i = 0; i <= 8; ++i)
-  {
-    // ignore the pins we use to talk to the Ethernet chip
-    int val = digitalRead(i);
-    server << "Digital " << i << ": ";
-    if (addControls)
-    {
-      char pinName[4];
-      pinName[0] = 'd';
-      itoa(i, pinName + 1, 10);
-      server.radioButton(pinName, "1", "On", val);
-      server << " ";
-      server.radioButton(pinName, "0", "Off", !val);
-    }
-    else
-      server << (val ? "HIGH" : "LOW");
-
-    server << "<br/>";
+  server << "RelayIn2_State: <input type=checkbox name=RelayIn2_State value=";
+  if ( RelayIn2_State == 0 ) {
+    server << "ON <br>";
+  } else {
+    server << "OFF <br>";
   }
-
-  server << "</p><h1>Analog Pins</h1><p>";
-  for (i = 0; i <= 8; ++i)
-  {
-    int val = analogRead(i);
-    server << "Analog " << i << ": " << val << "<br/>";
+  server << "RelayIn3_State: <input type=checkbox name=RelayIn3_State value=";
+  if ( RelayIn3_State == 0 ) {
+    server << "ON <br>";
+  } else {
+    server << "OFF <br>";
   }
-
-  server << "</p>";
+  server << "RelayIn4_State: <input type=checkbox name=RelayIn4_State value=";
+  if ( RelayIn4_State == 0 ) {
+    server << "ON <br>";
+  } else {
+    server << "OFF <br>";
+  }
 
   if (addControls)
-    server << "<input type='submit' value='Submit'/></form>";
+    server << "<br> <p> <input type='submit' value='Submit'/></form>";
 
   server << "</body></html>";
 }
