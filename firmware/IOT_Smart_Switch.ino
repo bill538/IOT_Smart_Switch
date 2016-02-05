@@ -1,6 +1,8 @@
 //
 // IOT Smart Switch variable initilization BEGIN
 
+#include "IOT_Smart_Switch.h"
+
 // First, let's create our "shorthand" for the pins used
 int ic2_sda = D0;
 int i2c_scl = D1;
