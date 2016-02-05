@@ -1,23 +1,4 @@
 //
-// RGB LCD initilazation BEGIN
-#include "Grove_LCD_RGB_Backlight.h"
-rgb_lcd lcd;
-//
-// RGB LCD initilazation END
-
-//
-// RestAPI initilization BEGIN
-#include "SparkTime.h"
-#include "HttpRequest.h"
-#include "HttpResponse.h"
-#include "http_parser.h"
-#include "spark-web-embd-rest-json.h"
-#include <map>
-#include <list>
-//
-// RestAPI END
-
-//
 // IOT Smart Switch variable initilization BEGIN
 
 // First, let's create our "shorthand" for the pins used
@@ -55,9 +36,9 @@ byte MAC[6];
 // Initialize time tracking stamps
 #define ONE_DAY_MILLIS (24 * 60 * 60 * 1000)
 unsigned long currentSync = millis();
-unsigned long lastMinSync = currentSync;
-unsigned long lastSecSync = currentSync;
 unsigned long lastMSecSync = currentSync;
+unsigned long lastSecSync = currentSync;
+unsigned long lastMinSync = currentSync;
 unsigned long lastDaySync = currentSync;
 
 // Init RGB lcd color for background
@@ -69,224 +50,161 @@ const int colorB = 0;
 
 
 //
-// RestAPI Variable & Function initilazation BEGIN
-#define WEB_PORT 80;
-UDP UDPClient;
-SparkTime rtc;
-
-unsigned long currentTime;
-unsigned long lastTime = 0UL;
-String timeStr;
-char* TS;
-
-class Welcome : public HttpResponse {
-protected:
-//Home page formatting  ---------------------------------------------------------------------------------------
-    Stream& printBody(Stream& aStream) const {
-        aStream.print("<html> \
-    <head> \
-    <title> \
-    Sparkcore \
-    </title> \
-    </head> \
-    <body bgcolor='#A9D300'>\
-        <p><a href='/json/dig'>Json Digital</a></p> \
-        <p><a href='/json/ana'>Json Analog</a></p> \
-    </body>\n \
-    </html>\n");
-        return aStream;
-    }
-public:
-};
-
-class Help :  public HttpResponse {
-protected:
-    //Help page formatting  ---------------------------------------------------------------------------------------
-    Stream& printBody(Stream& aStream) const {
-    aStream.print("<html> \
-    <head> \
-    <title> \
-    Sparkcore \
-    </title> \
-    </head> \
-    <body> \
-        <p>The parameter must be 'ana ' or ' dig' for the url  /json/.</p> \
-        <p>The setting should be 'on' or 'off' to the url /D0/ to /D7/.</p> \
-    </body>\n \
-    </html>\n");
-        return aStream;
-    }
-public:
-};
-
-const Help help;
-const Welcome welcome;
-// "Class WebServer " implements TCPServer and provided all the methods for http server.
-class WebServer : public TCPServer {
-private:
-
-protected:
-
-public:
-// Listen port TCP/80.
-    WebServer() : TCPServer(80) {}
-    WebServer(const unsigned aPort) : TCPServer(aPort) {}
-// Must be used in the loop function loop ().
-    void loop() {
-        char jsonD[96];
-        char jsonA[128];
-        TS = (char*)timeStr.c_str();
-        if (TCPClient client = available()) {
-
-            HttpRequest hr;
-            while (int nb = client.available()) {
-                Serial.println(nb);
-                for (int i = nb; i > 0; --i) {
-                    const char buf = client.read();
-                    Serial.print(buf);
-                    hr.parse(buf);
-                }
-                Serial.println();
-            }
-            Serial.print("URL : "); Serial.println(hr.URL());
-#ifdef USE_HEADERS
-            hr.printHeaders();
-#endif
-            struct slre_cap caps[4];
-//URL handling -----------------------------------------------------------------------------------------------
-            if (slre_match("^/(|index.htm)$", hr.URL(), strlen(hr.URL()), NULL, 0) >= 0) {
-                client << welcome;
-//URL JSON --------------------------------------------------------------------------------------------------
-            } else if ((slre_match("^/json/(ana|dig)$", hr.URL(), strlen(hr.URL()), caps, 1) >= 0)) {
-                pinMode(D0, OUTPUT);
-                if (!strcmp(caps[0].ptr, "dig")) {
-                    sprintf(jsonD,"{\"TS\":\"%s\"\,\"D0\":\"%ld\"\,\"D1\":\"%ld\",\"D2\":\"%ld\",\"D3\":\"%ld\",\"D4\":\"%ld\",\"D5\":\"%ld\",\"D6\":\"%ld\",\"D7\":\"%ld\"}",TS,digitalRead(0),digitalRead(1),digitalRead(2),digitalRead(3),digitalRead(4),digitalRead(5),digitalRead(6),digitalRead(7));
-                    HttpResponseStatic resp(jsonD, strlen(jsonD));
-                    client << resp.status(400);
-                } else if (!strcmp(caps[0].ptr, "ana")) {
-                    sprintf(jsonA,"{\"TS\":\"%s\"\,\"A0\":\"%ld\"\,\"A1\":\"%ld\",\"A2\":\"%ld\",\"A3\":\"%ld\",\"A4\":\"%ld\",\"A5\":\"%ld\",\"A6\":\"%ld\",\"A7\":\"%ld\"}",TS,analogRead(0),analogRead(1),analogRead(2),analogRead(3),analogRead(4),analogRead(5),analogRead(6),analogRead(7));
-                    HttpResponseStatic resp(jsonA, strlen(jsonA));
-                    client << resp.status(400);
-                } else {
-                    client << help;
-                }
-//URL REST D0 -----------------------------------------------------------------------------------------------
-            } else if ((slre_match("^/D0/(on|off)$", hr.URL(), strlen(hr.URL()), caps, 1) >= 0)) {
-                pinMode(D0, OUTPUT);
-                if (!strcmp(caps[0].ptr, "on")) {
-                    digitalWrite(D0, HIGH);
-                    client << welcome;
-                } else if (!strcmp(caps[0].ptr, "off")) {
-                    digitalWrite(D0, LOW);
-                    client << welcome;
-                } else {
-                    client << help;
-                }
-//URL REST D1 -----------------------------------------------------------------------------------------------
-            } else if ((slre_match("^/D1/(on|off)$", hr.URL(), strlen(hr.URL()), caps, 1) >= 0)) {
-                pinMode(D1, OUTPUT);
-                if (!strcmp(caps[0].ptr, "on")) {
-                    digitalWrite(D1, HIGH);
-                    client << welcome;
-                } else if (!strcmp(caps[0].ptr, "off")) {
-                    digitalWrite(D1, LOW);
-                    client << welcome;
-                } else {
-                    client << help;
-                }
-//URL REST D2 -----------------------------------------------------------------------------------------------
-            } else if ((slre_match("^/D2/(on|off)$", hr.URL(), strlen(hr.URL()), caps, 1) >= 0)) {
-                pinMode(D2, OUTPUT);
-                if (!strcmp(caps[0].ptr, "on")) {
-                    digitalWrite(D2, HIGH);
-                    client << welcome;
-                } else if (!strcmp(caps[0].ptr, "off")) {
-                    digitalWrite(D2, LOW);
-                    client << welcome;
-                } else {
-                    client << help;
-                }
-//URL REST D3 -----------------------------------------------------------------------------------------------
-            } else if ((slre_match("^/D3/(on|off)$", hr.URL(), strlen(hr.URL()), caps, 1) >= 0)) {
-                pinMode(D3, OUTPUT);
-                if (!strcmp(caps[0].ptr, "on")) {
-                    digitalWrite(D3, HIGH);
-                    client << welcome;
-                } else if (!strcmp(caps[0].ptr, "off")) {
-                    digitalWrite(D3, LOW);
-                    client << welcome;
-                } else {
-                    client << help;
-                }
-//URL REST D4 -----------------------------------------------------------------------------------------------
-            } else if ((slre_match("^/D4/(on|off)$", hr.URL(), strlen(hr.URL()), caps, 1) >= 0)) {
-                pinMode(D4, OUTPUT);
-                if (!strcmp(caps[0].ptr, "on")) {
-                    digitalWrite(D4, HIGH);
-                    client << welcome;
-                } else if (!strcmp(caps[0].ptr, "off")) {
-                    digitalWrite(D4, LOW);
-                    client << welcome;
-                } else {
-                    client << help;
-                }
-//URL REST D5 -----------------------------------------------------------------------------------------------
-            } else if ((slre_match("^/D5/(on|off)$", hr.URL(), strlen(hr.URL()), caps, 1) >= 0)) {
-                pinMode(D5, OUTPUT);
-                if (!strcmp(caps[0].ptr, "on")) {
-                    digitalWrite(D5, HIGH);
-                    client << welcome;
-                } else if (!strcmp(caps[0].ptr, "off")) {
-                    digitalWrite(D5, LOW);
-                    client << welcome;
-                } else {
-                    client << help;
-                }
-//URL REST D6 -----------------------------------------------------------------------------------------------
-            } else if ((slre_match("^/D6/(on|off)$", hr.URL(), strlen(hr.URL()), caps, 1) >= 0)) {
-                pinMode(D6, OUTPUT);
-                if (!strcmp(caps[0].ptr, "on")) {
-                    digitalWrite(D6, HIGH);
-                    client << welcome;
-                } else if (!strcmp(caps[0].ptr, "off")) {
-                    digitalWrite(D6, LOW);
-                    client << welcome;
-                } else {
-                    client << help;
-                }
-//URL REST D7 -----------------------------------------------------------------------------------------------
-            } else if ((slre_match("^/D7/(on|off)$", hr.URL(), strlen(hr.URL()), caps, 1) >= 0)) {
-                pinMode(D7, OUTPUT);
-                if (!strcmp(caps[0].ptr, "on")) {
-                    digitalWrite(D7, HIGH);
-                    client << welcome;
-                } else if (!strcmp(caps[0].ptr, "off")) {
-                    digitalWrite(D7, LOW);
-                    client << welcome;
-                } else {
-                    client << help;
-                }
-//Unknown URL ----------------------------------------------------------------------------------------------
-            } else {
-                char lib[1024];
-                lib[0] = '\0';
-                strcat(lib, "<html><h1>Not Found</h1>");
-                strcat(lib, "URL: ");
-                strcat(lib, hr.URL());
-                strcat(lib, "</html>");
-                HttpResponseStatic resp(lib, strlen(lib));
-                client << resp.status(404);
-            }
-            client.flush();
-            delay(100);
-            client.stop();
-        }
-    };
-};
-
-WebServer ws;
+// RGB LCD initilazation BEGIN
+#include "Grove_LCD_RGB_Backlight.h"
+rgb_lcd lcd;
 //
-// RestAPI Variable & Function initilazation END
+// RGB LCD initilazation END
+
+
+//
+// Webduino initilization BEGIN
+#include "WebServer.h"
+
+// no-cost stream operator as described at
+// http://sundial.org/arduino/?page_id=119
+template<class T>
+inline Print &operator <<(Print &obj, T arg)
+{ obj.print(arg); return obj; }
+
+
+#define PREFIX ""
+
+WebServer webserver(PREFIX, 80);
+
+// commands are functions that get called by the webserver framework
+// they can read any posted data from client, and they output to server
+
+void jsonCmd(WebServer &server, WebServer::ConnectionType type, char *url_tail, bool tail_complete)
+{
+  if (type == WebServer::POST)
+  {
+    server.httpFail();
+    return;
+  }
+
+  //server.httpSuccess(false, "application/json");
+  server.httpSuccess("application/json");
+
+  if (type == WebServer::HEAD)
+    return;
+
+  int i;
+  server << "{ ";
+  for (i = 0; i <= 9; ++i)
+  {
+    // ignore the pins we use to talk to the Ethernet chip
+    int val = digitalRead(i);
+    server << "\"d" << i << "\": " << val << ", ";
+  }
+
+  for (i = 0; i <= 5; ++i)
+  {
+    int val = analogRead(i);
+    server << "\"a" << i << "\": " << val;
+    if (i != 5)
+      server << ", ";
+  }
+
+  server << " }";
+}
+
+void outputPins(WebServer &server, WebServer::ConnectionType type, bool addControls = false)
+{
+  P(htmlHead) =
+    "<html>"
+    "<head>"
+    "<title>Particle Photon Web Server</title>"
+    "<style type=\"text/css\">"
+    "BODY { font-family: sans-serif }"
+    "H1 { font-size: 14pt; text-decoration: underline }"
+    "P  { font-size: 10pt; }"
+    "</style>"
+    "</head>"
+    "<body>";
+
+  int i;
+  server.httpSuccess();
+  server.printP(htmlHead);
+
+  if (addControls)
+    server << "<form action='" PREFIX "/form' method='post'>";
+
+  server << "<h1>Digital Pins</h1><p>";
+  // Check if RelayIn_State is 1(OFF) or 0(ON). Then with the opposit to the pin.
+  if ( RelayIn1_State == 0 ) {
+    server << "<h1>RelayIn1_State: ON</h1>" << RelayIn1_State << "<p>";
+  } else {
+    server << "<h1>RelayIn1_State: OFF</h1>" << RelayIn1_State << "<p>";
+  }
+  server << "<h1>RelayIn2_State:</h1>" << RelayIn2_State << "<p>";
+  server << "<h1>RelayIn3_State:</h1>" << RelayIn3_State << "<p>";
+  server << "<h1>RelayIn4_State:</h1>" << RelayIn4_State << "<p>";
+
+  for (i = 0; i <= 8; ++i)
+  {
+    // ignore the pins we use to talk to the Ethernet chip
+    int val = digitalRead(i);
+    server << "Digital " << i << ": ";
+    if (addControls)
+    {
+      char pinName[4];
+      pinName[0] = 'd';
+      itoa(i, pinName + 1, 10);
+      server.radioButton(pinName, "1", "On", val);
+      server << " ";
+      server.radioButton(pinName, "0", "Off", !val);
+    }
+    else
+      server << (val ? "HIGH" : "LOW");
+
+    server << "<br/>";
+  }
+
+  server << "</p><h1>Analog Pins</h1><p>";
+  for (i = 0; i <= 8; ++i)
+  {
+    int val = analogRead(i);
+    server << "Analog " << i << ": " << val << "<br/>";
+  }
+
+  server << "</p>";
+
+  if (addControls)
+    server << "<input type='submit' value='Submit'/></form>";
+
+  server << "</body></html>";
+}
+
+void formCmd(WebServer &server, WebServer::ConnectionType type, char *url_tail, bool tail_complete)
+{
+  if (type == WebServer::POST)
+  {
+    bool repeat;
+    char name[16], value[16];
+    do
+    {
+      repeat = server.readPOSTparam(name, 16, value, 16);
+      if (name[0] == 'd')
+      {
+        int pin = strtoul(name + 1, NULL, 10);
+        int val = strtoul(value, NULL, 10);
+        digitalWrite(pin, val);
+      }
+    } while (repeat);
+
+    server.httpSeeOther(PREFIX "/form");
+  }
+  else
+    outputPins(server, type, true);
+}
+
+void defaultCmd(WebServer &server, WebServer::ConnectionType type, char *url_tail, bool tail_complete)
+{
+  outputPins(server, type, false);
+}
+//
+// Webduino initilization END
 
 
 //
@@ -320,7 +238,7 @@ int CloudRelayInChange(String command) {
       break;
       case 2:   RelayIn = RelayIn2;
                 RelayIn_State = RelayIn2_State;
-     break;
+      break;
       case 3:   RelayIn = RelayIn3;
                 RelayIn_State = RelayIn3_State;
       break;
@@ -518,10 +436,15 @@ void setup() {
   Particle.variable("PrevSw3", Prev_Switch3_State);
   Particle.variable("PrevSw4", Prev_Switch4_State);
 
-  // WebServer Setup
-  rtc.begin(&UDPClient, "north-america.pool.ntp.org");
-  rtc.setTimeZone(1); // gmt offset
-  ws.begin();
+  //
+  // Webduino setup BEGIN
+  webserver.begin();
+
+  webserver.setDefaultCommand(&defaultCmd);
+  webserver.addCommand("json", &jsonCmd);
+  webserver.addCommand("form", &formCmd);
+  //
+  // Webduino setup END
 
   // Set up the LCD's number of columns and rows:
   lcd.begin(16, 2);
@@ -538,40 +461,18 @@ void setup() {
 }
 
 void loop() {
+
+  //
+  // Webduino loop END
+  // process incoming connections one at a time forever
+  webserver.processConnection();
+  //
+  // Webduino loop END
+
   // Get the current Millis for this loop
   currentSync = millis();
 
-  // WebServer Section
-  currentTime = rtc.now();
-  if (currentTime != lastTime) {
-    byte sec = rtc.second(currentTime);
-    if (sec == 10) {
-      // Build Date String
-	    timeStr = "";
-	    timeStr += rtc.yearString(currentTime);
-	    timeStr += rtc.monthString(currentTime);
-	    timeStr += rtc.dayString(currentTime);
-	    Serial.println(timeStr);
-    } else if (sec == 40) {
-	    // Including current timezone
-	    //Serial.println(rtc.ISODateString(currentTime));
-    } else if (sec == 50) {
-	    // UTC or Zulu time
-	    //Serial.println(rtc.ISODateUTCString(currentTime));
-    } else {
-      timeStr = "";
-	    timeStr += rtc.yearString(currentTime);
-	    timeStr += rtc.monthString(currentTime);
-	    timeStr += rtc.dayString(currentTime);
-	    timeStr += rtc.hourString(currentTime);
-	    timeStr += rtc.minuteString(currentTime);
-	    timeStr += rtc.secondString(currentTime);
-	    //Serial.println(timeStr);
-    }
-    lastTime = currentTime;
-  }
-  ws.loop();
-
+  //
   // Run below code every 100 mili seconds 1/10th second
   if ( (currentSync - lastMSecSync) > 100 ) {
     // At the start of loop copt Switch$_State over to Prev_Switch#_State so we can tell if State has changed from previous loop
@@ -595,9 +496,12 @@ void loop() {
     lastMSecSync = currentSync;
   }
 
-  // Update the display every second when the lastSync is > 1000 Millis ie one second
-  // This is needed so the loop() can run faster to detect switch has been flipped
+
+  //
+  // Run below code every 100 mili second ( 1/10th second )
   if ( (currentSync - lastSecSync) > 1000 ) {
+    // Update the display every second when the lastSync is > 1000 Millis ie one second
+
     // set the cursor to column 0, line 1
     // (note: line 1 is the second row, since counting begins with 0):
     lcd.clear();
@@ -610,19 +514,19 @@ void loop() {
     lastSecSync = currentSync;
   }
 
-  // Sync time with cloud once a day
-  if ( (currentSync - lastMinSync) > 6000 ) {
+  //
+  // Run below code every 60000 mili seconds 60 second
+  if ( (currentSync - lastMinSync) > 60000 ) {
     lastMinSync = currentSync;
   }
 
 
-  // Sync time with cloud once a day
+  //
+  // Run below code every 1 day ( 24 hours )
   if ( (currentSync - lastDaySync) > ONE_DAY_MILLIS ) {
+    // Sync time with cloud once a day
     // Request time synchronization from the Particle Cloud
     Particle.syncTime();
     lastDaySync = currentSync;
   }
-
-  // Add a delay so loop only checks if physical switch state changes 10 times in one second.
-  //delay(100);
 }
