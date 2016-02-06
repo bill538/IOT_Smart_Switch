@@ -114,63 +114,57 @@ void jsonCmd(WebServer &server, WebServer::ConnectionType type, char *url_tail, 
 void outputPins(WebServer &server, WebServer::ConnectionType type, bool addControls = false)
 {
   P(htmlHead) =
-    "<html>"
-    "<head>"
-    "<title>Particle Photon Web Server</title>"
-    "<style type=\"text/css\">"
-    "BODY { font-family: sans-serif }"
-    "H1 { font-size: 14pt; text-decoration: underline }"
-    "P  { font-size: 10pt; }"
-    "</style>"
-    "</head>"
-    "<body>";
+    "<html>\n"
+    "<head>\n"
+    "<title>Particle Photon Web Server</title>\n"
+    "<style type=\"text/css\">\n"
+    "BODY { font-family: sans-serif }\n"
+    "H1 { font-size: 14pt; text-decoration: underline }\n"
+    "P  { font-size: 10pt; }\n"
+    "</style>\n"
+    "</head>\n"
+    "<body>\n";
 
   int i;
   server.httpSuccess();
   server.printP(htmlHead);
 
-  if (addControls)
-    server << "<form action='" PREFIX "/form' method='post'>";
+  if (addControls) {
+    server << "<form action='" PREFIX "/form' method='post'>\n";
 
-  server << "<h1>Relay States</h1><p>";
-  // Check if RelayIn_State is 1(OFF) or 0(ON). Then with the opposit to the pin.
-
-  //
-  // <input type="checkbox" name="vehicle1" value="Bike"> I have a bike<br>
-
-  server << "RelayIn1_State: <input type=checkbox name=RelayIn1_State value=";
-  if ( RelayIn1_State == 0 ) {
-    server << "ON <br>";
-  } else {
-    server << "OFF <br>";
-  }
-  server << "RelayIn2_State: <input type=checkbox name=RelayIn2_State value=";
-  if ( RelayIn2_State == 0 ) {
-    server << "ON <br>";
-  } else {
-    server << "OFF <br>";
-  }
-  server << "RelayIn3_State: <input type=checkbox name=RelayIn3_State value=";
-  if ( RelayIn3_State == 0 ) {
-    server << "ON <br>";
-  } else {
-    server << "OFF <br>";
-  }
-  server << "RelayIn4_State: <input type=checkbox name=RelayIn4_State value=";
-  if ( RelayIn4_State == 0 ) {
-    server << "ON <br>";
-  } else {
-    server << "OFF <br>";
+    server << "<h1>Switch States</h1><p>\n";
+    // Check if RelayIn_State is 1(OFF) or 0(ON). Then with the opposit to the pin.
+    int RelayIn_States[4] = { RelayIn1_State,RelayIn2_State,RelayIn3_State,RelayIn4_State };
+    for (int i = 0; i < 4; i++) {
+      server << "Switch " << i+1 << " is currently <B>";
+      if ( RelayIn_States[i] == 0 ) {
+        server << "ON";
+      } else {
+        server << "OFF";
+      }
+      server << "</B>. <br>\nSwitch " << i+1;
+      if ( RelayIn_States[i] == 0 ) {
+        server << " <B> OFF</B> <input type=checkbox name=RelayIn" << i+1;
+        server << "_State value=1 <br> <br>\n<label for=\"name\">Switch ";
+        server << i+1 << " Timer(Minutes):</label> <input type=\"text\" id=\"RelayIn" << i+1;
+        server << "_State_Timer\" value=0 /><br>\n<hr>\n<br>\n";
+      } else {
+        server << " <B> ON</B> <input type=checkbox name=RelayIn" << i+1;
+        server << "_State value=0 <br> <br>\n<label for=\"name\">Switch ";
+        server << i+1 << " Timer(Minutes):</label> <input type=\"text\" id=\"RelayIn" << i+1;
+        server << "_State_Timer\" value=0 /><br>\n<hr>\n<br>\n";
+      }
+    }
+    server << "<br> <p> <input type='submit' value='Submit'/></form>\n";
   }
 
-  if (addControls)
-    server << "<br> <p> <input type='submit' value='Submit'/></form>";
-
-  server << "</body></html>";
+  server << "</body></html>\n";
+  Particle.publish("outputPins","Finshed build HTML Form");
 }
 
 void formCmd(WebServer &server, WebServer::ConnectionType type, char *url_tail, bool tail_complete)
 {
+  Particle.publish("formCmd",String::format("type:%s",type));
   if (type == WebServer::POST)
   {
     bool repeat;
@@ -182,7 +176,9 @@ void formCmd(WebServer &server, WebServer::ConnectionType type, char *url_tail, 
       {
         int pin = strtoul(name + 1, NULL, 10);
         int val = strtoul(value, NULL, 10);
-        digitalWrite(pin, val);
+        server << "name" << name << "value" << value;
+        Particle.publish("formCmd",String::format("Pin:%i, Val:%i, Repeat:%i, Name:%s%s%s%s%s%s, Val:%s%s%s%s%s%s",pin,val,repeat,name[0],name[1],name[2],name[3],name[4],name[5],value[0],value[1],value[2],value[3],value[4],value[5]));
+        //digitalWrite(pin, val);
       }
     } while (repeat);
 
