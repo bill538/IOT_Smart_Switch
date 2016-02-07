@@ -79,6 +79,7 @@ WebServer webserver(PREFIX, 80);
 
 void jsonCmd(WebServer &server, WebServer::ConnectionType type, char *url_tail, bool tail_complete)
 {
+  server << "<!-- jsonCmd ConnectionType=" << type << " -->\n";
   if (type == WebServer::POST)
   {
     server.httpFail();
@@ -93,7 +94,7 @@ void jsonCmd(WebServer &server, WebServer::ConnectionType type, char *url_tail, 
 
   int i;
   server << "{ ";
-  for (i = 0; i <= 9; ++i)
+  for (i = 0; i <= 8; ++i)
   {
     // ignore the pins we use to talk to the Ethernet chip
     int val = digitalRead(i);
@@ -128,12 +129,14 @@ void outputPins(WebServer &server, WebServer::ConnectionType type, bool addContr
   int i;
   server.httpSuccess();
   server.printP(htmlHead);
+  server << "<!-- outputPins addControls=" << addControls << " ConnectionType=" << type << " -->\n";
 
   if (addControls) {
     server << "<form action='" PREFIX "/form' method='post'>\n";
 
     server << "<h1>Switch States</h1><p>\n";
     // Check if RelayIn_State is 1(OFF) or 0(ON). Then with the opposit to the pin.
+
     int RelayIn_States[4] = { RelayIn1_State,RelayIn2_State,RelayIn3_State,RelayIn4_State };
     for (int i = 0; i < 4; i++) {
       server << "Switch " << i+1 << " is currently <B>";
@@ -142,7 +145,7 @@ void outputPins(WebServer &server, WebServer::ConnectionType type, bool addContr
       } else {
         server << "OFF";
       }
-      server << "</B>. <br>\nSwitch " << i+1;
+      server << "</B>. <br>\nTurn Switch " << i+1;
       if ( RelayIn_States[i] == 0 ) {
         server << " <B> OFF</B> <input type=checkbox name=RelayIn" << i+1;
         server << "_State value=1 <br> <br>\n<label for=\"name\">Switch ";
@@ -164,6 +167,7 @@ void outputPins(WebServer &server, WebServer::ConnectionType type, bool addContr
 
 void formCmd(WebServer &server, WebServer::ConnectionType type, char *url_tail, bool tail_complete)
 {
+  server << "<!-- formCmd ConnectionType=" << type << " -->\n";
   Particle.publish("formCmd",String::format("type:%s",type));
   if (type == WebServer::POST)
   {
@@ -172,11 +176,14 @@ void formCmd(WebServer &server, WebServer::ConnectionType type, char *url_tail, 
     do
     {
       repeat = server.readPOSTparam(name, 16, value, 16);
+      server << "<!-- formCmd name=" << name[0] << name[1] << name[2] << name[3] << name[4] << name[5] << name[6] << name[7] << " -->\n";
+      server << "<!-- formCmd value=" << value[0] << value[1] << value[2] << value[3] << value[4] << value[5] << value[6] << value[7] << " -->\n";
+      server << "<!-- formCmd repeat" << repeat << " -->\n";
       if (name[0] == 'd')
       {
         int pin = strtoul(name + 1, NULL, 10);
         int val = strtoul(value, NULL, 10);
-        server << "name" << name << "value" << value;
+        server << "name:" << name << "value:" << value;
         Particle.publish("formCmd",String::format("Pin:%i, Val:%i, Repeat:%i, Name:%s%s%s%s%s%s, Val:%s%s%s%s%s%s",pin,val,repeat,name[0],name[1],name[2],name[3],name[4],name[5],value[0],value[1],value[2],value[3],value[4],value[5]));
         //digitalWrite(pin, val);
       }
@@ -190,6 +197,7 @@ void formCmd(WebServer &server, WebServer::ConnectionType type, char *url_tail, 
 
 void defaultCmd(WebServer &server, WebServer::ConnectionType type, char *url_tail, bool tail_complete)
 {
+  server << "<!-- defaultCmd ConnectionType=" << type << " -->\n";
   outputPins(server, type, false);
 }
 //
