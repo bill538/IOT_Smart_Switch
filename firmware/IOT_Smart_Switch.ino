@@ -141,20 +141,15 @@ void outputPins(WebServer &server, WebServer::ConnectionType type, bool addContr
     for (int i = 0; i < 4; i++) {
       server << "Switch " << i+1 << " is currently <B>";
       if ( RelayIn_States[i] == 0 ) {
-        server << "ON";
+        server << "ON</B>. <br>\nTurn Switch " << i+1;
+        server << " <B>OFF</B> <input type=checkbox name=Switch" << i+1;
+        server << "_State value=" << i+1 << " <br> <br>\n";
+        //  server << Timer time left in minutes is ?????????????
       } else {
-        server << "OFF";
-      }
-      server << "</B>. <br>\nTurn Switch " << i+1;
-      if ( RelayIn_States[i] == 0 ) {
-        server << " <B> OFF</B> <input type=checkbox name=RelayIn" << i+1;
-        server << "_State value=1 <br> <br>\n<label for=\"name\">Switch ";
-        server << i+1 << " Timer(Minutes):</label> <input type=\"text\" id=\"RelayIn" << i+1;
-        server << "_State_Timer\" value=0 /><br>\n<hr>\n<br>\n";
-      } else {
-        server << " <B> ON</B> <input type=checkbox name=RelayIn" << i+1;
-        server << "_State value=0 <br> <br>\n<label for=\"name\">Switch ";
-        server << i+1 << " Timer(Minutes):</label> <input type=\"text\" id=\"RelayIn" << i+1;
+        server << "OFF</B>. <br>\nTurn Switch " << i+1;
+        server << " <B>ON</B> <input type=checkbox name=Switch" << i+1;
+        server << "_State value=" << i+1 << " <br> <br>\n<label for=\"name\">Switch ";
+        server << i+1 << " Timer(Minutes):</label> <input type=\"text\" id=\"Switch" << i+1;
         server << "_State_Timer\" value=0 /><br>\n<hr>\n<br>\n";
       }
     }
@@ -162,13 +157,12 @@ void outputPins(WebServer &server, WebServer::ConnectionType type, bool addContr
   }
 
   server << "</body></html>\n";
-  Particle.publish("outputPins","Finshed build HTML Form");
 }
 
 void formCmd(WebServer &server, WebServer::ConnectionType type, char *url_tail, bool tail_complete)
 {
   server << "<!-- formCmd ConnectionType=" << type << " -->\n";
-  Particle.publish("formCmd",String::format("type:%s",type));
+
   if (type == WebServer::POST)
   {
     bool repeat;
@@ -184,11 +178,12 @@ void formCmd(WebServer &server, WebServer::ConnectionType type, char *url_tail, 
         int pin = strtoul(name + 1, NULL, 10);
         int val = strtoul(value, NULL, 10);
         server << "name:" << name << "value:" << value;
-        Particle.publish("formCmd",String::format("Pin:%i, Val:%i, Repeat:%i, Name:%s%s%s%s%s%s, Val:%s%s%s%s%s%s",pin,val,repeat,name[0],name[1],name[2],name[3],name[4],name[5],value[0],value[1],value[2],value[3],value[4],value[5]));
+        CloudRelayInChange(String::format("%i",val));
         //digitalWrite(pin, val);
       }
     } while (repeat);
 
+    // httpSeeOther is a http 303 redirect back to the main form
     server.httpSeeOther(PREFIX "/form");
   }
   else
@@ -209,7 +204,7 @@ void defaultCmd(WebServer &server, WebServer::ConnectionType type, char *url_tai
 
 //
 // Function for Cloud/RestAPI to Change the state of RelayIn1,2,3,4 and set RelayIn#_State to proper state
-// Argument syntax: 1 or 3
+// Argument syntax for command = 1|2|3|4
 int CloudRelayInChange(String command) {
   bool value = 0;
   int RelayIn = 0;
