@@ -60,6 +60,201 @@ rgb_lcd lcd;
 
 
 //
+// IOT Smart Switch Fuction initilazation BEGIN
+
+//
+// Function for Cloud/RestAPI to Change the state of RelayIn1,2,3,4 and set RelayIn#_State to proper state
+// Argument syntax for command = 1|2|3|4
+int CloudRelayInChange(String command) {
+  bool value = 0;
+  int RelayIn = 0;
+  int RelayIn_State = 0;
+
+  // Make sure upper case
+  command.toUpperCase();
+
+  Particle.publish("CloudRelayInChange", command);
+
+  //Extract RelayIn# from Command and convert to integer
+  int Relay = command.charAt(0) - '0';
+
+  //Sanity check to see if the Relay number are within limits
+  if (Relay< 1 || Relay >4) {
+    return -1;
+  }
+
+  // Set the Pin number(RelayIn#) to RelayIn & set RelayIn_State
+  switch (Relay) {
+      case 1:   RelayIn = RelayIn1;
+                RelayIn_State = RelayIn1_State;
+      break;
+      case 2:   RelayIn = RelayIn2;
+                RelayIn_State = RelayIn2_State;
+      break;
+      case 3:   RelayIn = RelayIn3;
+                RelayIn_State = RelayIn3_State;
+      break;
+      case 4:   RelayIn = RelayIn4;
+                RelayIn_State = RelayIn4_State;
+      break;
+      default:  return -2;
+  }
+
+  Particle.publish("CloudRelayInChange", String::format("B - Switch:%i, RelayIn Pin:D%i, RelayIn_State:%i",Relay,RelayIn,RelayIn_State));
+
+  // Check if RelayIn_State is 1(OFF) or 0(ON). Then with the opposit to the pin.
+  if ( RelayIn_State == 0 ) {
+    digitalWrite(RelayIn, 1);
+    RelayIn_State = 1;
+  } else if ( RelayIn_State == 1 ) {
+    digitalWrite(RelayIn, 0);
+    RelayIn_State = 0;
+  } else {
+    return -3;
+  }
+
+  // Set Global Variable for RelayIn#_State based on new state
+  switch (Relay) {
+      case 1:   RelayIn1_State = RelayIn_State;
+      break;
+      case 2:   RelayIn2_State = RelayIn_State;
+      break;
+      case 3:   RelayIn3_State = RelayIn_State;
+      break;
+      case 4:   RelayIn4_State = RelayIn_State;
+      break;
+      default:  return -4;
+  }
+  Particle.publish("CloudRelayInChange", String::format("C - Switch:%i, RelayIn Pin:D%i, RelayIn_State:%i",Relay,RelayIn,RelayIn_State));
+}
+
+
+//
+// Function READs or Writes to Digital or Analog pins from the cloud
+//
+// Argument syntax: A1,Read or D4,Write,LOW
+int CloudAccessPin(String command) {
+  bool value = 0;
+
+  // Make sure upper case
+  command.toUpperCase();
+
+  Particle.publish("CloudAccessPin", command);
+
+  //convert ascii to integer
+  int pinNumber = command.charAt(1) - '0';
+
+  //Sanity check to see if the pin numbers are within limits
+  if (pinNumber< 0 || pinNumber >7) {
+    return -1;
+  }
+
+  // Add 10 to Analog pin number
+  if(command.startsWith("A")) {
+    pinNumber = pinNumber+10;
+  }
+
+  // Check if READ or Write operation
+  if ( command.substring(3,7) == "READ" ) {
+    pinMode(pinNumber, INPUT);
+    return digitalRead(pinNumber);
+  } else if ( command.substring(3,8) == "WRITE" ) {
+    if ( command.substring(9,13) == "HIGH" ) {
+      value = 1;
+    } else if ( command.substring(9,12) == "LOW" ) {
+      value = 0;
+    } else {
+      return -2;
+    }
+
+    pinMode(pinNumber, OUTPUT);
+    WriteDigitalPin(pinNumber, value);
+    return 1;
+  } else {
+    return -3;
+  }
+}
+
+
+//
+// Function set Digital output HIGH or LOW
+//
+// Argument A1, HIGH or D4, LOW
+int WriteDigitalPin(int pin, int state) {
+  Particle.publish("WriteDigitalPin", String::format("A - Pin:%i, State:%i",pin,state) );
+
+  // find out the state to set pin
+  if (state == HIGH) {
+    digitalWrite(pin, state);
+    return 1;
+  } else if (state == LOW) {
+    digitalWrite(pin, state);
+    return 0;
+  } else {
+    return -1;
+  }
+}
+
+
+//
+// Function to check if physical switch has chnaged state(been flipped)
+//
+int CheckSwitchStateChanged(int switch_pin, int current_switch_state, int previous_switch_state, int relayin, int relayin_state) {
+  bool success;
+
+  // Check if switch pin state changed
+  if (current_switch_state != previous_switch_state) {
+    if(relayin_state == HIGH) {
+      success = CloudRelayInChange(String(relayin-1));
+      //WriteDigitalPin(relayin, LOW);
+      success = Particle.publish("CheckSwitchStateChanged", String::format("success:%i, light:%s, relayin:%i, relayin_state:%i, switch_pin:%i, current_switch_state:%i, previous_switch_state:%i", success, "ON", relayin, relayin_state, switch_pin, current_switch_state, previous_switch_state));
+      return 0;
+    } else {
+      success = CloudRelayInChange(String(relayin-1));
+      //WriteDigitalPin(relayin, HIGH);
+      success = Particle.publish("CheckSwitchStateChanged", String::format("success:%i, light:%s, relayin:%i, relayin_state:%i, switch_pin:%i, current_switch_state:%i, previous_switch_state:%i", success, "OFF", relayin, relayin_state, switch_pin, current_switch_state, previous_switch_state));
+      return 1;
+    }
+  } else {
+    return relayin_state;
+  }
+}
+
+
+//
+// Function to Read inputs as digital with HIGH or LOW
+// Note: Assume pinmode has been set
+//
+int ReadDigitalPin(int pin) {
+  //Particle.publish("ReadDigitalPin", String::format("A - Pin:%i",pin) );
+  return digitalRead(pin);
+}
+
+// You can't pass argument to the function being called by Timer.
+// The work around is just create dedicated function for each swicth called Switch#TimerFunction
+void Switch1TimerFunction(){
+  Particle.publish("Switch1TimerFunction", "1");
+  CloudRelayInChange("1");
+}
+void Switch2TimerFunction(){
+  Particle.publish("Switch2TimerFunction", "2");
+  CloudRelayInChange("2");
+}
+void Switch3TimerFunction(){
+  Particle.publish("Switch3TimerFunction", "3");
+  CloudRelayInChange("3");
+}
+void Switch4TimerFunction(){
+  Particle.publish("Switch4TimerFunction", "4");
+  CloudRelayInChange("4");
+}
+
+
+//
+// IOT Smart Switch Fuction initilazation END
+
+
+//
 // Webduino initilization BEGIN
 #include "WebServer.h"
 
@@ -200,181 +395,6 @@ void defaultCmd(WebServer &server, WebServer::ConnectionType type, char *url_tai
 
 
 //
-// IOT Smart Switch Fuction initilazation BEGIN
-
-//
-// Function for Cloud/RestAPI to Change the state of RelayIn1,2,3,4 and set RelayIn#_State to proper state
-// Argument syntax for command = 1|2|3|4
-int CloudRelayInChange(String command) {
-  bool value = 0;
-  int RelayIn = 0;
-  int RelayIn_State = 0;
-
-  // Make sure upper case
-  command.toUpperCase();
-
-  Particle.publish("CloudRelayInChange Command", command);
-
-  //Extract RelayIn# from Command and convert to integer
-  int Relay = command.charAt(0) - '0';
-
-  //Sanity check to see if the Relay number are within limits
-  if (Relay< 1 || Relay >4) {
-    return -1;
-  }
-
-  // Set the Pin number(RelayIn#) to RelayIn & set RelayIn_State
-  switch (Relay) {
-      case 1:   RelayIn = RelayIn1;
-                RelayIn_State = RelayIn1_State;
-      break;
-      case 2:   RelayIn = RelayIn2;
-                RelayIn_State = RelayIn2_State;
-      break;
-      case 3:   RelayIn = RelayIn3;
-                RelayIn_State = RelayIn3_State;
-      break;
-      case 4:   RelayIn = RelayIn4;
-                RelayIn_State = RelayIn4_State;
-      break;
-      default:  return -2;
-  }
-
-  Particle.publish("CloudRelayIn RelayIn - A", String::format("RelayIn:%i, RelayIn_State:%i",RelayIn,RelayIn_State));
-
-  // Check if RelayIn_State is 1(OFF) or 0(ON). Then with the opposit to the pin.
-  if ( RelayIn_State == 0 ) {
-    digitalWrite(RelayIn, 1);
-    RelayIn_State = 1;
-  } else if ( RelayIn_State == 1 ) {
-    digitalWrite(RelayIn, 0);
-    RelayIn_State = 0;
-  } else {
-    return -3;
-  }
-
-  // Set Global Variable for RelayIn#_State based on new state
-  switch (Relay) {
-      case 1:   RelayIn1_State = RelayIn_State;
-      break;
-      case 2:   RelayIn2_State = RelayIn_State;
-      break;
-      case 3:   RelayIn3_State = RelayIn_State;
-      break;
-      case 4:   RelayIn4_State = RelayIn_State;
-      break;
-      default:  return -4;
-  }
-  Particle.publish("CloudRelayIn RelayIn - B", String::format("RelayIn:%i, RelayIn_State:%i",RelayIn,RelayIn_State));
-}
-
-
-//
-// Function READs or Writes to Digital or Analog pins from the cloud
-//
-// Argument syntax: A1,Read or D4,Write,LOW
-int CloudAccessPin(String command) {
-  bool value = 0;
-
-  // Make sure upper case
-  command.toUpperCase();
-
-  //Particle.publish("CloudAccessPin Command", command);
-  Particle.publish("CloudAccessPin Command", command);
-  Particle.publish("CloudAccessPin RelayIn3_State", String(RelayIn3_State));
-  //Particle.publish("CloudAccessPin Command", command);
-
-  //convert ascii to integer
-  int pinNumber = command.charAt(1) - '0';
-
-  //Sanity check to see if the pin numbers are within limits
-  if (pinNumber< 0 || pinNumber >7) {
-    return -1;
-  }
-
-  // Add 10 to Analog pin number
-  if(command.startsWith("A")) {
-    pinNumber = pinNumber+10;
-  }
-
-  // Check if READ or Write operation
-  if ( command.substring(3,7) == "READ" ) {
-    pinMode(pinNumber, INPUT);
-    return digitalRead(pinNumber);
-  } else if ( command.substring(3,8) == "WRITE" ) {
-    if ( command.substring(9,13) == "HIGH" ) {
-      value = 1;
-    } else if ( command.substring(9,12) == "LOW" ) {
-      value = 0;
-    } else {
-      return -2;
-    }
-
-    pinMode(pinNumber, OUTPUT);
-    digitalWrite(pinNumber, value);
-    return 1;
-  } else {
-    return -3;
-  }
-}
-
-
-//
-// Function set Digital output HIGH or LOW
-//
-// Argument A1, HIGH or D4, LOW
-int WriteDigitalPin(int pin, int state) {
-  Particle.publish("Pin - WriteDigital", String(pin) );
-
-  // find out the state to set pin
-  if (state == HIGH) {
-    digitalWrite(pin, state);
-    return 1;
-  } else if (state == LOW) {
-    digitalWrite(pin, state);
-    return 0;
-  } else {
-    return -1;
-  }
-}
-
-
-//
-// Function to check if physical switch has chnaged state(been flipped)
-//
-int CheckSwitchStateChanged(int switch_pin, int current_switch_state, int previous_switch_state, int relayin, int relayin_state) {
-  bool success;
-
-  // Check if switch pin state changed
-  if (current_switch_state != previous_switch_state) {
-    if(relayin_state == HIGH) {
-      WriteDigitalPin(relayin, LOW);
-      success = Particle.publish("State_Changed", String::format("light:%s, relayin:%i, relayin_state:%i, switch_pin:%i, current_switch_state:%i, previous_switch_state:%i", "ON", relayin, relayin_state, switch_pin, current_switch_state, previous_switch_state));
-      return 0;
-    } else {
-      WriteDigitalPin(relayin, HIGH);
-      success = Particle.publish("State_Changed", String::format("light:%s, relayin:%i, relayin_state:%i, switch_pin:%i, current_switch_state:%i, previous_switch_state:%i", "OFF", relayin, relayin_state, switch_pin, current_switch_state, previous_switch_state));
-      return 1;
-    }
-  } else {
-    return relayin_state;
-  }
-}
-
-
-//
-// Function to Read inputs as digital with HIGH or LOW
-// Note: Assume pinmode has been set
-//
-int ReadDigitalPin(int pin) {
-  //Particle.publish("Pin - ReadDigital", String(pin) );
-  return digitalRead(pin);
-}
-
-//
-// IOT Smart Switch Fuction initilazation END
-
-//
 // Main Functions
 //
 void setup() {
@@ -449,6 +469,12 @@ void setup() {
   lcd.setCursor(0, 1);
   lcd.print("Setup Complete!!");
 
+  // You can't pass argument to the function being called by Timer.
+  // The work around is just create dedicated function for each swicth called Switch#TimerFunction
+  Timer TimerSwitch1(1000, Switch1TimerFunction,false);
+  Timer TimerSwitch2(3000, Switch2TimerFunction,false);
+  Timer TimerSwitch3(5000, Switch3TimerFunction,false);
+  Timer TimerSwitch4(7000, Switch4TimerFunction,false);
   delay(1000);
 }
 
