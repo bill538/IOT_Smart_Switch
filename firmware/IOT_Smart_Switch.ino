@@ -104,10 +104,10 @@ int CloudRelayInChange(String command) {
 
   // Check if RelayIn_State is 1(OFF) or 0(ON). Then with the opposit to the pin.
   if ( RelayIn_State == 0 ) {
-    digitalWrite(RelayIn, 1);
+    WriteDigitalPin(RelayIn, 1);
     RelayIn_State = 1;
   } else if ( RelayIn_State == 1 ) {
-    digitalWrite(RelayIn, 0);
+    WriteDigitalPin(RelayIn, 0);
     RelayIn_State = 0;
   } else {
     return -3;
@@ -183,15 +183,27 @@ int CloudAccessPin(String command) {
 int WriteDigitalPin(int pin, int state) {
   Particle.publish("WriteDigitalPin", String::format("A - Pin:%i, State:%i",pin,state) );
 
+  // https://community.particle.io/t/pinmode-in-loop-for-analog-and-digital/7107/5
+  // Change the pinMode to proper mode(OUPUT) for write operation.
+  int mode = getPinMode(pin);
+  if (mode != OUTPUT) {
+      pinMode(pin, OUTPUT);
+  }
+
   // find out the state to set pin
   if (state == HIGH) {
-    digitalWrite(pin, state);
-    return 1;
+      digitalWrite(pin, state);
+      return 1;
   } else if (state == LOW) {
-    digitalWrite(pin, state);
-    return 0;
+      digitalWrite(pin, state);
+      return 0;
   } else {
-    return -1;
+      return -1;
+  }
+
+  // Set pinMode back for how you found it.
+  if (mode != OUTPUT) {
+      pinMode(pin, INPUT);
   }
 }
 
@@ -206,12 +218,10 @@ int CheckSwitchStateChanged(int switch_pin, int current_switch_state, int previo
   if (current_switch_state != previous_switch_state) {
     if(relayin_state == HIGH) {
       success = CloudRelayInChange(String(relayin-1));
-      //WriteDigitalPin(relayin, LOW);
       success = Particle.publish("CheckSwitchStateChanged", String::format("success:%i, light:%s, relayin:%i, relayin_state:%i, switch_pin:%i, current_switch_state:%i, previous_switch_state:%i", success, "ON", relayin, relayin_state, switch_pin, current_switch_state, previous_switch_state));
       return 0;
     } else {
       success = CloudRelayInChange(String(relayin-1));
-      //WriteDigitalPin(relayin, HIGH);
       success = Particle.publish("CheckSwitchStateChanged", String::format("success:%i, light:%s, relayin:%i, relayin_state:%i, switch_pin:%i, current_switch_state:%i, previous_switch_state:%i", success, "OFF", relayin, relayin_state, switch_pin, current_switch_state, previous_switch_state));
       return 1;
     }
@@ -234,11 +244,12 @@ int ReadDigitalPin(int pin) {
 // The work around is just create dedicated function for each swicth called Switch#TimerFunction
 void Switch1TimerFunction(){
   Particle.publish("Switch1TimerFunction", "1");
-  CloudRelayInChange("1");
+  WriteDigitalPin(D7, HIGH);
 }
 void Switch2TimerFunction(){
   Particle.publish("Switch2TimerFunction", "2");
-  CloudRelayInChange("2");
+  WriteDigitalPin(D7, LOW);
+  //CloudRelayInChange("2");
 }
 void Switch3TimerFunction(){
   Particle.publish("Switch3TimerFunction", "3");
@@ -274,7 +285,7 @@ WebServer webserver(PREFIX, 80);
 
 void jsonCmd(WebServer &server, WebServer::ConnectionType type, char *url_tail, bool tail_complete)
 {
-  server << "<!-- jsonCmd ConnectionType=" << type << " -->\n";
+  //server << "<!-- jsonCmd ConnectionType=" << type << " -->\n";
   if (type == WebServer::POST)
   {
     server.httpFail();
@@ -324,7 +335,7 @@ void outputPins(WebServer &server, WebServer::ConnectionType type, bool addContr
   int i;
   server.httpSuccess();
   server.printP(htmlHead);
-  server << "<!-- outputPins addControls=" << addControls << " ConnectionType=" << type << " -->\n";
+  //server << "<!-- outputPins addControls=" << addControls << " ConnectionType=" << type << " -->\n";
 
   if (addControls) {
     server << "<form action='" PREFIX "/form' method='post'>\n";
@@ -338,7 +349,7 @@ void outputPins(WebServer &server, WebServer::ConnectionType type, bool addContr
       if ( RelayIn_States[i] == 0 ) {
         server << "ON</B>. <br>\nTurn Switch " << i+1;
         server << " <B>OFF</B> <input type=checkbox name=Switch" << i+1;
-        server << "_State value=" << i+1 << " <br> <br>\n";
+        server << "_State value=" << i+1 << " <br>\n<hr>\n<br>\n";
         //  server << Timer time left in minutes is ?????????????
       } else {
         server << "OFF</B>. <br>\nTurn Switch " << i+1;
@@ -356,7 +367,7 @@ void outputPins(WebServer &server, WebServer::ConnectionType type, bool addContr
 
 void formCmd(WebServer &server, WebServer::ConnectionType type, char *url_tail, bool tail_complete)
 {
-  server << "<!-- formCmd ConnectionType=" << type << " -->\n";
+  //server << "<!-- formCmd ConnectionType=" << type << " -->\n";
 
   if (type == WebServer::POST)
   {
@@ -365,17 +376,14 @@ void formCmd(WebServer &server, WebServer::ConnectionType type, char *url_tail, 
     do
     {
       repeat = server.readPOSTparam(name, 16, value, 16);
-      server << "<!-- formCmd name=" << name[0] << name[1] << name[2] << name[3] << name[4] << name[5] << name[6] << name[7] << " -->\n";
-      server << "<!-- formCmd value=" << value[0] << value[1] << value[2] << value[3] << value[4] << value[5] << value[6] << value[7] << " -->\n";
-      server << "<!-- formCmd repeat" << repeat << " -->\n";
-      if (name[0] == 'd')
-      {
-        int pin = strtoul(name + 1, NULL, 10);
-        int val = strtoul(value, NULL, 10);
-        server << "name:" << name << "value:" << value;
-        CloudRelayInChange(String::format("%i",val));
-        //digitalWrite(pin, val);
-      }
+      //server << "<!-- formCmd - WebServer::POST name=" << name[0] << name[1] << name[2] << name[3] << name[4] << name[5] << name[6] << name[7] << " -->\n";
+      //server << "<!-- formCmd - WebServer::POST value=" << value[0] << value[1] << value[2] << value[3] << value[4] << value[5] << value[6] << value[7] << " -->\n";
+      //server << "<!-- formCmd - WebServer::POST repeat=" << repeat << " -->\n";
+
+      int pin = strtoul(name + 1, NULL, 10);
+      int val = strtoul(value, NULL, 10);
+      //server << "name:" << name << "value:" << value;
+      CloudRelayInChange(String::format("%i",val));
     } while (repeat);
 
     // httpSeeOther is a http 303 redirect back to the main form
@@ -387,7 +395,7 @@ void formCmd(WebServer &server, WebServer::ConnectionType type, char *url_tail, 
 
 void defaultCmd(WebServer &server, WebServer::ConnectionType type, char *url_tail, bool tail_complete)
 {
-  server << "<!-- defaultCmd ConnectionType=" << type << " -->\n";
+  //server << "<!-- defaultCmd ConnectionType=" << type << " -->\n";
   outputPins(server, type, false);
 }
 //
@@ -471,15 +479,16 @@ void setup() {
 
   // You can't pass argument to the function being called by Timer.
   // The work around is just create dedicated function for each swicth called Switch#TimerFunction
-  Timer TimerSwitch1(1000, Switch1TimerFunction,false);
-  Timer TimerSwitch2(3000, Switch2TimerFunction,false);
-  Timer TimerSwitch3(5000, Switch3TimerFunction,false);
-  Timer TimerSwitch4(7000, Switch4TimerFunction,false);
+  Timer TimerSwitch1(1000, Switch1TimerFunction);
+  Timer TimerSwitch2(30000, Switch2TimerFunction);
+  TimerSwitch1.start();
+  TimerSwitch2.start();
+  //Timer TimerSwitch3(5000, Switch3TimerFunction,false);
+  //Timer TimerSwitch4(7000, Switch4TimerFunction,false);
   delay(1000);
 }
 
 void loop() {
-
   //
   // Webduino loop END
   // process incoming connections one at a time forever
