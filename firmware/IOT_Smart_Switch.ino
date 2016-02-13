@@ -42,6 +42,7 @@ unsigned long lastMSecSync = currentSync;
 unsigned long lastSecSync = currentSync;
 unsigned long lastMinSync = currentSync;
 unsigned long lastDaySync = currentSync;
+int TimeZone = -4;
 
 // Init RGB lcd color for background
 const int colorR = 128;
@@ -244,12 +245,11 @@ int ReadDigitalPin(int pin) {
 // The work around is just create dedicated function for each swicth called Switch#TimerFunction
 void Switch1TimerFunction(){
   Particle.publish("Switch1TimerFunction", "1");
-  WriteDigitalPin(D7, HIGH);
+  CloudRelayInChange("1");
 }
 void Switch2TimerFunction(){
   Particle.publish("Switch2TimerFunction", "2");
-  WriteDigitalPin(D7, LOW);
-  //CloudRelayInChange("2");
+  CloudRelayInChange("2");
 }
 void Switch3TimerFunction(){
   Particle.publish("Switch3TimerFunction", "3");
@@ -259,6 +259,34 @@ void Switch4TimerFunction(){
   Particle.publish("Switch4TimerFunction", "4");
   CloudRelayInChange("4");
 }
+// You can't pass argument to the function being called by Timer.
+// The work around is just create dedicated function for each swicth called Switch#TimerFunction
+Timer TimerSwitch1(20000, Switch1TimerFunction, true);
+Timer TimerSwitch2(30000, Switch2TimerFunction, true);
+Timer TimerSwitch3(40000, Switch3TimerFunction, true);
+Timer TimerSwitch4(50000, Switch4TimerFunction, true);
+
+//  This function is used to set timer time and start timer.
+int CloudSwitchTimer(int SwitchNum, int SwitchMins) {
+  int SwitchMills = SwitchMins*60000;
+
+  switch (SwitchNum) {
+      case 1:   TimerSwitch1.changePeriod(SwitchMills);
+                TimerSwitch1.reset();
+      break;
+      case 2:   TimerSwitch2.changePeriod(SwitchMills);
+                TimerSwitch2.reset();
+      break;
+      case 3:   TimerSwitch3.changePeriod(SwitchMills);
+                TimerSwitch3.reset();
+      break;
+      case 4:   TimerSwitch4.changePeriod(SwitchMills);
+                TimerSwitch4.reset();
+      break;
+      default:  return -1;
+  }
+}
+
 
 
 //
@@ -354,12 +382,12 @@ void outputPins(WebServer &server, WebServer::ConnectionType type, bool addContr
       } else {
         server << "OFF</B>. <br>\nTurn Switch " << i+1;
         server << " <B>ON</B> <input type=checkbox name=Switch" << i+1;
-        server << "_State value=" << i+1 << " <br> <br>\n<label for=\"name\">Switch ";
-        server << i+1 << " Timer(Minutes):</label> <input type=\"text\" id=\"Switch" << i+1;
-        server << "_State_Timer\" value=0 /><br>\n<hr>\n<br>\n";
+        server << "_State value=" << i+1 << " <br> <br>\nSwitch " << i+1;
+        server << " Timer(Minutes): <input type=\"text\" name=\"Switch" << i+1;
+        server << "_Timer\" value=0 /><br>\n<hr>\n<br>\n";
       }
     }
-    server << "<br> <p> <input type='submit' value='Submit'/></form>\n";
+    server << "<input type='submit' value='Submit'/></form>\n";
   }
 
   server << "</body></html>\n";
@@ -376,14 +404,33 @@ void formCmd(WebServer &server, WebServer::ConnectionType type, char *url_tail, 
     do
     {
       repeat = server.readPOSTparam(name, 16, value, 16);
-      //server << "<!-- formCmd - WebServer::POST name=" << name[0] << name[1] << name[2] << name[3] << name[4] << name[5] << name[6] << name[7] << " -->\n";
-      //server << "<!-- formCmd - WebServer::POST value=" << value[0] << value[1] << value[2] << value[3] << value[4] << value[5] << value[6] << value[7] << " -->\n";
-      //server << "<!-- formCmd - WebServer::POST repeat=" << repeat << " -->\n";
 
       int pin = strtoul(name + 1, NULL, 10);
       int val = strtoul(value, NULL, 10);
-      //server << "name:" << name << "value:" << value;
-      CloudRelayInChange(String::format("%i",val));
+      server << "<!-- formCmd - WebServer::POST name=" << name << "  value=" << value << " -->\n";
+      server << "<!-- formCmd - WebServer::POST pin=" << pin << "  val=" << val << " -->\n";
+      //server << "<!-- formCmd - WebServer::POST repeat=" << repeat << " -->\n";
+
+      if ( !strcmp(name,"Switch1_Timer") or !strcmp(name,"Switch2_Timer") or
+           !strcmp(name,"Switch3_Timer") or !strcmp(name,"Switch4_Timer") ) {
+        server << "<!-- formCmd - WebServer::POST if matched Switch#_Timer -->\n";
+        if ( val > 0 ) {
+          //server << "<!-- formCmd - WebServer::POST val=" << val << " start timer -->\n";
+          if ( !strcmp(name,"Switch1_Timer") ) {
+            CloudSwitchTimer(1, val);
+          } else if ( !strcmp(name,"Switch2_Timer") ) {
+            CloudSwitchTimer(2, val);
+          } else if ( !strcmp(name,"Switch3_Timer") ) {
+            CloudSwitchTimer(3, val);
+          } else if ( !strcmp(name,"Switch4_Timer") ) {
+            CloudSwitchTimer(4, val);
+          }
+        }
+      } else if ( !strcmp(name,"Switch1_State") or !strcmp(name,"Switch2_State") or
+                  !strcmp(name,"Switch3_State") or !strcmp(name,"Switch4_State") ) {
+        server << "<!-- formCmd - WebServer::POST else if matched Switch#_state -->\n";
+        CloudRelayInChange(String::format("%i",val));
+      }
     } while (repeat);
 
     // httpSeeOther is a http 303 redirect back to the main form
@@ -456,6 +503,9 @@ void setup() {
   Particle.variable("PrevSw3", Prev_Switch3_State);
   Particle.variable("PrevSw4", Prev_Switch4_State);
 
+  // Set time zone to Eastern USA daylight saving time
+  Time.zone(TimeZone);
+
   //
   // Webduino setup BEGIN
   webserver.begin();
@@ -477,14 +527,6 @@ void setup() {
   lcd.setCursor(0, 1);
   lcd.print("Setup Complete!!");
 
-  // You can't pass argument to the function being called by Timer.
-  // The work around is just create dedicated function for each swicth called Switch#TimerFunction
-  Timer TimerSwitch1(1000, Switch1TimerFunction);
-  Timer TimerSwitch2(30000, Switch2TimerFunction);
-  TimerSwitch1.start();
-  TimerSwitch2.start();
-  //Timer TimerSwitch3(5000, Switch3TimerFunction,false);
-  //Timer TimerSwitch4(7000, Switch4TimerFunction,false);
   delay(1000);
 }
 
@@ -502,7 +544,8 @@ void loop() {
   //
   // Run below code every 100 mili seconds 1/10th second
   if ( (currentSync - lastMSecSync) > 100 ) {
-    // At the start of loop copt Switch$_State over to Prev_Switch#_State so we can tell if State has changed from previous loop
+    // At the start of loop copt Switch$_State over to Prev_Switch#_State so we
+    // can tell if State has changed from previous loop
     Prev_Switch1_State = Switch1_State;
     Prev_Switch2_State = Switch2_State;
     Prev_Switch3_State = Switch3_State;
@@ -533,11 +576,16 @@ void loop() {
     // (note: line 1 is the second row, since counting begins with 0):
     lcd.clear();
     lcd.setCursor(0, 0);
+    time_t time = Time.now();
     //lcd.print(myIpAddress);
-    lcd.print(String::format("1:%i 2:%i 3:%i 4:%i", RelayIn1_State, RelayIn2_State, RelayIn3_State, RelayIn4_State));
+    // Time output sample: 01/01/15 01:08PM
+    lcd.print(Time.format(time, "%m/%d/%Y %I:%M%p") );
     lcd.setCursor(0, 1);
+    lcd.print(Time.format(time, "%S"));
+    lcd.print(String::format("sec - %i,%i,%i,%i", RelayIn1_State, RelayIn2_State, RelayIn3_State, RelayIn4_State));
+
     // print the number of seconds since reset:
-    lcd.print(String::format("%i %i %i", currentSync/1000, lastSecSync/1000, currentSync - lastSecSync ));
+    //lcd.print(String::format("%i %i %i", currentSync/1000, lastSecSync/1000, currentSync - lastSecSync ));
     lastSecSync = currentSync;
   }
 
