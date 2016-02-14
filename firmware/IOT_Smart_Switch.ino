@@ -71,7 +71,7 @@ int CloudRelayInChange(String command) {
   int RelayIn = 0;
   int RelayIn_State = 0;
 
-  // Make sure upper case
+  // Make sure command text is in upper case
   command.toUpperCase();
 
   Particle.publish("CloudRelayInChange", command);
@@ -259,6 +259,8 @@ void Switch4TimerFunction(){
   Particle.publish("Switch4TimerFunction", "4");
   CloudRelayInChange("4");
 }
+
+
 // You can't pass argument to the function being called by Timer.
 // The work around is just create dedicated function for each swicth called Switch#TimerFunction
 Timer TimerSwitch1(20000, Switch1TimerFunction, true);
@@ -266,6 +268,7 @@ Timer TimerSwitch2(30000, Switch2TimerFunction, true);
 Timer TimerSwitch3(40000, Switch3TimerFunction, true);
 Timer TimerSwitch4(50000, Switch4TimerFunction, true);
 
+//
 //  This function is used to set timer time and start timer.
 int CloudSwitchTimer(int SwitchNum, int SwitchMins) {
   int SwitchMills = SwitchMins*60000;
@@ -286,7 +289,6 @@ int CloudSwitchTimer(int SwitchNum, int SwitchMins) {
       default:  return -1;
   }
 }
-
 
 
 //
@@ -369,8 +371,8 @@ void outputPins(WebServer &server, WebServer::ConnectionType type, bool addContr
     server << "<form action='" PREFIX "/form' method='post'>\n";
 
     server << "<h1>Switch States</h1><p>\n";
-    // Check if RelayIn_State is 1(OFF) or 0(ON). Then with the opposit to the pin.
 
+    // Check if RelayIn_States are 1(OFF) or 0(ON). Then diplay ON/OFF details appropreiatly
     int RelayIn_States[4] = { RelayIn1_State,RelayIn2_State,RelayIn3_State,RelayIn4_State };
     for (int i = 0; i < 4; i++) {
       server << "Switch " << i+1 << " is currently <B>";
@@ -401,21 +403,27 @@ void formCmd(WebServer &server, WebServer::ConnectionType type, char *url_tail, 
   {
     bool repeat;
     char name[16], value[16];
+    // Loop on all the http post form data
     do
     {
       repeat = server.readPOSTparam(name, 16, value, 16);
 
       int pin = strtoul(name + 1, NULL, 10);
       int val = strtoul(value, NULL, 10);
-      server << "<!-- formCmd - WebServer::POST name=" << name << "  value=" << value << " -->\n";
-      server << "<!-- formCmd - WebServer::POST pin=" << pin << "  val=" << val << " -->\n";
+      //server << "<!-- formCmd - WebServer::POST name=" << name << "  value=" << value << " -->\n";
+      //server << "<!-- formCmd - WebServer::POST pin=" << pin << "  val=" << val << " -->\n";
       //server << "<!-- formCmd - WebServer::POST repeat=" << repeat << " -->\n";
 
+      // Check if name from the form data is Timer related
       if ( !strcmp(name,"Switch1_Timer") or !strcmp(name,"Switch2_Timer") or
            !strcmp(name,"Switch3_Timer") or !strcmp(name,"Switch4_Timer") ) {
-        server << "<!-- formCmd - WebServer::POST if matched Switch#_Timer -->\n";
+        //server << "<!-- formCmd - WebServer::POST if matched Switch#_Timer -->\n";
+
+        // If Timer val is greagter then 0 start appropreiate Timer
         if ( val > 0 ) {
           //server << "<!-- formCmd - WebServer::POST val=" << val << " start timer -->\n";
+
+          // Call correct function based on val
           if ( !strcmp(name,"Switch1_Timer") ) {
             CloudSwitchTimer(1, val);
           } else if ( !strcmp(name,"Switch2_Timer") ) {
@@ -426,14 +434,15 @@ void formCmd(WebServer &server, WebServer::ConnectionType type, char *url_tail, 
             CloudSwitchTimer(4, val);
           }
         }
+      // Check if name from the form data is related related to changing switch state
       } else if ( !strcmp(name,"Switch1_State") or !strcmp(name,"Switch2_State") or
                   !strcmp(name,"Switch3_State") or !strcmp(name,"Switch4_State") ) {
-        server << "<!-- formCmd - WebServer::POST else if matched Switch#_state -->\n";
+        //server << "<!-- formCmd - WebServer::POST else if matched Switch#_state -->\n";
         CloudRelayInChange(String::format("%i",val));
       }
     } while (repeat);
 
-    // httpSeeOther is a http 303 redirect back to the main form
+    // httpSeeOther is a http 303 redirect back to the main /form
     server.httpSeeOther(PREFIX "/form");
   }
   else
@@ -576,12 +585,20 @@ void loop() {
     // (note: line 1 is the second row, since counting begins with 0):
     lcd.clear();
     lcd.setCursor(0, 0);
+
+    // Get current time to update LCD display
     time_t time = Time.now();
-    //lcd.print(myIpAddress);
-    // Time output sample: 01/01/15 01:08PM
-    lcd.print(Time.format(time, "%m/%d/%Y %I:%M%p") );
+
+    String secs = Time.format(time, "%S");
+    if ( secs == "0" or secs == "1" ) {
+      // Display IP for 2 seconds on LCD panel.
+      lcd.print(myIpAddress);
+    } else {
+      // Time output sample: 01/01/15 01:08PM
+      lcd.print(Time.format(time, "%m/%d/%Y %I:%M%p") );
+    }
     lcd.setCursor(0, 1);
-    lcd.print(Time.format(time, "%S"));
+    lcd.print(secs);
     lcd.print(String::format("sec - %i,%i,%i,%i", RelayIn1_State, RelayIn2_State, RelayIn3_State, RelayIn4_State));
 
     // print the number of seconds since reset:
@@ -594,7 +611,6 @@ void loop() {
   if ( (currentSync - lastMinSync) > 60000 ) {
     lastMinSync = currentSync;
   }
-
 
   //
   // Run below code every 1 day ( 24 hours )
