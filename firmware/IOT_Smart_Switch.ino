@@ -1,4 +1,4 @@
-//
+  //
 // IOT Smart Switch variable initilization BEGIN
 
 #include "IOT_Smart_Switch.h"
@@ -10,22 +10,18 @@ int RelayIn1 = D2;
 int RelayIn2 = D3;
 int RelayIn3 = D4;
 int RelayIn4 = D5;
-int RelayIn1_State = HIGH;
-int RelayIn2_State = HIGH;
-int RelayIn3_State = HIGH;
-int RelayIn4_State = HIGH;
+int RelayIn[4] = { D2, D3, D3, D4  };
+int RelayIn_States[4] = { HIGH, HIGH, HIGH, HIGH };
 int Switch1 = A2;
 int Switch2 = A3;
 int Switch3 = A4;
 int Switch4 = A5;
-int Switch1_State = HIGH;
-int Switch2_State = HIGH;
-int Switch3_State = HIGH;
-int Switch4_State = HIGH;
-int Prev_Switch1_State = HIGH;
-int Prev_Switch2_State = HIGH;
-int Prev_Switch3_State = HIGH;
-int Prev_Switch4_State = HIGH;
+int Switch[4] = { A2, A3, A4, A5 };
+int Switch_States[4] = { HIGH, HIGH, HIGH, HIGH };
+int Prev_Switch_States[4] = { HIGH, HIGH, HIGH, HIGH };
+int TimerStartTime[4] = { 0, 0, 0, 0 };
+int TimerTime[4] = { 0, 0, 0, 0 };
+
 
 int Led1 = D6;
 int Led2 = D7;
@@ -42,7 +38,7 @@ unsigned long lastMSecSync = currentSync;
 unsigned long lastSecSync = currentSync;
 unsigned long lastMinSync = currentSync;
 unsigned long lastDaySync = currentSync;
-int TimeZone = -4;
+int TimeZone = -5;
 
 // Init RGB lcd color for background
 const int colorR = 128;
@@ -87,16 +83,16 @@ int CloudRelayInChange(String command) {
   // Set the Pin number(RelayIn#) to RelayIn & set RelayIn_State
   switch (Relay) {
       case 1:   RelayIn = RelayIn1;
-                RelayIn_State = RelayIn1_State;
+                RelayIn_State = RelayIn_States[0];
       break;
       case 2:   RelayIn = RelayIn2;
-                RelayIn_State = RelayIn2_State;
+                RelayIn_State = RelayIn_States[1];
       break;
       case 3:   RelayIn = RelayIn3;
-                RelayIn_State = RelayIn3_State;
+                RelayIn_State = RelayIn_States[2];
       break;
       case 4:   RelayIn = RelayIn4;
-                RelayIn_State = RelayIn4_State;
+                RelayIn_State = RelayIn_States[2];
       break;
       default:  return -2;
   }
@@ -116,13 +112,13 @@ int CloudRelayInChange(String command) {
 
   // Set Global Variable for RelayIn#_State based on new state
   switch (Relay) {
-      case 1:   RelayIn1_State = RelayIn_State;
+      case 1:   RelayIn_States[0] = RelayIn_State;
       break;
-      case 2:   RelayIn2_State = RelayIn_State;
+      case 2:   RelayIn_States[1] = RelayIn_State;
       break;
-      case 3:   RelayIn3_State = RelayIn_State;
+      case 3:   RelayIn_States[2] = RelayIn_State;
       break;
-      case 4:   RelayIn4_State = RelayIn_State;
+      case 4:   RelayIn_States[3] = RelayIn_State;
       break;
       default:  return -4;
   }
@@ -275,16 +271,24 @@ int CloudSwitchTimer(int SwitchNum, int SwitchMins) {
 
   switch (SwitchNum) {
       case 1:   TimerSwitch1.changePeriod(SwitchMills);
+                TimerTime[0] = SwitchMins*60;
                 TimerSwitch1.reset();
+                TimerStartTime[0] = Time.now();
       break;
       case 2:   TimerSwitch2.changePeriod(SwitchMills);
+                TimerTime[1] = SwitchMins*60;
                 TimerSwitch2.reset();
+                TimerStartTime[1] = Time.now();
       break;
       case 3:   TimerSwitch3.changePeriod(SwitchMills);
+                TimerTime[2] = SwitchMins*60;
                 TimerSwitch3.reset();
+                TimerStartTime[2] = Time.now();
       break;
       case 4:   TimerSwitch4.changePeriod(SwitchMills);
+                //TimerTime[3] = SwitchMins*60;
                 TimerSwitch4.reset();
+                TimerStartTime[3] = Time.now();
       break;
       default:  return -1;
   }
@@ -370,26 +374,33 @@ void outputPins(WebServer &server, WebServer::ConnectionType type, bool addContr
   if (addControls) {
     server << "<form action='" PREFIX "/form' method='post'>\n";
 
-    server << "<h1>Switch States</h1><p>\n";
+    server << "<h1> Switch States - " << Time.format(Time.now(), TIME_FORMAT_DEFAULT) << " </h1> <p>\n";
 
     // Check if RelayIn_States are 1(OFF) or 0(ON). Then diplay ON/OFF details appropreiatly
-    int RelayIn_States[4] = { RelayIn1_State,RelayIn2_State,RelayIn3_State,RelayIn4_State };
     for (int i = 0; i < 4; i++) {
       server << "Switch " << i+1 << " is currently <B>";
       if ( RelayIn_States[i] == 0 ) {
+        // Get time left on timer
+        int LeftMins = (TimerStartTime[i]-(Time.now()-TimerTime[i]))/60;
+        int LeftSecs = ((TimerStartTime[i]-(Time.now()-TimerTime[i]))%60);
         server << "ON</B>. <br>\nTurn Switch " << i+1;
         server << " <B>OFF</B> <input type=checkbox name=Switch" << i+1;
-        server << "_State value=" << i+1 << " <br>\n<hr>\n<br>\n";
-        //  server << Timer time left in minutes is ?????????????
+        server << "_State value=" << i+1 << "/><br>\nTimer Time Left: ";
+        server << LeftMins << ":" << String::format("%02d", LeftSecs) << "<br>\n<hr>\n<br>\n";
+        server << "<!-- addControls i=" << i << " -->\n";
+        server << "<!-- addControls TimerStartTime=" << TimerStartTime[i] << " -->\n";
+        server << "<!-- addControls TimerTime=" << TimerTime[i] << " -->\n";
+        server << "<!-- addControls LeftMins=" << LeftMins << " -->\n";
+        server << "<!-- addControls LeftSecs=" << LeftSecs << " -->\n";
       } else {
         server << "OFF</B>. <br>\nTurn Switch " << i+1;
         server << " <B>ON</B> <input type=checkbox name=Switch" << i+1;
-        server << "_State value=" << i+1 << " <br> <br>\nSwitch " << i+1;
+        server << "_State value=" << i+1 << " /> <br>\nSwitch " << i+1;
         server << " Timer(Minutes): <input type=\"text\" name=\"Switch" << i+1;
         server << "_Timer\" value=0 /><br>\n<hr>\n<br>\n";
       }
     }
-    server << "<input type='submit' value='Submit'/></form>\n";
+    server << "<INPUT TYPE=\"button\" onClick=\"history.go(0)\" VALUE=\"Refresh\"> <input type='submit' value='Submit'/></form>\n";
   }
 
   server << "</body></html>\n";
@@ -463,6 +474,8 @@ void defaultCmd(WebServer &server, WebServer::ConnectionType type, char *url_tai
 //
 void setup() {
   // Here's the pin Mode configuration
+  //           D0,        D1       D2   3   4   5   6   7   8   9  10  11  12  13  14  15
+  //modes[16] { "OUTPUT", "OUTPUT", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""}
   pinMode(Led1, OUTPUT);
   pinMode(Led2, OUTPUT);
   pinMode(Switch1, INPUT);
@@ -499,18 +512,18 @@ void setup() {
   // https://api.particle.io/v1/devices/2e0048000a47343432313031/IP?access_token=***************
   Particle.variable("IP", myIpAddress);
   Particle.variable("SSID", SSID);
-  Particle.variable("RelayIn1", RelayIn1_State);
-  Particle.variable("RelayIn2", RelayIn2_State);
-  Particle.variable("RelayIn3", RelayIn3_State);
-  Particle.variable("RelayIn4", RelayIn4_State);
-  Particle.variable("Switch1", Switch1_State);
-  Particle.variable("Switch2", Switch2_State);
-  Particle.variable("Switch3", Switch3_State);
-  Particle.variable("Switch4", Switch4_State);
-  Particle.variable("PrevSw1", Prev_Switch1_State);
-  Particle.variable("PrevSw2", Prev_Switch2_State);
-  Particle.variable("PrevSw3", Prev_Switch3_State);
-  Particle.variable("PrevSw4", Prev_Switch4_State);
+  Particle.variable("RelayIn1", RelayIn_States[0]);
+  Particle.variable("RelayIn2", RelayIn_States[1]);
+  Particle.variable("RelayIn3", RelayIn_States[2]);
+  Particle.variable("RelayIn4", RelayIn_States[3]);
+  Particle.variable("Switch1", Switch_States[0]);
+  Particle.variable("Switch2", Switch_States[1]);
+  Particle.variable("Switch3", Switch_States[2]);
+  Particle.variable("Switch4", Switch_States[3]);
+  Particle.variable("PrevSw1", Prev_Switch_States[0]);
+  Particle.variable("PrevSw2", Prev_Switch_States[1]);
+  Particle.variable("PrevSw3", Prev_Switch_States[2]);
+  Particle.variable("PrevSw4", Prev_Switch_States[3]);
 
   // Set time zone to Eastern USA daylight saving time
   Time.zone(TimeZone);
@@ -553,24 +566,24 @@ void loop() {
   //
   // Run below code every 100 mili seconds 1/10th second
   if ( (currentSync - lastMSecSync) > 100 ) {
-    // At the start of loop copt Switch$_State over to Prev_Switch#_State so we
+    // At the start of loop copy Switch$_State over to Prev_Switch#_State so we
     // can tell if State has changed from previous loop
-    Prev_Switch1_State = Switch1_State;
-    Prev_Switch2_State = Switch2_State;
-    Prev_Switch3_State = Switch3_State;
-    Prev_Switch4_State = Switch4_State;
+    Prev_Switch_States[0] = Switch_States[0];
+    Prev_Switch_States[1] = Switch_States[1];
+    Prev_Switch_States[2] = Switch_States[2];
+    Prev_Switch_States[3] = Switch_States[3];
 
     // Read the four anlog inputs for a LOW or HIGH state
-    Switch1_State = ReadDigitalPin(Switch1);
-    Switch2_State = ReadDigitalPin(Switch2);
-    Switch3_State = ReadDigitalPin(Switch3);
-    Switch4_State = ReadDigitalPin(Switch4);
+    Switch_States[0] = ReadDigitalPin(Switch1);
+    Switch_States[1] = ReadDigitalPin(Switch2);
+    Switch_States[2] = ReadDigitalPin(Switch3);
+    Switch_States[3] = ReadDigitalPin(Switch4);
 
     // Check if light switches have changed states "been flipped"
-    RelayIn1_State = CheckSwitchStateChanged(Switch1, Switch1_State, Prev_Switch1_State, RelayIn1, RelayIn1_State);
-    RelayIn2_State = CheckSwitchStateChanged(Switch2, Switch2_State, Prev_Switch2_State, RelayIn2, RelayIn2_State);
-    RelayIn3_State = CheckSwitchStateChanged(Switch3, Switch3_State, Prev_Switch3_State, RelayIn3, RelayIn3_State);
-    RelayIn4_State = CheckSwitchStateChanged(Switch4, Switch4_State, Prev_Switch4_State, RelayIn4, RelayIn4_State);
+    RelayIn_States[0] = CheckSwitchStateChanged(Switch1, Switch_States[0], Prev_Switch_States[0], RelayIn1, RelayIn_States[0]);
+    RelayIn_States[1] = CheckSwitchStateChanged(Switch2, Switch_States[1], Prev_Switch_States[1], RelayIn2, RelayIn_States[1]);
+    RelayIn_States[2] = CheckSwitchStateChanged(Switch3, Switch_States[2], Prev_Switch_States[2], RelayIn3, RelayIn_States[2]);
+    RelayIn_States[3] = CheckSwitchStateChanged(Switch4, Switch_States[3], Prev_Switch_States[3], RelayIn4, RelayIn_States[3]);
 
     lastMSecSync = currentSync;
   }
@@ -599,7 +612,7 @@ void loop() {
     }
     lcd.setCursor(0, 1);
     lcd.print(secs);
-    lcd.print(String::format("sec - %i,%i,%i,%i", RelayIn1_State, RelayIn2_State, RelayIn3_State, RelayIn4_State));
+    lcd.print(String::format("sec - %i,%i,%i,%i", RelayIn_States[0], RelayIn_States[1], RelayIn_States[2], RelayIn_States[3]));
 
     // print the number of seconds since reset:
     //lcd.print(String::format("%i %i %i", currentSync/1000, lastSecSync/1000, currentSync - lastSecSync ));
