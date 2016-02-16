@@ -10,7 +10,7 @@ int RelayIn1 = D2;
 int RelayIn2 = D3;
 int RelayIn3 = D4;
 int RelayIn4 = D5;
-int RelayIn[4] = { D2, D3, D3, D4  };
+int RelayIn[4] = { D2, D3, D4, D5 };
 int RelayIn_States[4] = { HIGH, HIGH, HIGH, HIGH };
 int Switch1 = A2;
 int Switch2 = A3;
@@ -103,6 +103,9 @@ int CloudRelayInChange(String command) {
   if ( RelayIn_State == 0 ) {
     WriteDigitalPin(RelayIn, 1);
     RelayIn_State = 1;
+    // Rest any timer values and stop Timer
+    TimerStartTime[Relay-1] = 0;
+    TimerTime[Relay-1] = 0;
   } else if ( RelayIn_State == 1 ) {
     WriteDigitalPin(RelayIn, 0);
     RelayIn_State = 0;
@@ -316,6 +319,60 @@ WebServer webserver(PREFIX, 80);
 
 // commands are functions that get called by the webserver framework
 // they can read any posted data from client, and they output to server
+
+void debugCmd(WebServer &server, WebServer::ConnectionType type, char *url_tail, bool tail_complete)
+{
+  //server << "<!-- debugCmd ConnectionType=" << type << " -->\n";
+  P(htmlHead) =
+    "<html>\n"
+    "<head>\n"
+    "<title>Particle Photon Web Server</title>\n"
+    "<style type=\"text/css\">\n"
+    "BODY { font-family: sans-serif }\n"
+    "H1 { font-size: 14pt; text-decoration: underline }\n"
+    "P  { font-size: 10pt; }\n"
+    "</style>\n"
+    "</head>\n"
+    "<body>\n";
+
+  if (type == WebServer::POST) {
+    server.httpFail();
+    return;
+  }
+
+  server.httpSuccess();
+  server.printP(htmlHead);
+
+  if (type == WebServer::HEAD)
+    return;
+
+  int i;
+  for (i = 0; i < 4; ++i) {
+    server << "RelayIn " << i+1 << " Pin Number: " << RelayIn[i] << "<br>\n";
+    server << "RelayIn " << i+1 << " State: " << RelayIn_States[i] << "<br>\n";
+    server << "Switch " << i+1 << " Pin Number: " << Switch[i] << "<br>\n";
+    server << "Switch " << i+1 << " State: " << Switch_States[i] << "<br>\n";
+    server << "Previous Switch " << i+1 << " State: " << Prev_Switch_States[i] << "<br>\n";
+    server << "Time.now() " << Time.now() << "<br>\n";
+    server << "Timer " << i+1 << " Start Time: " << TimerStartTime[i] << "<br>\n";
+    server << "Time.now() - TimerStartTime[i]: " << Time.now() - TimerTime[i] << "<br>\n";
+    server << "Timer " << i+1 << " Time: " << TimerTime[i] << "<br>\n";
+    server << "TimerStartTime[i]-(Time.now() - TimerTime[i]) " << i+1 << " Time: " << TimerStartTime[i]-(Time.now()-TimerTime[i]) << "<br>\n";
+    server << "(TimerStartTime[i]-(Time.now() - TimerTime[i]))/60 " << i+1 << " Time: " << (TimerStartTime[i]-(Time.now()-TimerTime[i]))/60 << "<br>\n";
+    server << "(TimerStartTime[i]-(Time.now() - TimerTime[i]))%60 " << i+1 << " Time: " << (TimerStartTime[i]-(Time.now()-TimerTime[i]))%60 << "<br>\n";
+  }
+  server << "myIpAddress: " << myIpAddress << "<br>\n";
+  server << "ONE_DAY_MILLIS: " << ONE_DAY_MILLIS << "<br>\n";
+  server << "currentSync: " << currentSync << "<br>\n";
+  server << "lastMSecSync: " << lastMSecSync << "<br>\n";
+  server << "lastSecSync: " << lastSecSync << "<br>\n";
+  server << "lastMinSync: " << lastMinSync << "<br>\n";
+  server << "lastDaySync: " << lastDaySync << "<br>\n";
+  server << "TimeZone: " << TimeZone << "<br>\n";
+  server << "colorR: " << colorR << "<br>\n";
+  server << "colorG: " << colorG << "<br>\n";
+  server << "colorB: " << colorB << "<br>\n";
+}
 
 void jsonCmd(WebServer &server, WebServer::ConnectionType type, char *url_tail, bool tail_complete)
 {
@@ -535,6 +592,7 @@ void setup() {
   webserver.setDefaultCommand(&defaultCmd);
   webserver.addCommand("json", &jsonCmd);
   webserver.addCommand("form", &formCmd);
+  webserver.addCommand("debug", &debugCmd);
   //
   // Webduino setup END
 
@@ -549,7 +607,7 @@ void setup() {
   lcd.setCursor(0, 1);
   lcd.print("Setup Complete!!");
 
-  delay(1000);
+  delay(2000);
 }
 
 void loop() {
@@ -603,7 +661,7 @@ void loop() {
     time_t time = Time.now();
 
     String secs = Time.format(time, "%S");
-    if ( secs == "0" or secs == "1" ) {
+    if ( secs == "00" or secs == "01" ) {
       // Display IP for 2 seconds on LCD panel.
       lcd.print(myIpAddress);
     } else {
