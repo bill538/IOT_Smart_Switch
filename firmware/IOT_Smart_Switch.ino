@@ -59,6 +59,63 @@ rgb_lcd lcd;
 //
 // IOT Smart Switch Fuction initilazation BEGIN
 
+// You can't pass argument to the function being called by Timer.
+// The work around is just create dedicated function for each swicth called Switch#TimerFunction
+void Switch1TimerFunction(){
+  Particle.publish("Switch1TimerFunction", "1");
+  CloudRelayInChange("1");
+}
+void Switch2TimerFunction(){
+  Particle.publish("Switch2TimerFunction", "2");
+  CloudRelayInChange("2");
+}
+void Switch3TimerFunction(){
+  Particle.publish("Switch3TimerFunction", "3");
+  CloudRelayInChange("3");
+}
+void Switch4TimerFunction(){
+  Particle.publish("Switch4TimerFunction", "4");
+  CloudRelayInChange("4");
+}
+
+
+// You can't pass argument to the function being called by Timer.
+// The work around is just create dedicated function for each swicth called Switch#TimerFunction
+Timer TimerSwitch1(20000, Switch1TimerFunction, true);
+Timer TimerSwitch2(30000, Switch2TimerFunction, true);
+Timer TimerSwitch3(40000, Switch3TimerFunction, true);
+Timer TimerSwitch4(50000, Switch4TimerFunction, true);
+
+//
+//  This function is used to set timer time and start timer.
+int CloudSwitchTimer(int SwitchNum, int SwitchMins) {
+  int SwitchMills = SwitchMins*60000;
+
+  switch (SwitchNum) {
+      case 1:   TimerSwitch1.changePeriod(SwitchMills);
+                TimerTime[0] = SwitchMins*60;
+                TimerSwitch1.reset();
+                TimerStartTime[0] = Time.now();
+      break;
+      case 2:   TimerSwitch2.changePeriod(SwitchMills);
+                TimerTime[1] = SwitchMins*60;
+                TimerSwitch2.reset();
+                TimerStartTime[1] = Time.now();
+      break;
+      case 3:   TimerSwitch3.changePeriod(SwitchMills);
+                TimerTime[2] = SwitchMins*60;
+                TimerSwitch3.reset();
+                TimerStartTime[2] = Time.now();
+      break;
+      case 4:   TimerSwitch4.changePeriod(SwitchMills);
+                TimerTime[3] = SwitchMins*60;
+                TimerSwitch4.reset();
+                TimerStartTime[3] = Time.now();
+      break;
+      default:  return -1;
+  }
+}
+
 //
 // Function for Cloud/RestAPI to Change the state of RelayIn1,2,3,4 and set RelayIn#_State to proper state
 // Argument syntax for command = 1|2|3|4
@@ -92,7 +149,7 @@ int CloudRelayInChange(String command) {
                 RelayIn_State = RelayIn_States[2];
       break;
       case 4:   RelayIn = RelayIn4;
-                RelayIn_State = RelayIn_States[2];
+                RelayIn_State = RelayIn_States[3];
       break;
       default:  return -2;
   }
@@ -103,14 +160,21 @@ int CloudRelayInChange(String command) {
   if ( RelayIn_State == 0 ) {
     WriteDigitalPin(RelayIn, 1);
     RelayIn_State = 1;
-    // Rest any timer values and stop Timer
+    // Rest any timer values and stop Timer for OFF Switch
     TimerStartTime[Relay-1] = 0;
     TimerTime[Relay-1] = 0;
+    switch (Relay) {
+        case 1: TimerSwitch1.stop(); break;
+        case 2: TimerSwitch2.stop(); break;
+        case 3: TimerSwitch3.stop(); break;
+        case 4: TimerSwitch4.stop(); break;
+       default: return -3;
+    }
   } else if ( RelayIn_State == 1 ) {
     WriteDigitalPin(RelayIn, 0);
     RelayIn_State = 0;
   } else {
-    return -3;
+    return -4;
   }
 
   // Set Global Variable for RelayIn#_State based on new state
@@ -123,7 +187,7 @@ int CloudRelayInChange(String command) {
       break;
       case 4:   RelayIn_States[3] = RelayIn_State;
       break;
-      default:  return -4;
+      default:  return -5;
   }
   Particle.publish("CloudRelayInChange", String::format("C - Switch:%i, RelayIn Pin:D%i, RelayIn_State:%i",Relay,RelayIn,RelayIn_State));
 }
@@ -240,64 +304,6 @@ int ReadDigitalPin(int pin) {
   return digitalRead(pin);
 }
 
-// You can't pass argument to the function being called by Timer.
-// The work around is just create dedicated function for each swicth called Switch#TimerFunction
-void Switch1TimerFunction(){
-  Particle.publish("Switch1TimerFunction", "1");
-  CloudRelayInChange("1");
-}
-void Switch2TimerFunction(){
-  Particle.publish("Switch2TimerFunction", "2");
-  CloudRelayInChange("2");
-}
-void Switch3TimerFunction(){
-  Particle.publish("Switch3TimerFunction", "3");
-  CloudRelayInChange("3");
-}
-void Switch4TimerFunction(){
-  Particle.publish("Switch4TimerFunction", "4");
-  CloudRelayInChange("4");
-}
-
-
-// You can't pass argument to the function being called by Timer.
-// The work around is just create dedicated function for each swicth called Switch#TimerFunction
-Timer TimerSwitch1(20000, Switch1TimerFunction, true);
-Timer TimerSwitch2(30000, Switch2TimerFunction, true);
-Timer TimerSwitch3(40000, Switch3TimerFunction, true);
-Timer TimerSwitch4(50000, Switch4TimerFunction, true);
-
-//
-//  This function is used to set timer time and start timer.
-int CloudSwitchTimer(int SwitchNum, int SwitchMins) {
-  int SwitchMills = SwitchMins*60000;
-
-  switch (SwitchNum) {
-      case 1:   TimerSwitch1.changePeriod(SwitchMills);
-                TimerTime[0] = SwitchMins*60;
-                TimerSwitch1.reset();
-                TimerStartTime[0] = Time.now();
-      break;
-      case 2:   TimerSwitch2.changePeriod(SwitchMills);
-                TimerTime[1] = SwitchMins*60;
-                TimerSwitch2.reset();
-                TimerStartTime[1] = Time.now();
-      break;
-      case 3:   TimerSwitch3.changePeriod(SwitchMills);
-                TimerTime[2] = SwitchMins*60;
-                TimerSwitch3.reset();
-                TimerStartTime[2] = Time.now();
-      break;
-      case 4:   TimerSwitch4.changePeriod(SwitchMills);
-                //TimerTime[3] = SwitchMins*60;
-                TimerSwitch4.reset();
-                TimerStartTime[3] = Time.now();
-      break;
-      default:  return -1;
-  }
-}
-
-
 //
 // IOT Smart Switch Fuction initilazation END
 
@@ -360,6 +366,7 @@ void debugCmd(WebServer &server, WebServer::ConnectionType type, char *url_tail,
     server << "TimerStartTime[i]-(Time.now() - TimerTime[i]) " << i+1 << " Time: " << TimerStartTime[i]-(Time.now()-TimerTime[i]) << "<br>\n";
     server << "(TimerStartTime[i]-(Time.now() - TimerTime[i]))/60 " << i+1 << " Time: " << (TimerStartTime[i]-(Time.now()-TimerTime[i]))/60 << "<br>\n";
     server << "(TimerStartTime[i]-(Time.now() - TimerTime[i]))%60 " << i+1 << " Time: " << (TimerStartTime[i]-(Time.now()-TimerTime[i]))%60 << "<br>\n";
+    server << "<hr>\n";
   }
   server << "myIpAddress: " << myIpAddress << "<br>\n";
   server << "ONE_DAY_MILLIS: " << ONE_DAY_MILLIS << "<br>\n";
@@ -453,8 +460,9 @@ void outputPins(WebServer &server, WebServer::ConnectionType type, bool addContr
         server << "OFF</B>. <br>\nTurn Switch " << i+1;
         server << " <B>ON</B> <input type=checkbox name=Switch" << i+1;
         server << "_State value=" << i+1 << " /> <br>\nSwitch " << i+1;
-        server << " Timer(Minutes): <input type=\"text\" name=\"Switch" << i+1;
-        server << "_Timer\" value=0 /><br>\n<hr>\n<br>\n";
+        //server << " Timer(Minutes): <input type=\"text\" name=\"Switch" << i+1;
+        server << " Timer(Minutes): <input type=\"number\" name=\"Switch" << i+1;
+        server << "_Timer\" value=0 min=\"0\" max=\"71582\" /><br>\n<hr>\n<br>\n";
       }
     }
     server << "<INPUT TYPE=\"button\" onClick=\"history.go(0)\" VALUE=\"Refresh\"> <input type='submit' value='Submit'/></form>\n";
@@ -476,7 +484,7 @@ void formCmd(WebServer &server, WebServer::ConnectionType type, char *url_tail, 
     {
       repeat = server.readPOSTparam(name, 16, value, 16);
 
-      int pin = strtoul(name + 1, NULL, 10);
+      //int pin = strtoul(name + 1, NULL, 10);
       int val = strtoul(value, NULL, 10);
       //server << "<!-- formCmd - WebServer::POST name=" << name << "  value=" << value << " -->\n";
       //server << "<!-- formCmd - WebServer::POST pin=" << pin << "  val=" << val << " -->\n";
