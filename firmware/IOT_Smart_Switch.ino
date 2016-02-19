@@ -330,16 +330,7 @@ void debugCmd(WebServer &server, WebServer::ConnectionType type, char *url_tail,
 {
   //server << "<!-- debugCmd ConnectionType=" << type << " -->\n";
   P(htmlHead) =
-    "<html>\n"
-    "<head>\n"
-    "<title>Particle Photon Web Server</title>\n"
-    "<style type=\"text/css\">\n"
-    "BODY { font-family: sans-serif }\n"
-    "H1 { font-size: 14pt; text-decoration: underline }\n"
-    "P  { font-size: 10pt; }\n"
-    "</style>\n"
-    "</head>\n"
-    "<body>\n";
+    "<html>\n<head>\n<title>Particle Photon Web Server</title>\n</head>\n";
 
   if (type == WebServer::POST) {
     server.httpFail();
@@ -422,13 +413,38 @@ void outputPins(WebServer &server, WebServer::ConnectionType type, bool addContr
     "<html>\n"
     "<head>\n"
     "<title>Particle Photon Web Server</title>\n"
+    "<script language=\"JavaScript\">\n"
+    "<!--\n"
+    "var AllArr = [\"Switch1_Timer\", \"Switch2_Timer\", \"Switch3_Timer\", \"Switch4_Timer\"];\n"
+    "function isArray(value) {\n"
+    "  if (value) {\n"
+    "    if (typeof value === 'object') {\n"
+    "      return (Object.prototype.toString.call(value) == '[object Array]')\n"
+    "    }\n"
+    "  }\n"
+    "  return false;\n"
+    "}\n"
+    "function ChangeElementState(state,ListArr) {\n"
+    "	state=!state\n"
+    "	if (isArray(ListArr)) {\n"
+    "    for (var i = 0, len = ListArr.length; i < len; ++i) {\n"
+    "			 if (IOT.elements[ListArr[i]]) {"
+    "        IOT.elements[ListArr[i]].disabled = state;\n"
+    "      }"
+    "    }\n"
+    " } else {\n"
+    "		IOT.elements[ListArr].disabled = state;\n"
+    "	}\n"
+    "}\n"
+    "//-->\n"
+    "</script>\n"
     "<style type=\"text/css\">\n"
     "BODY { font-family: sans-serif }\n"
     "H1 { font-size: 14pt; text-decoration: underline }\n"
     "P  { font-size: 10pt; }\n"
     "</style>\n"
     "</head>\n"
-    "<body>\n";
+    "<body onload=ChangeElementState(false,AllArr);>\n";
 
   int i;
   server.httpSuccess();
@@ -436,7 +452,7 @@ void outputPins(WebServer &server, WebServer::ConnectionType type, bool addContr
   //server << "<!-- outputPins addControls=" << addControls << " ConnectionType=" << type << " -->\n";
 
   if (addControls) {
-    server << "<form action='" PREFIX "/form' method='post'>\n";
+    server << "<form name=\"IOT\" action='" PREFIX "/form' method='post'>\n";
 
     server << "<h1> Switch States - " << Time.format(Time.now(), TIME_FORMAT_DEFAULT) << " </h1> <p>\n";
 
@@ -447,9 +463,10 @@ void outputPins(WebServer &server, WebServer::ConnectionType type, bool addContr
         // Get time left on timer
         int LeftMins = (TimerStartTime[i]-(Time.now()-TimerTime[i]))/60;
         int LeftSecs = ((TimerStartTime[i]-(Time.now()-TimerTime[i]))%60);
-        server << "ON</B>. <br>\nTurn Switch " << i+1;
-        server << " <B>OFF</B> <input type=checkbox name=Switch" << i+1;
-        server << "_State value=" << i+1 << "/><br>\nTimer Time Left: ";
+        server << "ON</B>. <br>\n<label> Turn Switch " << i+1;
+        server << " <B>OFF</B> <input type=checkbox onclick=\"ChangeElementState(this.checked,'Switch";
+        server << i+1 << "_Timer')\" name=Switch" << i+1;
+        server << "_State value=" << i+1 << "/></label><br>\nTimer Time Left: ";
         server << LeftMins << ":" << String::format("%02d", LeftSecs) << "<br>\n<hr>\n<br>\n";
         server << "<!-- addControls i=" << i << " -->\n";
         server << "<!-- addControls TimerStartTime=" << TimerStartTime[i] << " -->\n";
@@ -457,9 +474,10 @@ void outputPins(WebServer &server, WebServer::ConnectionType type, bool addContr
         server << "<!-- addControls LeftMins=" << LeftMins << " -->\n";
         server << "<!-- addControls LeftSecs=" << LeftSecs << " -->\n";
       } else {
-        server << "OFF</B>. <br>\nTurn Switch " << i+1;
-        server << " <B>ON</B> <input type=checkbox name=Switch" << i+1;
-        server << "_State value=" << i+1 << " /> <br>\nSwitch " << i+1;
+        server << "OFF</B>. <br>\n<label> Turn Switch " << i+1;
+        server << " <B>ON</B> <input type=checkbox onclick=\"ChangeElementState(this.checked,'Switch";
+        server << i+1 << "_Timer')\" name=Switch" << i+1;
+        server << "_State value=" << i+1 << " /> </label><br>\nSwitch " << i+1;
         //server << " Timer(Minutes): <input type=\"text\" name=\"Switch" << i+1;
         server << " Timer(Minutes): <input type=\"number\" name=\"Switch" << i+1;
         server << "_Timer\" value=0 min=\"0\" max=\"71582\" /><br>\n<hr>\n<br>\n";
