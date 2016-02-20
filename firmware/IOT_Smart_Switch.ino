@@ -36,15 +36,6 @@ int SWITCHDATA [5][14] { //initialize to zero
 
 int ic2_sda = D0;
 int i2c_scl = D1;
-//int RelayIn[4] = { D2, D3, D4, D5 };
-//int RelayIn_States[4] = { HIGH, HIGH, HIGH, HIGH };
-//int Switch[4] = { A2, A3, A4, A5 };
-//int Switch_States[4] = { HIGH, HIGH, HIGH, HIGH };
-//int Prev_Switch_States[4] = { HIGH, HIGH, HIGH, HIGH };
-//int TimerStartTime[4] = { 0, 0, 0, 0 };
-//int TimerTime[4] = { 0, 0, 0, 0 };
-
-
 int Led1 = D6;
 int Led2 = D7;
 
@@ -107,6 +98,8 @@ Timer TimerSwitch1(20000, Switch1TimerFunction, true);
 Timer TimerSwitch2(30000, Switch2TimerFunction, true);
 Timer TimerSwitch3(40000, Switch3TimerFunction, true);
 Timer TimerSwitch4(50000, Switch4TimerFunction, true);
+// Timer that updates the LCD display every second.
+Timer TimerUpdateLCD(1000, UpdateLCD, false);
 
 //
 //  This function is used to set timer time and start timer.
@@ -138,6 +131,29 @@ int CloudSwitchTimer(int SwitchNum, int SwitchMins) {
   }
 }
 
+//
+// Update the display every second
+void UpdateLCD () {
+  // set the cursor to column 0, line 1
+  // (note: line 1 is the second row, since counting begins with 0):
+  lcd.clear();
+  lcd.setCursor(0, 0);
+
+  // Get current time to update LCD display
+  time_t time = Time.now();
+
+  String secs = Time.format(time, "%S");
+  if ( secs == "00" or secs == "01" or secs == "0" or secs == "1" ) {
+    // Display IP for 2 seconds on LCD panel.
+    lcd.print(myIpAddress);
+  } else {
+    // Time output sample: 01/01/15 01:08PM
+    lcd.print(Time.format(time, "%m/%d/%Y %I:%M%p") );
+  }
+  lcd.setCursor(0, 1);
+  lcd.print(secs);
+  lcd.print(String::format("sec - %i,%i,%i,%i", SWITCHDATA[1][2], SWITCHDATA[2][2], SWITCHDATA[3][2], SWITCHDATA[4][2]));
+}
 //
 // Function for Cloud/RestAPI to Change the state of RelayIn1,2,3,4 and set RelayIn#_State to proper state
 // Argument syntax for command = 1|2|3|4
@@ -623,6 +639,15 @@ void setup() {
     //pinMode(SWITCHDATA[i][3], SWITCHDATA[i][4]);   // Set Switch# pinMode
   }
 
+  // initialize Switch states at startup
+  for (i = 1; i < SWITCHCOUNT; ++i) {
+    // Read the four anlog inputs for a LOW or HIGH state
+    // Switch_State[#] = ReadDigitalPin(SWITCHDATA[1][3]);
+    SWITCHDATA[i][5] = ReadDigitalPin(SWITCHDATA[i][3]);
+    // Prev_Switch_State = Switch_State;
+    SWITCHDATA[i][6] = SWITCHDATA[i][5];
+  }
+
   // Publish devi's IP
   // Build IP Address and publish
   IPAddress myIp = WiFi.localIP();
@@ -672,16 +697,16 @@ void setup() {
   lcd.print("Setup Complete!!");
 
   delay(2000);
+  //
+  // Enable LCD update Timer
+  TimerUpdateLCD.start();
 }
 
 void loop() {
   int i=0;
   //
-  // Webduino loop END
-  // process incoming connections one at a time forever
+  // Webserver process incoming connections one at a time forever
   webserver.processConnection();
-  //
-  // Webduino loop END
 
   // Get the current Millis for this loop
   currentSync = millis();
@@ -708,39 +733,15 @@ void loop() {
 
   //
   // Run below code every 100 mili second ( 1/10th second )
-  if ( (currentSync - lastSecSync) > 1000 ) {
-    // Update the display every second when the lastSync is > 1000 Millis ie one second
-
-    // set the cursor to column 0, line 1
-    // (note: line 1 is the second row, since counting begins with 0):
-    lcd.clear();
-    lcd.setCursor(0, 0);
-
-    // Get current time to update LCD display
-    time_t time = Time.now();
-
-    String secs = Time.format(time, "%S");
-    if ( secs == "00" or secs == "01" ) {
-      // Display IP for 2 seconds on LCD panel.
-      lcd.print(myIpAddress);
-    } else {
-      // Time output sample: 01/01/15 01:08PM
-      lcd.print(Time.format(time, "%m/%d/%Y %I:%M%p") );
-    }
-    lcd.setCursor(0, 1);
-    lcd.print(secs);
-    lcd.print(String::format("sec - %i,%i,%i,%i", SWITCHDATA[1][2], SWITCHDATA[2][2], SWITCHDATA[3][2], SWITCHDATA[4][2]));
-
-    // print the number of seconds since reset:
-    //lcd.print(String::format("%i %i %i", currentSync/1000, lastSecSync/1000, currentSync - lastSecSync ));
-    lastSecSync = currentSync;
-  }
+  //if ( (currentSync - lastSecSync) > 1000 ) {
+  //  lastSecSync = currentSync;
+  //}
 
   //
   // Run below code every 60000 mili seconds 60 second
-  if ( (currentSync - lastMinSync) > 60000 ) {
-    lastMinSync = currentSync;
-  }
+  //if ( (currentSync - lastMinSync) > 60000 ) {
+  //  lastMinSync = currentSync;
+  //}
 
   //
   // Run below code every 1 day ( 24 hours )
