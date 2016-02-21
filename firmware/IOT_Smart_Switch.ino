@@ -1,9 +1,7 @@
-  //
+//
 // IOT Smart Switch variable initilization BEGIN
-
 #include "IOT_Smart_Switch.h"
 
-// First, let's create our "shorthand" for the pins used
 //
 // SWITCHDATA
 //   [#] = [0]=Empty, [1]=Switch1, [2]=Switch2, [3]=Switch3, [4]=Switch4
@@ -12,26 +10,29 @@
 //   [#][2] = RelayIn State
 //   [#][3] = Switch Pin
 //   [#][4] = Switch Mode
-//   [#][5] = Switch_State
-//   [#][6] = Prev_Switch_State
+//   [#][5] = Switch State
+//   [#][6] = Previous Switch State
 //   [#][7] = TimerStartTime
 //   [#][8] = TimerTime
-//   [#][9] = CronMin - minutes between (0-59)
-//   [#][10] = CronHour - hours between (0-23)
-//   [#][11] = CronDay - day of the month (1-31)
-//   [#][12] = CronMonth - month of the year (1-12)
-//   [#][13] = CronWeekDay - day of the week (0-6 with 0=Sunday)
+//   [#][9] = CronDurationMins
+//   [#][10] = CronStartTime
+//   [#][11] = CronSec - seconds between (0-59) & -1=*
+//   [#][12] = CronMin - minutes between (0-59) & -1=*
+//   [#][13] = CronHour - hours between (0-23) & -1=*
+//   [#][14] = CronDay - day of the month (1-31) & -1=*
+//   [#][15] = CronMonth - month of the year (1-12) & -1=*
+//   [#][16] = CronWeekDay - day of the week (0-6 with 0=Sunday) & -1=*
 String WEBTITLE="Particle Photon IOT Smart Switch";
 int SWITCHCOUNT = 5;
 //int SWITCHCOUNT = sizeof(SWITCHDATA) / sizeof(int);
-int SWITCHDATASIZE = 14;
+int SWITCHDATASIZE = 17;
 //int SWITCHDATASIZE = sizeof(SWITCHDATA[0]) / sizeof(int);
-int SWITCHDATA [5][14] { //initialize to zero
- {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
- {D2, OUTPUT, HIGH, A2, INPUT, HIGH, HIGH, 0, 0, 0, 0, 0, 0, 0},
- {D3, OUTPUT, HIGH, A3, INPUT, HIGH, HIGH, 0, 0, 0, 0, 0, 0, 0},
- {D4, OUTPUT, HIGH, A4, INPUT, HIGH, HIGH, 0, 0, 0, 0, 0, 0, 0},
- {D5, OUTPUT, HIGH, A5, INPUT, HIGH, HIGH, 0, 0, 0, 0, 0, 0, 0}
+int SWITCHDATA [5][17] { //initialize to zero
+  {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+  {D2, OUTPUT, HIGH, A2, INPUT, HIGH, HIGH, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+  {D3, OUTPUT, HIGH, A3, INPUT, HIGH, HIGH, 0, 0, 1, 0, 30, 32, 12, 21, 2, 0},
+  {D4, OUTPUT, HIGH, A4, INPUT, HIGH, HIGH, 0, 0, 2, 0, 40, -1, -1, -1, -1, -1},
+  {D5, OUTPUT, HIGH, A5, INPUT, HIGH, HIGH, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
 };
 
 int ic2_sda = D0;
@@ -90,6 +91,46 @@ void Switch4TimerFunction(){
   Particle.publish("Switch4TimerFunction", "4");
   CloudRelayInChange("4");
 }
+void SwitchCronFunction(){
+  int i=0;
+  for (i = 1; i < SWITCHCOUNT; ++i) {
+    //   [#][9] = CronDurationMins
+    //   [#][10] = CronStartTime
+    //   [#][11] = CronSec - seconds between (0-59) & -1=*
+    //   [#][12] = CronMin - minutes between (0-59) & -1=*
+    //   [#][13] = CronHour - hours between (0-23) & -1=*
+    //   [#][14] = CronDay - day of the month (1-31) & -1=*
+    //   [#][15] = CronMonth - month of the year (1-12) & -1=*
+    //   [#][16] = CronWeekDay - day of the week (0-6 with 0=Sunday) & -1=*    // Check if Cron Duration is non zero
+    if ( SWITCHDATA[i][9] > 0 ) {
+      time_t time = Time.now();
+
+      // Check if CronStartTime is set and past the schduled duration
+      if ( SWITCHDATA[i][10] > 0 ) {
+        // Check if past Duration
+        if ( ((time-SWITCHDATA[i][10])/60) > SWITCHDATA[i][9] ) {
+          Particle.publish("SwitchCronFunction", String::format("Past Duration - A - sec:%i, min:%i, i:%i, [9]:%i, [10]:%i, [11]:%i, [12]:%1",Time.second(time),Time.minute(time),i,SWITCHDATA[i][9],SWITCHDATA[i][10],SWITCHDATA[i][11],SWITCHDATA[i][12]));
+          SWITCHDATA[i][10] = 0;
+        }
+      } else {
+        if ( Time.second(time) == SWITCHDATA[i][11] or SWITCHDATA[i][11] == -1 or
+             Time.minute(time) == SWITCHDATA[i][12] or SWITCHDATA[i][12] == -1 or
+             Time.hour(time) == SWITCHDATA[i][13] or SWITCHDATA[i][13] == -1 or
+             Time.day(time) == SWITCHDATA[i][14] or SWITCHDATA[i][14] == -1 or
+             Time.month(time) == SWITCHDATA[i][15] or SWITCHDATA[i][15] == -1 or
+             Time.weekday(time)-1 == SWITCHDATA[i][16] or SWITCHDATA[i][16] == -1
+           ) {
+            Particle.publish("SwitchCronFunction", String::format("Matched - B - sec:%i, min:%i, i:%i, SWITCHDATA[i][10]:%i, SWITCHDATA[i][11]:%i",Time.second(time),Time.minute(time),i,SWITCHDATA[i][10],SWITCHDATA[i][11]));
+            SWITCHDATA[i][10]=time;
+        }
+        if ( Time.second(time) == SWITCHDATA[i][10] ) {
+          Particle.publish("SwitchCronFunction", String::format("Matched - C - sec:%i, min:%i, i:%i, SWITCHDATA[i][10]:%i, SWITCHDATA[i][11]:%i",Time.second(time),Time.minute(time),i,SWITCHDATA[i][10],SWITCHDATA[i][11]));
+          SWITCHDATA[i][10]=time;
+        }
+      }
+    }
+  }
+}
 
 
 // You can't pass argument to the function being called by Timer.
@@ -98,6 +139,8 @@ Timer TimerSwitch1(20000, Switch1TimerFunction, true);
 Timer TimerSwitch2(30000, Switch2TimerFunction, true);
 Timer TimerSwitch3(40000, Switch3TimerFunction, true);
 Timer TimerSwitch4(50000, Switch4TimerFunction, true);
+// Timer that checks if any switchs have crons enabled
+Timer TimerSwitchCron(1000, SwitchCronFunction, false);
 // Timer that updates the LCD display every second.
 Timer TimerUpdateLCD(1000, UpdateLCD, false);
 
@@ -397,11 +440,14 @@ void debugCmd(WebServer &server, WebServer::ConnectionType type, char *url_tail,
   server << "    <th>Previous Switch State (6)</th>\n";
   server << "    <th>Timer Start Time (7)</th>\n";
   server << "    <th>Timer Time (8)</th>\n";
-  server << "    <th>Cron Mins (9)</th>\n";
-  server << "    <th>Cron Hours (10)</th>\n";
-  server << "    <th>Cron Day (11)</th>\n";
-  server << "    <th>Cron Month (12)</th>\n";
-  server << "    <th>Cron Week Day (13)</th>\n";
+  server << "    <th>Cron Duration in Minutes (9)</th>\n";
+  server << "    <th>Cron Start Time (10)</th>\n";
+  server << "    <th>Cron Secs (11)</th>\n";
+  server << "    <th>Cron Mins (12)</th>\n";
+  server << "    <th>Cron Hours (13)</th>\n";
+  server << "    <th>Cron Day (14)</th>\n";
+  server << "    <th>Cron Month (15)</th>\n";
+  server << "    <th>Cron Week Day (16)</th>\n";
   server << "  </tr>\n";
   for (i = 0; i < SWITCHCOUNT; i++) {
     server << "  <tr>\n";
@@ -634,8 +680,11 @@ void setup() {
   // Loop to set the proper pin mode
   for (int i = 1; i < SWITCHCOUNT; i++) {
     //pinMode(SWITCHDATA[i][0], SWITCHDATA[i][1]);   // Set RealayIn# pinMode
-    pinMode(SWITCHDATA[i][0], OUTPUT);   // Set RealayIn# pinMode
-    pinMode(SWITCHDATA[i][3], INPUT);    // Set Switch# pinMode
+    pinMode(SWITCHDATA[i][0], OUTPUT);               // Set RealayIn# pinMode
+    // Default the the Output RelatIn# Pin to default states
+    WriteDigitalPin(SWITCHDATA[i][0], SWITCHDATA[i][2]);
+    // Set phyical switch # pin mode to proper SWITCHDATA[#][4]
+    pinMode(SWITCHDATA[i][3], INPUT);                // Set Switch# pinMode
     //pinMode(SWITCHDATA[i][3], SWITCHDATA[i][4]);   // Set Switch# pinMode
   }
 
@@ -659,15 +708,13 @@ void setup() {
   Particle.function("AccessPin", CloudAccessPin);
   Particle.function("RelayInChg", CloudRelayInChange);
 
-  // Expose all variables to the cloud. Note current maximum is 10.
+  // Export key variables to the cloud for access
   // https://api.particle.io/v1/devices/2e0048000a47343432313031/IP?access_token=***************
   Particle.variable("IP", myIpAddress);
   Particle.variable("SSID", SSID);
-
-  // Export key variables to the cloud for access
   for (i = 1; i < SWITCHCOUNT; ++i) {
-    Particle.variable(String::format("RelayIn%i",i), SWITCHDATA[i][2]);
     Particle.variable(String::format("Switch%i",i), SWITCHDATA[i][5]);
+    Particle.variable(String::format("RelayIn%i",i), SWITCHDATA[i][2]);
     Particle.variable(String::format("PrevSw1%i",i), SWITCHDATA[i][6]);
   }
 
@@ -677,11 +724,10 @@ void setup() {
   //
   // Webduino setup BEGIN
   webserver.begin();
-
-  webserver.setDefaultCommand(&defaultCmd);
-  webserver.addCommand("json", &jsonCmd);
-  webserver.addCommand("form", &formCmd);
-  webserver.addCommand("debug", &debugCmd);
+  webserver.setDefaultCommand(&defaultCmd);     // Web path /
+  webserver.addCommand("json", &jsonCmd);       // Web path /json
+  webserver.addCommand("form", &formCmd);       // Web path /form
+  webserver.addCommand("debug", &debugCmd);     // Web path /debug
   //
   // Webduino setup END
 
@@ -700,10 +746,12 @@ void setup() {
   //
   // Enable LCD update Timer
   TimerUpdateLCD.start();
+  //
+  // Enable CronTimer
+  TimerSwitchCron.start();
 }
 
 void loop() {
-  int i=0;
   //
   // Webserver process incoming connections one at a time forever
   webserver.processConnection();
@@ -715,6 +763,7 @@ void loop() {
   // Run below code every 100 mili seconds 1/10th second
   if ( (currentSync - lastMSecSync) > 100 ) {
     // Loop on each switch
+    int i=0;
     for (i = 1; i < SWITCHCOUNT; ++i) {
       // At the start of loop copy Switch$_State over to Prev_Switch#_State so we
       // can tell if State has changed from previous loop
@@ -729,7 +778,6 @@ void loop() {
     }
     lastMSecSync = currentSync;
   }
-
 
   //
   // Run below code every 100 mili second ( 1/10th second )
@@ -749,6 +797,7 @@ void loop() {
     // Sync time with cloud once a day
     // Request time synchronization from the Particle Cloud
     Particle.syncTime();
+    Particle.publish("syncTime", String::format("Time synced - currentSync:%i, lastDaySync:%i",currentSync,lastDaySync));
     lastDaySync = currentSync;
   }
 }
