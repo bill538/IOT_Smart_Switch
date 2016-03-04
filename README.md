@@ -47,9 +47,10 @@ Description     | Model #         | Quanity | Price | Shipping | Total
 
 # Case cutting.
 The way we cut the holes is mount an Metal electical plate and use it as the template.  Then take an dremel to cur out the whole with a zipper bit.
-![](https://github.com/bill538/IOT_Smart_Switch/blob/master/IOT_Smart_Switch-Case_Cover.jpg)
-![](https://github.com/bill538/IOT_Smart_Switch/blob/master/IOT_Smart_Switch-Case_1.jpg)
-![](https://github.com/bill538/IOT_Smart_Switch/blob/master/IOT_Smart_Switch-Case_2.jpg)
+![IOT_Smart_Switch-Case_Cover](https://github.com/bill538/IOT_Smart_Switch/blob/master/IOT_Smart_Switch-Case_Cover.jpg)
+![IOT_Smart_Switch-Case_1](https://github.com/bill538/IOT_Smart_Switch/blob/master/IOT_Smart_Switch-Case_1.jpg)
+![IOT_Smart_Switch-Case_2](https://github.com/bill538/IOT_Smart_Switch/blob/master/IOT_Smart_Switch-Case_2.jpg)
+
 
 
 Web Page Sample: http://192.168.10.146/json
