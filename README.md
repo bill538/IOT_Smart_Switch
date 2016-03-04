@@ -45,6 +45,13 @@ Description     | Model #         | Quanity | Price | Shipping | Total
 [20cm Long F/F Solderless Flexible Breadboard Jumper Cable Wire 40 Pcs](http://www.newegg.com/Product/Product.aspx?Item=9SIA67038W2538) | 9SIA67038W2538 | 1 | $1.11 | $0.00 | $1.11
 # Grand Total: $105.16
 
+# Case cutting.
+The way we cut the holes is mount an Metal electical plate and use it as the template.  Then take an dremel to cur out the whole with a zipper bit.
+![](https://github.com/bill538/IOT_Smart_Switch/blob/master/IOT_Smart_Switch-Case_Cover.jpg)
+![](https://github.com/bill538/IOT_Smart_Switch/blob/master/IOT_Smart_Switch-Case_1.jpg)
+![](https://github.com/bill538/IOT_Smart_Switch/blob/master/IOT_Smart_Switch-Case_2.jpg)
+
+
 Web Page Sample: http://192.168.10.146/json
 ```
 { "d0": 0, "d1": 0, "d2": 1, "d3": 1, "d4": 1, "d5": 1, "d6": 0, "d7": 0, "d8": 1, "a0": 874, "a1": 1228, "a2": 4095, "a3": 4095, "a4": 4093, "a5": 4095 }
