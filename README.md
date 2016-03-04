@@ -50,7 +50,8 @@ Web Page Sample: http://192.168.10.146/json
 { "d0": 0, "d1": 0, "d2": 1, "d3": 1, "d4": 1, "d5": 1, "d6": 0, "d7": 0, "d8": 1, "a0": 874, "a1": 1228, "a2": 4095, "a3": 4095, "a4": 4093, "a5": 4095 }
 ```
 
+Web Page Sample: http://192.168.10.146/form
 ![Web Page Sample: http://192.168.10.146/form](https://github.com/bill538/IOT_Smart_Switch/blob/master/IOT_Smart_Switch-http-form.png)
 
-
+Web Page Sample: http://192.168.10.146/debug
 ![Web Page Sample: http://192.168.10.146/debug](https://github.com/bill538/IOT_Smart_Switch/blob/master/IOT_Smart_Switch-http-debug.png)
