@@ -621,7 +621,7 @@ void outputPins(WebServer &server, WebServer::ConnectionType type, bool addContr
     "//-->\n"
     "</script>\n"
     "<style type=\"text/css\">\n"
-    "BODY { font-family: sans-serif }\n"
+    "BODY { font-family: sans-serif; font-size: 10pt; }\n"
     "H1 { font-size: 14pt; text-decoration: underline }\n"
     "P  { font-size: 10pt; }\n"
     "</style>\n"
