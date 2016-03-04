@@ -30,9 +30,9 @@ int SWITCHDATASIZE = 17;
 int SWITCHDATA [5][17] { //initialize to zero
   {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
   {D2, OUTPUT, HIGH, A2, INPUT, HIGH, HIGH, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-  {D3, OUTPUT, HIGH, A3, INPUT, HIGH, HIGH, 0, 0, 1, 0, 30, 32, 12, 21, 2, 0},
-  {D4, OUTPUT, HIGH, A4, INPUT, HIGH, HIGH, 0, 0, 2, 0, 40, -1, -1, -1, -1, -1},
-  {D5, OUTPUT, HIGH, A5, INPUT, HIGH, HIGH, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
+  {D3, OUTPUT, HIGH, A3, INPUT, HIGH, HIGH, 0, 0, 1, 0, 30, 32, 12, 24, 2, 90000000 },
+  {D4, OUTPUT, HIGH, A4, INPUT, HIGH, HIGH, 0, 0, 2, 0, 40, -1, -1, -1, -1, 91111111 },
+  {D5, OUTPUT, HIGH, A5, INPUT, HIGH, HIGH, 0, 0, 4, 0, 30, -1, -1, -1, -1, 91111000 }
 };
 
 int ic2_sda = D0;
@@ -91,6 +91,51 @@ void Switch4TimerFunction(){
   Particle.publish("Switch4TimerFunction", "4");
   CloudRelayInChange("4");
 }
+
+int weekdayMatch(int dayNum, int weekdayHash) {
+  //
+  //String str = "This is my string";
+  // Length (with one extra character for the null terminator)
+  //int str_len = str.length() + 1;
+  // Prepare the character array (the buffer)
+  //char char_array[str_len];
+  // Copy it over
+  //str.toCharArray(char_array, str_len);
+
+  // Check for wild card(*) = 90000000
+  if ( weekdayHash == 90000000 ) {
+    return true;
+  }
+  // Bit shift to right based on week day
+  int weekdayBitShift = weekdayHash;
+  weekdayBitShift = weekdayBitShift >> dayNum;
+
+  switch (dayNum) {
+    // 90000001 = 45000000
+    case 1:  if ( weekdayBitShift >= 45000000 ) { return true; }
+    break;
+    // 90000010 = 22500002
+    case 2:  if ( weekdayBitShift >= 22500002 ) { return true; }
+    break;
+    // 90000100 = 11250012
+    case 3:  if ( weekdayBitShift >= 11250012 ) { return true; }
+    break;
+    // 90001000 = 5625062
+    case 4:  if ( weekdayBitShift >= 5625062 ) { return true; }
+    break;
+    // 90010000 = 2812812
+    case 5:  if ( weekdayBitShift >= 2812812 ) { return true; }
+    break;
+    // 90000000 = 1407812
+    case 6:  if ( weekdayBitShift >= 1407812 ) { return true; }
+    break;
+    // 91000000 = 710937
+    case 7:  if ( weekdayBitShift >= 710937 ) { return true; }
+    break;
+    default:  return false;
+  }
+
+}
 void SwitchCronFunction(){
   int i=0;
   for (i = 1; i < SWITCHCOUNT; ++i) {
@@ -113,20 +158,21 @@ void SwitchCronFunction(){
           SWITCHDATA[i][10] = 0;
         }
       } else {
-        if ( Time.second(time) == SWITCHDATA[i][11] or SWITCHDATA[i][11] == -1 or
-             Time.minute(time) == SWITCHDATA[i][12] or SWITCHDATA[i][12] == -1 or
-             Time.hour(time) == SWITCHDATA[i][13] or SWITCHDATA[i][13] == -1 or
-             Time.day(time) == SWITCHDATA[i][14] or SWITCHDATA[i][14] == -1 or
-             Time.month(time) == SWITCHDATA[i][15] or SWITCHDATA[i][15] == -1 or
-             Time.weekday(time)-1 == SWITCHDATA[i][16] or SWITCHDATA[i][16] == -1
+        String weekday = String(SWITCHDATA[i][16], DEC);
+        if ( (Time.second(time) == SWITCHDATA[i][11] or SWITCHDATA[i][11] == -1) and
+             (Time.minute(time) == SWITCHDATA[i][12] or SWITCHDATA[i][12] == -1) and
+             (Time.hour(time) == SWITCHDATA[i][13] or SWITCHDATA[i][13] == -1) and
+             (Time.day(time) == SWITCHDATA[i][14] or SWITCHDATA[i][14] == -1) and
+             (Time.month(time) == SWITCHDATA[i][15] or SWITCHDATA[i][15] == -1) and
+             (weekdayMatch(Time.weekday(time)-1, SWITCHDATA[i][16]) or SWITCHDATA[i][16] == -1 or SWITCHDATA[i][16] == 90000000 )
            ) {
-            Particle.publish("SwitchCronFunction", String::format("Matched - B - sec:%i, min:%i, i:%i, SWITCHDATA[i][10]:%i, SWITCHDATA[i][11]:%i",Time.second(time),Time.minute(time),i,SWITCHDATA[i][10],SWITCHDATA[i][11]));
+            Particle.publish("SwitchCronFunction", String::format("Matched - B - sec:%i, min:%i, i:%i, SWITCHDATA[i][10]:%i, SWITCHDATA[i][11]:%i,weekdayMatcg:%i",Time.second(time),Time.minute(time),i,SWITCHDATA[i][10],SWITCHDATA[i][11],weekdayMatch(Time.day(time), SWITCHDATA[i][14])));
             SWITCHDATA[i][10]=time;
         }
-        if ( Time.second(time) == SWITCHDATA[i][10] ) {
-          Particle.publish("SwitchCronFunction", String::format("Matched - C - sec:%i, min:%i, i:%i, SWITCHDATA[i][10]:%i, SWITCHDATA[i][11]:%i",Time.second(time),Time.minute(time),i,SWITCHDATA[i][10],SWITCHDATA[i][11]));
-          SWITCHDATA[i][10]=time;
-        }
+        //if ( Time.second(time) == SWITCHDATA[i][10] ) {
+        //  Particle.publish("SwitchCronFunction", String::format("Matched - C - sec:%i, min:%i, i:%i, SWITCHDATA[i][10]:%i, SWITCHDATA[i][11]:%i",Time.second(time),Time.minute(time),i,SWITCHDATA[i][10],SWITCHDATA[i][11]));
+        //  SWITCHDATA[i][10]=time;
+        //}
       }
     }
   }
@@ -143,6 +189,8 @@ Timer TimerSwitch4(50000, Switch4TimerFunction, true);
 Timer TimerSwitchCron(1000, SwitchCronFunction, false);
 // Timer that updates the LCD display every second.
 Timer TimerUpdateLCD(1000, UpdateLCD, false);
+// Timer to check if phyical switch has been flipped
+Timer TimerCheckAllSwitchs(100, CheckAllSwitchs, false);
 
 //
 //  This function is used to set timer time and start timer.
@@ -197,6 +245,25 @@ void UpdateLCD () {
   lcd.print(secs);
   lcd.print(String::format("sec - %i,%i,%i,%i", SWITCHDATA[1][2], SWITCHDATA[2][2], SWITCHDATA[3][2], SWITCHDATA[4][2]));
 }
+
+//
+// Check in any of the phyical switches have been flipped
+void CheckAllSwitchs () {
+  int i=0;
+  for (i = 1; i < SWITCHCOUNT; ++i) {
+    // At the start of loop copy Switch$_State over to Prev_Switch#_State so we
+    // can tell if State has changed from previous loop
+    // Prev_Switch_State = Switch_State;
+    SWITCHDATA[i][6] = SWITCHDATA[i][5];
+    // Read the four anlog inputs for a LOW or HIGH state
+    // Switch_State[#] = ReadDigitalPin(SWITCHDATA[1][3]);
+    SWITCHDATA[i][5] = ReadDigitalPin(SWITCHDATA[i][3]);
+    // Check if light switches have changed states "been flipped"
+    // RelayIn_State = CheckSwitchStateChanged(switch_pin,   current_switch_state, prev_switch_state, relayin,         relayin_state)
+    SWITCHDATA[i][2] = CheckSwitchStateChanged(SWITCHDATA[i][3], SWITCHDATA[i][5], SWITCHDATA[i][6], SWITCHDATA[i][0], SWITCHDATA[i][2]);
+  }
+}
+
 //
 // Function for Cloud/RestAPI to Change the state of RelayIn1,2,3,4 and set RelayIn#_State to proper state
 // Argument syntax for command = 1|2|3|4
@@ -749,6 +816,9 @@ void setup() {
   //
   // Enable CronTimer
   TimerSwitchCron.start();
+  //
+  // Enable CheckAllSwitchs timer
+  TimerCheckAllSwitchs.start();
 }
 
 void loop() {
@@ -758,26 +828,6 @@ void loop() {
 
   // Get the current Millis for this loop
   currentSync = millis();
-
-  //
-  // Run below code every 100 mili seconds 1/10th second
-  if ( (currentSync - lastMSecSync) > 100 ) {
-    // Loop on each switch
-    int i=0;
-    for (i = 1; i < SWITCHCOUNT; ++i) {
-      // At the start of loop copy Switch$_State over to Prev_Switch#_State so we
-      // can tell if State has changed from previous loop
-      // Prev_Switch_State = Switch_State;
-      SWITCHDATA[i][6] = SWITCHDATA[i][5];
-      // Read the four anlog inputs for a LOW or HIGH state
-      // Switch_State[#] = ReadDigitalPin(SWITCHDATA[1][3]);
-      SWITCHDATA[i][5] = ReadDigitalPin(SWITCHDATA[i][3]);
-      // Check if light switches have changed states "been flipped"
-      // RelayIn_State = CheckSwitchStateChanged(switch_pin,   current_switch_state, prev_switch_state, relayin,         relayin_state)
-      SWITCHDATA[i][2] = CheckSwitchStateChanged(SWITCHDATA[i][3], SWITCHDATA[i][5], SWITCHDATA[i][6], SWITCHDATA[i][0], SWITCHDATA[i][2]);
-    }
-    lastMSecSync = currentSync;
-  }
 
   //
   // Run below code every 100 mili second ( 1/10th second )
