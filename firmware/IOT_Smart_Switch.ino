@@ -21,7 +21,7 @@
 //   [#][13] = CronHour - hours between (0-23) & -1=*
 //   [#][14] = CronDay - day of the month (1-31) & -1=*
 //   [#][15] = CronMonth - month of the year (1-12) & -1=*
-//   [#][16] = CronWeekDay - day of the week (0-6 with 0=Sunday) & -1=*
+//   [#][16] = CronWeekDay - day of the week 9SMTWTFS(0-6 with 0=Sunday) & 0=Ignore
 String WEBTITLE="Particle Photon IOT Smart Switch";
 int SWITCHCOUNT = 5;
 //int SWITCHCOUNT = sizeof(SWITCHDATA) / sizeof(int);
@@ -29,10 +29,10 @@ int SWITCHDATASIZE = 17;
 //int SWITCHDATASIZE = sizeof(SWITCHDATA[0]) / sizeof(int);
 int SWITCHDATA [5][17] { //initialize to zero
   {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-  {D2, OUTPUT, HIGH, A2, INPUT, HIGH, HIGH, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+  {D2, OUTPUT, HIGH, A2, INPUT, HIGH, HIGH, 0, 0, 10, 0, 0, 30, 17, -1, -1, 91111111},
   {D3, OUTPUT, HIGH, A3, INPUT, HIGH, HIGH, 0, 0, 1, 0, 30, 32, 12, 24, 2, 90000000 },
-  {D4, OUTPUT, HIGH, A4, INPUT, HIGH, HIGH, 0, 0, 2, 0, 40, -1, -1, -1, -1, 91111111 },
-  {D5, OUTPUT, HIGH, A5, INPUT, HIGH, HIGH, 0, 0, 4, 0, 30, -1, -1, -1, -1, 91111000 }
+  {D4, OUTPUT, HIGH, A4, INPUT, HIGH, HIGH, 0, 0, 2, 0, 40, -1, -1, -1, -1, 90000000 },
+  {D5, OUTPUT, HIGH, A5, INPUT, HIGH, HIGH, 0, 0, 840, 0, 0, 0, 6, -1, -1, 91111111 }
 };
 
 int ic2_sda = D0;
@@ -52,7 +52,7 @@ unsigned long lastMSecSync = currentSync;
 unsigned long lastSecSync = currentSync;
 unsigned long lastMinSync = currentSync;
 unsigned long lastDaySync = currentSync;
-int TimeZone = -5;
+int TimeZone = -4;
 
 // Init RGB lcd color for background
 const int colorR = 128;
@@ -102,8 +102,10 @@ int weekdayMatch(int dayNum, int weekdayHash) {
   // Copy it over
   //str.toCharArray(char_array, str_len);
 
-  // Check for wild card(*) = 90000000
+  // Check for disabled = 90000000
   if ( weekdayHash == 90000000 ) {
+    return false;
+  } else if  ( weekdayHash == 91111111 ) {
     return true;
   }
   // Bit shift to right based on week day
@@ -126,7 +128,7 @@ int weekdayMatch(int dayNum, int weekdayHash) {
     // 90010000 = 2812812
     case 5:  if ( weekdayBitShift >= 2812812 ) { return true; }
     break;
-    // 90000000 = 1407812
+    // 90100000 = 1407812
     case 6:  if ( weekdayBitShift >= 1407812 ) { return true; }
     break;
     // 91000000 = 710937
@@ -156,6 +158,9 @@ void SwitchCronFunction(){
         if ( ((time-SWITCHDATA[i][10])/60) > SWITCHDATA[i][9] ) {
           Particle.publish("SwitchCronFunction", String::format("Past Duration - A - sec:%i, min:%i, i:%i, [9]:%i, [10]:%i, [11]:%i, [12]:%1",Time.second(time),Time.minute(time),i,SWITCHDATA[i][9],SWITCHDATA[i][10],SWITCHDATA[i][11],SWITCHDATA[i][12]));
           SWITCHDATA[i][10] = 0;
+          // Turn off Relay attached to D#.  #=i
+          WriteDigitalPin(SWITCHDATA[i][0], 1);
+          SWITCHDATA[i][2] = 1;
         }
       } else {
         String weekday = String(SWITCHDATA[i][16], DEC);
@@ -164,10 +169,14 @@ void SwitchCronFunction(){
              (Time.hour(time) == SWITCHDATA[i][13] or SWITCHDATA[i][13] == -1) and
              (Time.day(time) == SWITCHDATA[i][14] or SWITCHDATA[i][14] == -1) and
              (Time.month(time) == SWITCHDATA[i][15] or SWITCHDATA[i][15] == -1) and
-             (weekdayMatch(Time.weekday(time)-1, SWITCHDATA[i][16]) or SWITCHDATA[i][16] == -1 or SWITCHDATA[i][16] == 90000000 )
+             (weekdayMatch(Time.weekday(time)-1, SWITCHDATA[i][16]) or SWITCHDATA[i][16] == -1 )
            ) {
             Particle.publish("SwitchCronFunction", String::format("Matched - B - sec:%i, min:%i, i:%i, SWITCHDATA[i][10]:%i, SWITCHDATA[i][11]:%i,weekdayMatcg:%i",Time.second(time),Time.minute(time),i,SWITCHDATA[i][10],SWITCHDATA[i][11],weekdayMatch(Time.day(time), SWITCHDATA[i][14])));
             SWITCHDATA[i][10]=time;
+            // Turn ON Relay attached to D#.  #=i
+            //CloudSwitchTimer(1, val);
+            WriteDigitalPin(SWITCHDATA[i][0], 0);
+            SWITCHDATA[i][2] = 0;
         }
         //if ( Time.second(time) == SWITCHDATA[i][10] ) {
         //  Particle.publish("SwitchCronFunction", String::format("Matched - C - sec:%i, min:%i, i:%i, SWITCHDATA[i][10]:%i, SWITCHDATA[i][11]:%i",Time.second(time),Time.minute(time),i,SWITCHDATA[i][10],SWITCHDATA[i][11]));
@@ -186,7 +195,7 @@ Timer TimerSwitch2(30000, Switch2TimerFunction, true);
 Timer TimerSwitch3(40000, Switch3TimerFunction, true);
 Timer TimerSwitch4(50000, Switch4TimerFunction, true);
 // Timer that checks if any switchs have crons enabled
-Timer TimerSwitchCron(1000, SwitchCronFunction, false);
+Timer TimerSwitchCron(500, SwitchCronFunction, false);
 // Timer that updates the LCD display every second.
 Timer TimerUpdateLCD(1000, UpdateLCD, false);
 // Timer to check if phyical switch has been flipped
@@ -304,7 +313,7 @@ int CloudRelayInChange(String command) {
 
   Particle.publish("CloudRelayInChange", String::format("B - Switch:%i, RelayIn Pin:D%i, RelayIn_State:%i",Relay,RelayIn,RelayIn_State));
 
-  // Check if RelayIn_State is 1(OFF) or 0(ON). Then with the opposit to the pin.
+  // Check if RelayIn_State is 1(OFF) or 0(ON). Then chnage ping to opposit state.
   if ( RelayIn_State == 0 ) {
     WriteDigitalPin(RelayIn, 1);
     RelayIn_State = 1;
